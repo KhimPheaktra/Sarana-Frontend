@@ -12,6 +12,7 @@ import {
 } from '@ant-design/icons';
 import './navbar.css';
 import { useNavigate } from 'react-router-dom';
+import userAvatar from "../../../assets/images/user-avatar.png";
 
 const { Header } = Layout;
 
@@ -100,7 +101,7 @@ const navigate = useNavigate();
             getPopupContainer={(trigger) => trigger.parentElement!}
           >
             <Space className="user-profile">
-              <Avatar src="src\assets\images\user-avatar.png" />
+              <Avatar src={userAvatar} />
               <Text strong>{username}</Text>
               <DownOutlined className="dropdown-arrow" />
             </Space>
