@@ -100,7 +100,7 @@ const navigate = useNavigate();
             getPopupContainer={(trigger) => trigger.parentElement!}
           >
             <Space className="user-profile">
-              <Avatar src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" />
+              <Avatar src="src\assets\images\user-avatar.png" />
               <Text strong>{username}</Text>
               <DownOutlined className="dropdown-arrow" />
             </Space>
