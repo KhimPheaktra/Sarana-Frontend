@@ -1,0 +1,55 @@
+.dashboard-title {
+  font-size: 22px;
+  font-weight: 600;
+  margin-bottom: 16px;
+}
+
+.stat-card {
+  border-radius: 12px;
+}
+
+.stat-suffix-up {
+  color: #52c41a;
+  font-size: 12px;
+}
+
+.stat-suffix-down {
+  color: #ff4d4f;
+  font-size: 12px;
+}
+
+.supplier-item {
+  display: flex;
+  align-items: center;
+  padding: 12px 0;
+}
+
+.supplier-icon {
+  width: 40px;
+  height: 40px;
+  background: #f0f2f5;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 12px;
+}
+
+.quick-action-card {
+  text-align: center;
+}
+
+.quick-action-content {
+  font-weight: 500;
+}
+
+.table-card {
+  overflow-x: auto;
+}
+
+/* Mobile Fix */
+@media (max-width: 576px) {
+  .dashboard-title {
+    font-size: 18px;
+  }
+}

@@ -1,0 +1,18 @@
+
+body {
+  overflow-y: scroll !important;
+}
+
+/* Disable ant design modal mask blur animation   */
+.ant-modal-mask {
+  backdrop-filter: none !important;
+  animation-duration: 0s !important;
+}
+
+.ant-modal-wrap {
+  animation-duration: 0s !important;
+}
+
+.ant-modal {
+  animation-duration: 0.2s !important;
+}
