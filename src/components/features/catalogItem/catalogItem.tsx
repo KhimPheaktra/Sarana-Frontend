@@ -4,7 +4,7 @@ import type { ModalMode, CatalogItemType } from "./catalogItem.types";
 import PageHeader from "../../layout/pageHeader/PageHeader";
 import {TagsOutlined } from "@ant-design/icons";
 import CatalogItemTable from "./CatalogItemTable";
-import CatalogItemModal from "./CatalogItemModal.";
+import CatalogItemModal from "./CatalogItemModal";
 
 
 
