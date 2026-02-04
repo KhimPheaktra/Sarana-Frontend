@@ -1,9 +1,9 @@
 import type { ColumnsType } from "antd/es/table";
 import type { PurchaseType } from "./purchase.types";
-import { Space, Table } from "antd";
-import { Button } from "antd";
-import { EyeOutlined,EditOutlined,DeleteOutlined } from "@ant-design/icons";
+import { Space, Table, Form, Row, Col, DatePicker, Button, Grid } from "antd";
+import { EyeOutlined, EditOutlined, DeleteOutlined, ClearOutlined } from "@ant-design/icons";
 
+const { useBreakpoint } = Grid;
 
 interface Props {
     data: PurchaseType[];
@@ -11,7 +11,12 @@ interface Props {
     onEdit: (purchase: PurchaseType) => void;
     onDelete: (purchase: PurchaseType) => void;
 }
-const PurchaseTable:React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
+
+const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
+    const [form] = Form.useForm();
+    const screens = useBreakpoint();
+    const isMobile = !screens.md;
+
     const columns: ColumnsType<PurchaseType> = [
         {
             title: "ID",
@@ -63,8 +68,7 @@ const PurchaseTable:React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
             key: "total_amount",
             align: "center",
         },
-       
-           {
+        {
             title: "Actions",
             key: "actions",
             align: "center",
@@ -72,29 +76,88 @@ const PurchaseTable:React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
                 <Space>
                     <Button type="primary" onClick={() => onView(record)}>
                         <EyeOutlined /> View
-                        </Button>
+                    </Button>
                     <Button type="primary" onClick={() => onEdit(record)}>
                         <EditOutlined /> Edit
-                        </Button>
+                    </Button>
                     <Button danger onClick={() => onDelete(record)}>
                         <DeleteOutlined /> Delete
                     </Button>
                 </Space>
             )
         }
-
     ];
 
     return (
-        <Table
-            columns={columns}
-            dataSource={data}
-            pagination={{ pageSize: 10,simple: true }}
-            scroll={{x: 'max-content'}}
-            rowKey="purchase_id"
-        />
-    );
+        <div style={{ overflow: 'visible', minHeight: '600px' }}>
+            <Form form={form} layout="vertical" requiredMark={false}>
+                <Row gutter={16} align="bottom">  
+                    {isMobile ? (
+                        <>
+                            <Col xs={24} sm={12}>
+                                <Form.Item
+                                    label="From Date"
+                                    name="purchase_date_from"
+                                >
+                                    <DatePicker 
+                                        placeholder="From date"
+                                        format="YYYY-MM-DD"
+                                        style={{ width: '100%' }}
+                                    />
+                                </Form.Item>
+                            </Col>
 
+                            <Col xs={24} sm={12}>
+                                <Form.Item
+                                    label="To Date"
+                                    name="purchase_date_to"
+                                >
+                                    <DatePicker 
+                                        placeholder="To date"
+                                        format="YYYY-MM-DD"
+                                        style={{ width: '100%' }}
+                                    />
+                                </Form.Item>
+                            </Col>
+                        </>
+                    ) : (
+                        <Col xs={24} sm={24} md={18}>
+                            <Form.Item
+                                label="Purchase Date Range"
+                                name="purchase_date_range"
+                            >
+                                <DatePicker.RangePicker 
+                                    placeholder={["From date", "To date"]}
+                                    format="YYYY-MM-DD"
+                                    style={{ width: '100%' }}
+                                />
+                            </Form.Item>
+                        </Col>
+                    )}
+
+                    <Col xs={24} sm={12} md={6}>
+                        <Form.Item>
+                            <Button 
+                                onClick={() => form.resetFields()} 
+                                icon={<ClearOutlined />}
+                                block={isMobile}
+                            >
+                                Clear Filter
+                            </Button>
+                        </Form.Item>
+                    </Col>
+                </Row>
+            </Form>
+
+            <Table
+                columns={columns}
+                dataSource={data}
+                pagination={{ pageSize: 10, simple: true }}
+                scroll={{ x: 'max-content' }}
+                rowKey="purchase_id"
+            />
+        </div>
+    );
 };
 
 export default PurchaseTable;

@@ -44,7 +44,7 @@ const ExpensesModal: React.FC<Props> = ({
           : "Add"
       }
       okButtonProps={{ danger: mode === "delete" }}
-      destroyOnClose={false}
+      destroyOnHidden={false}
       forceRender
       maskClosable={false}
     >

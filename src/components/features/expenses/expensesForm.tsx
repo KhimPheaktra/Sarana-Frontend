@@ -38,6 +38,7 @@ const ExpensesForm: React.FC<Props> = ({ form}) => {
               placeholder="Enter purchase date"
               showTime
               format="YYYY-MM-DD HH:mm:ss" 
+              style={{ width: '100%' }}
             />
           </Form.Item>
         </Col>

@@ -15,7 +15,6 @@ const Worker: React.FC = () => {
         { key: "1", id: 1, name: "Tra", phone_number: "012312313", address: "Sangkat 1" },
         { key: "2", id: 2, name: "Long", phone_number: "0214142121", address: "Sangkat 2" },
     ];
-    console.log("Worker",workers);
 
     const openAdd = () => {
     setModalMode("add");
