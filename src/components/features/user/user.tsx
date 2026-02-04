@@ -4,7 +4,7 @@ import UserTable from "./userTable";
 import UserModal from "./userModal";
 import { UserOutlined } from "@ant-design/icons";
 import type { ModalMode, UserType } from "./user.types";
-import PageHeader from "../../layout/page_header/pageHeader";
+import PageHeader from "../../layout/pageHeader/pageHeader";
 
 const User: React.FC = () => {
   const [form] = Form.useForm();

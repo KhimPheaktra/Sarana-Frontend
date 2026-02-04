@@ -36,15 +36,7 @@ const PurchaseForm: React.FC<Props> = ({ form}) => {
             />
           </Form.Item>
         </Col>
-      <Col xs={24} sm={12}>
-        <Form.Item
-          label="Total Amount"
-          name="total_amount"
-          rules={[{ required: true, message: "Please enter total amount" }]}
-        >
-          <InputNumber placeholder="Enter total amount" precision={2} style={{ width: '100%' }}/>
-        </Form.Item>
-      </Col>
+      
          <Col xs={24} sm={12}>
         <Form.Item
           label="Catelog Item"
@@ -58,7 +50,6 @@ const PurchaseForm: React.FC<Props> = ({ form}) => {
           </Select>
         </Form.Item>
       </Col>
-      
       <Col xs={24} sm={12}>
         <Form.Item
           label="Quantity"
@@ -86,12 +77,15 @@ const PurchaseForm: React.FC<Props> = ({ form}) => {
           <InputNumber placeholder="Enter subtotal" precision={2} style={{ width: '100%' }} />
         </Form.Item>
       </Col>
-     
-    
-      
-
-
-     
+      <Col xs={24} sm={12}>
+        <Form.Item
+          label="Total Amount"
+          name="total_amount"
+          rules={[{ required: true, message: "Please enter total amount" }]}
+        >
+          <InputNumber placeholder="Enter total amount" precision={2} style={{ width: '100%' }}/>
+        </Form.Item>
+      </Col>
     </Row>
   </Form>
 

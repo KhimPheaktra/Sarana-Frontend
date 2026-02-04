@@ -1,7 +1,7 @@
 import { Card, Form, message } from "antd";
 import { useState } from "react";
 import type {  ModalMode, PurchaseType } from "./purchase.types";
-import PageHeader from "../../layout/page_header/pageHeader";
+import PageHeader from "../../layout/pageHeader/pageHeader";
 import PurchaseTable from "./purchaseTable";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import PurchaseModal from "./purchaseModal";

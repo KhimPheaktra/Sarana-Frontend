@@ -1,9 +1,9 @@
 import { useState } from "react";
 import type { ModalMode, SupplierType } from "./supplier.types";
 import { Card, Form, message } from "antd";
-import PageHeader from "../../layout/page_header/pageHeader";
+import PageHeader from "../../layout/pageHeader/pageHeader";
 import SupplierModal from "./supplierModal";
-import {TeamOutlined} from "@ant-design/icons";
+import {TruckOutlined} from "@ant-design/icons";
 import SupplierTable from "./supplierTable";
 
 
@@ -66,7 +66,7 @@ const Supplier = () => {
                 title="Supplier Management"
                 count={suppliers.length}
                 countLabel="suppliers"
-                icon={<TeamOutlined />}
+                icon={<TruckOutlined />}
                 onAdd={openAdd}
                 buttonText="Add Supplier"
             />

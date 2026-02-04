@@ -1,7 +1,7 @@
 import { Card, Form, message } from "antd";
 import { useState } from "react";
 import type { ModalMode, CatalogItemType } from "./catalogItem.types";
-import PageHeader from "../../layout/page_header/pageHeader";
+import PageHeader from "../../layout/pageHeader/pageHeader";
 import {TagsOutlined } from "@ant-design/icons";
 import CatalogItemModal from "./catalogItemModal.";
 import CatalogItemTable from "./catalogItemTable";

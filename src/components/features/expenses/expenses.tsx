@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { ExpensesType, ModalMode } from "./expenses.types";
 import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
-import PageHeader from "../../layout/page_header/pageHeader";
+import PageHeader from "../../layout/pageHeader/pageHeader";
 import { BookOutlined } from "@ant-design/icons";
 import ExpensesTable from "./expensesTable";
 import ExpensesModal from "./expensesModal";

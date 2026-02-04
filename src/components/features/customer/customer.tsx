@@ -4,7 +4,7 @@ import type { CusType, ModalMode } from "./cus.types";
 import CustomerTable from "./customerTable";
 import CustomerModal from "./customerModal";
 import {UserOutlined } from "@ant-design/icons";   
-import PageHeader from "../../layout/page_header/pageHeader";
+import PageHeader from "../../layout/pageHeader/pageHeader";
 
 const Customer = () => {
     const [form] = Form.useForm();

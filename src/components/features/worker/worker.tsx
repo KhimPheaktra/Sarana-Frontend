@@ -5,7 +5,7 @@ import { Card, Form, message } from "antd";
 import type { ModalMode, WorkerType } from "./worker.types";
 import WorkerModal from "./workerModal";
 import { TeamOutlined } from "@ant-design/icons";
-import PageHeader from "../../layout/page_header/pageHeader";
+import PageHeader from "../../layout/pageHeader/pageHeader";
 const Worker: React.FC = () => {
     const [form] = Form.useForm();
     const [modalMode, setModalMode] = useState<ModalMode>(null);

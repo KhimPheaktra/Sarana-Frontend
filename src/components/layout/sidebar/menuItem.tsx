@@ -25,7 +25,7 @@ export const menuItems: AppMenuItem[] = [
     key: 'dashboard',
     icon: <HomeOutlined />,
     label: 'Dashboard',
-    route: '/',
+    route: '/dashboard',
   },
     {
     key: 'catalogItems',
@@ -123,7 +123,7 @@ export const menuItems: AppMenuItem[] = [
           {
             key: 'reports-profit',
             label: 'Profit & Loss',
-            route: '/reports/profit-loss',
+            route: '/reports/profit',
           },
           
         ],

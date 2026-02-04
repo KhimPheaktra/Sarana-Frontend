@@ -59,7 +59,6 @@ body {
   transform: translateX(0) !important;
 }
 
-/* Ensure navbar stays on top when sidebar is closed */
 .ant-layout-header {
   z-index: 999;
 }
@@ -78,7 +77,6 @@ body {
   }
 }
 
-/* Tablet */
 @media (max-width: 991px) and (min-width: 768px) {
   .main-layout {
     margin-left: 0 !important;
@@ -108,4 +106,28 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 999;
   }
+}
+
+.app-fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.router-container {
+  min-height: 100vh;
+  opacity: 1;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.router-container.loading {
+  opacity: 0;
+  pointer-events: none;
 }

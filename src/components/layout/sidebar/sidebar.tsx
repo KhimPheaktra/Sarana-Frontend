@@ -28,7 +28,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
     }
   };
   
-  const selectedKey = findeSelectKey(menuItems) || 'dashboard';
+  const selectedKey = findeSelectKey(menuItems);
 
   const findRouteByKey = (items: any[], key: string): string | undefined => {
     for (const item of items) {
@@ -41,13 +41,14 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
   };
 
   const handleMenuClick = ({ key }: { key: string }) => {
-    const route = findRouteByKey(menuItems, key);
+  const route = findRouteByKey(menuItems, key);
 
-    if (route) {
+    if (route && route !== location.pathname) {
       navigate(route);
       if (isMobile && onClose) onClose();
     }
   };
+
 
   return (
     <>

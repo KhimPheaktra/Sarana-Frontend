@@ -13,22 +13,24 @@ interface LoginFormValues {
 }
 
 const Login: React.FC = () => {
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated, setUsername } = useAuth();
 
-  const onFinish = (values: LoginFormValues): void => {
+  const onFinish = (values: LoginFormValues) => {
     setLoading(true);
+
     setTimeout(() => {
       sessionStorage.setItem('isAuthenticated', 'true');
       sessionStorage.setItem('username', values.username);
-      
-      setIsAuthenticated(true); 
-      
+
+      setIsAuthenticated(true);
+      setUsername(values.username);
+
       message.success('Login successful!');
       setLoading(false);
-      navigate('/dashboard');
-    }, 1000);
+      navigate('/dashboard', { replace: true });
+    }, 800);
   };
 
   return (
