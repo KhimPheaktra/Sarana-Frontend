@@ -3,7 +3,9 @@ import { Spin } from 'antd';
 
 interface AuthContextType {
   isAuthenticated: boolean;
+  username: string;
   setIsAuthenticated: (value: boolean) => void;
+  setUsername: (value: string) => void;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -12,14 +14,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(() => {
     return sessionStorage.getItem('isAuthenticated') === 'true';
   });
+  const [username, setUsername] = useState(() => {
+    return sessionStorage.getItem('username') || 'User';
+  });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setLoading(false);
-    }, 100);
-
-    return () => clearTimeout(timer);
+    setLoading(false);
   }, []);
 
   if (loading) {
@@ -40,7 +41,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   return createElement(
     AuthContext.Provider,
-    { value: { isAuthenticated, setIsAuthenticated } },
+    { value: { isAuthenticated, username, setIsAuthenticated, setUsername } },
     children
   );
 };

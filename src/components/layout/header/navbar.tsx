@@ -1,5 +1,5 @@
-import React from 'react';
-import { Typography,Layout, Input, Badge, Avatar, Dropdown, Button, Space, type MenuProps } from 'antd';
+import React, {useEffect } from 'react';
+import { Typography, Layout, Input, Badge, Avatar, Dropdown, Button, Space, type MenuProps } from 'antd';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -16,16 +16,25 @@ import userAvatar from "../../../assets/images/user-avatar.png";
 import { useAuth } from '../../cores/auth/authContext';
 
 const { Header } = Layout;
+const { Text } = Typography;
 
 interface NavbarProps {
   collapsed: boolean;
   onToggle: () => void;
 }
 
-
 const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
-const navigate = useNavigate();
-  const username = localStorage.getItem('username') || 'User';
+  const navigate = useNavigate();
+  const { setIsAuthenticated, username, setUsername } = useAuth();
+  
+  useEffect(() => {
+    if (!username || username === 'User') {
+      const storedUsername = sessionStorage.getItem('username');
+      if (storedUsername && setUsername) {
+        setUsername(storedUsername);
+      }
+    }
+  }, [username, setUsername]);
 
   const handleMenuClick: MenuProps['onClick'] = (e) => {
     switch (e.key) {
@@ -41,12 +50,11 @@ const navigate = useNavigate();
     }
   };
 
-  const { setIsAuthenticated } = useAuth();
-
   const handleLogout = () => {
     sessionStorage.removeItem('isAuthenticated');
     sessionStorage.removeItem('username');
     setIsAuthenticated(false);
+    setUsername('User');     
     navigate('/login');
   };
 
@@ -71,12 +79,9 @@ const navigate = useNavigate();
       danger: true
     },
   ];
-  const { Text } = Typography;
-
 
   return (
     <Header className="custom-navbar">
-      {/* Left: Toggle & Search */}
       <div className="navbar-left">
         <Button
           type="text"
@@ -101,12 +106,11 @@ const navigate = useNavigate();
             menu={{ items: userMenuItems, onClick: handleMenuClick }}
             trigger={['click']}
             placement="bottomRight"
-        
             getPopupContainer={(trigger) => trigger.parentElement!}
           >
             <Space className="user-profile">
               <Avatar src={userAvatar} />
-              <Text strong>{username}</Text>
+              <Text strong>{username || 'User'}</Text>
               <DownOutlined className="dropdown-arrow" />
             </Space>
           </Dropdown>

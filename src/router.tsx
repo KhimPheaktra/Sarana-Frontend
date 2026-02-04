@@ -19,38 +19,22 @@ export interface RouteConfig {
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
-  
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
-  }
-  
-  return <>{children}</>;
+  return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { isAuthenticated } = useAuth();
-  
-  if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />;
-  }
-  
-  return <>{children}</>;
-};
-
-const RootRedirect: React.FC = () => {
-  const { isAuthenticated } = useAuth();
-  
-  return <Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />;
+  return isAuthenticated ? <Navigate to="/dashboard" replace /> : <>{children}</>;
 };
 
 export const routes: RouteConfig[] = [
   {
-    path: '/login',
-    element: <PublicRoute><Login /></PublicRoute>
+    path: '/',
+    element: <Navigate to="/dashboard" replace />,
   },
   {
-    path: '/',
-    element: <RootRedirect />,
+    path: '/login',
+    element: <PublicRoute><Login /></PublicRoute>
   },
   {
     path: '/dashboard',
