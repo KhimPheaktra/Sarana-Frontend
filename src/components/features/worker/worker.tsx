@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 
-import WorkerTable from "./workerTable";
+import WorkerTable from "./WorkerTable";
 import { Card, Form, message } from "antd";
 import type { ModalMode, WorkerType } from "./worker.types";
-import WorkerModal from "./workerModal";
+import WorkerModal from "./WorkerModal";
 import { TeamOutlined } from "@ant-design/icons";
-import PageHeader from "../../layout/pageHeader/pageHeader";
+import PageHeader from "../../layout/pageHeader/PageHeader";
 const Worker: React.FC = () => {
     const [form] = Form.useForm();
     const [modalMode, setModalMode] = useState<ModalMode>(null);

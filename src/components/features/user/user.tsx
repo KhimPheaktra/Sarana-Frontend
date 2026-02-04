@@ -1,10 +1,10 @@
 import {Card, Form, message } from "antd";
 import React, { useState } from "react";
-import UserTable from "./userTable";
-import UserModal from "./userModal";
+import UserTable from "./UserTable";
+import UserModal from "./UserModal";
 import { UserOutlined } from "@ant-design/icons";
 import type { ModalMode, UserType } from "./user.types";
-import PageHeader from "../../layout/pageHeader/pageHeader";
+import PageHeader from "../../layout/pageHeader/PageHeader";
 
 const User: React.FC = () => {
   const [form] = Form.useForm();

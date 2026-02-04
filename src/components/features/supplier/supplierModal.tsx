@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import type { ModalMode, SupplierType } from "./supplier.types";
-import SupplierForm from "./supplierForm";
+import SupplierForm from "./SupplierForm";
 
 
 interface Props {

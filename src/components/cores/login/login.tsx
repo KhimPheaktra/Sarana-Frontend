@@ -3,9 +3,10 @@ import { message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import './login.css';
-import LoginBackground from './loginBackground';
-import LoginCard from './loginCard';
+
 import { useAuth } from '../auth/authContext';
+import LoginBackground from './LoginBackground';
+import LoginCard from './LoginCard';
 
 interface LoginFormValues {
   username: string;

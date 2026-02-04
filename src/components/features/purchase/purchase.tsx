@@ -1,10 +1,10 @@
 import { Card, Form, message } from "antd";
 import { useState } from "react";
 import type {  ModalMode, PurchaseType } from "./purchase.types";
-import PageHeader from "../../layout/pageHeader/pageHeader";
-import PurchaseTable from "./purchaseTable";
+import PageHeader from "../../layout/pageHeader/PageHeader";
+import PurchaseTable from "./PurchaseTable";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import PurchaseModal from "./purchaseModal";
+import PurchaseModal from "./PurchaseModal";
 import dayjs from 'dayjs';
 
 

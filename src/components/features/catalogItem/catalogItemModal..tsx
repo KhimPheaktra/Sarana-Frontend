@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import type { CatalogItemType, ModalMode } from "./catalogItem.types";
-import CatalogItemForm from "./catalogItemForm";
+import CatalogItemForm from "./CatalogItemForm";
 
 
 

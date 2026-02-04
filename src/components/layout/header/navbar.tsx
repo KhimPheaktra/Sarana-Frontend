@@ -14,7 +14,7 @@ import './navbar.css';
 import { useNavigate } from 'react-router-dom';
 import userAvatar from "../../../assets/images/user-avatar.png";
 import { useAuth } from '../../cores/auth/authContext';
-import { LoadingOverlay } from '../../common/loadingOverlay';
+import { LoadingOverlay } from '../../common/LoadingOverlay';
 
 const { Header } = Layout;
 const { Text } = Typography;

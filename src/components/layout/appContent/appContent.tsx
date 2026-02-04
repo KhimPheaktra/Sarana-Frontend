@@ -1,10 +1,9 @@
 import React, { memo, useEffect, useState } from 'react';
 import { Layout } from 'antd';
-import { Routes, Route, useLocation } from 'react-router-dom';
+import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { routes } from '../../../router';
-import { Sidebar } from '../sidebar/sidebar';
-import Navbar from '../header/navbar';
-
+import { Sidebar } from '../sidebar/Sidebar';
+import Navbar from '../header/Navbar';
 
 const { Content, Sider } = Layout;
 
@@ -21,11 +20,12 @@ const isMobileOrTablet = () => {
 
 export const AppContent: React.FC = memo(() => {
   const location = useLocation();
-  const isLoginPage = location.pathname === '/login';
-
   const [collapsed, setCollapsed] = useState(false);
   const [isMobile, setIsMobile] = useState(isMobileOrTablet());
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const isAuthenticated = !!sessionStorage.getItem('isAuthenticated'); 
+  const isLoginPage = location.pathname === '/login';
 
   useEffect(() => {
     const handleResize = () => {
@@ -49,6 +49,10 @@ export const AppContent: React.FC = memo(() => {
       setCollapsed(!collapsed);
     }
   };
+
+  if (!isAuthenticated && !isLoginPage) {
+    return <Navigate to="/login" replace />;
+  }
 
   if (isLoginPage) {
     return (

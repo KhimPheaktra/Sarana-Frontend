@@ -1,5 +1,5 @@
 import type { MenuProps } from "antd";
-import type { AppMenuItem } from "./menuItem";
+import type { AppMenuItem } from "./MenuItem";
 
 type AntdMenuItem = Required<MenuProps>["items"][number];
 

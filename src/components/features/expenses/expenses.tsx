@@ -2,10 +2,10 @@ import { useState } from "react";
 import type { ExpensesType, ModalMode } from "./expenses.types";
 import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
-import PageHeader from "../../layout/pageHeader/pageHeader";
+import PageHeader from "../../layout/pageHeader/PageHeader";
 import { BookOutlined } from "@ant-design/icons";
-import ExpensesTable from "./expensesTable";
-import ExpensesModal from "./expensesModal";
+import ExpensesTable from "./ExpensesTable";
+import ExpensesModal from "./ExpensesModal";
 const Expenses = () => {
     const [form] = Form.useForm();
     const [modalMode, setModalMode] = useState<ModalMode>(null);

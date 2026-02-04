@@ -14,46 +14,53 @@ const CatalogItemTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       title: "ID",
       dataIndex: "item_id",
       align: "center",
-      key: "id",
+      key: "item_id",
       sorter: (a, b) => a.item_id - b.item_id,
       defaultSortOrder: 'ascend',
     },
     {
         title: "Item Type",
         dataIndex: "item_type",
+        key: "item_type",
         align: "center",
     },
     {
-      title: "Name",
-      dataIndex: "name",
-      align: "center",
-   
+        title: "Name",
+        dataIndex: "name",
+        key: "name",
+        align: "center",
+    
     },
     {
         title: "Description",
         dataIndex: "description",
+        key: "description",
         align: "center",
 
     },
     {
         title: "Price",
         dataIndex: "price",
+        key: "price",
         align: "center",
     },
     {
         title: "Purchase Price",
         dataIndex: "purchase_price",
+        key: "purchase_price",
         align: "center",
     },
 
     {
         title: "Stock Quantity",
         dataIndex: "stock_quantity",
+        key: "stock_quantity",
         align: "center",
     },
     {
       title: "Active",
-      dataIndex: "is_active",
+      dataIndex: "is_active", 
+      key: "is_active",
       align: "center",
       render: (is_active) => (
         <Tag color={is_active ? "green" : "red"}>
@@ -64,6 +71,7 @@ const CatalogItemTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
     {
       title: "Actions",
       align: "center",
+      key: "action",
       render: (_, record) => (
         <Space>
           <Button type="primary" onClick={() => onEdit(record)}>
@@ -83,7 +91,7 @@ const CatalogItemTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       dataSource={data}
       pagination={{ pageSize: 10,simple: true }}
       scroll={{x: 'max-content'}}
-      rowKey="id"
+      rowKey="item_id"
     />
   );
 };

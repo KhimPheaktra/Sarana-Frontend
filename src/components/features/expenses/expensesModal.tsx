@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import type { ExpensesType, ModalMode } from "./expenses.types";
-import ExpensesForm from "./expensesForm";
+import ExpensesForm from "./ExpensesForm";
 
 
 

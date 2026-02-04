@@ -1,23 +1,24 @@
-import React from 'react';
-import { Navigate } from 'react-router-dom';
-import { Spin } from 'antd';
-import { Dashboard } from './components/features/dashboard/dashboard';
-import User from './components/features/user/user';
-import Worker from './components/features/worker/worker';
-import Customer from './components/features/customer/customer';
-import CatalogItem from './components/features/catalogItem/catalogItem';
-import Supplier from './components/features/supplier/supplier';
-import Purchase from './components/features/purchase/purchase';
-import Payment from './components/features/payement/payment';
-import Expenses from './components/features/expenses/expenses';
-import Login from './components/cores/login/login';
+import Dashboard from './components/features/dashboard/Dashboard';
+import User from './components/features/user/User';
+import Worker from './components/features/worker/Worker';
+import Customer from './components/features/customer/Customer';
+import CatalogItem from './components/features/catalogItem/CatalogItem';
+import Supplier from './components/features/supplier/Supplier';
+import Purchase from './components/features/purchase/Purchase';
+import Expenses from './components/features/expenses/Expenses';
 import { useAuth } from './components/cores/auth/authContext';
-import Quote from './components/features/quote/quote';
-import Invoice from './components/features/invoice/invoice';
-import Commision from './components/features/commision/commission';
-import SaleReport from './components/features/reports/saleReport/saleReport';
-import ExpenseReport from './components/features/reports/expenseReport/expenseReport';
-import ProfitReport from './components/features/reports/profitReport/profitReport';
+import Quote from './components/features/quote/Quote';
+import SaleReport from './components/features/reports/saleReport/SaleReport';
+import ExpenseReport from './components/features/reports/expenseReport/ExpenseReport';
+import ProfitReport from './components/features/reports/profitReport/ProfitReport';
+import Login from './components/cores/login/Login';
+import Invoice from './components/features/invoice/Invoice';
+import { Spin } from 'antd';
+import { Navigate } from 'react-router-dom';
+import Payment from './components/features/payement/Payment';
+import Commision from './components/features/commision/Commission';
+
+
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, authReady } = useAuth();

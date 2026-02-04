@@ -1,10 +1,11 @@
 import { Card, Form, message } from "antd";
 import { useState } from "react";
 import type { CusType, ModalMode } from "./cus.types";
-import CustomerTable from "./customerTable";
-import CustomerModal from "./customerModal";
+
 import {UserOutlined } from "@ant-design/icons";   
-import PageHeader from "../../layout/pageHeader/pageHeader";
+import PageHeader from "../../layout/pageHeader/PageHeader";
+import CustomerTable from "./CustomerTable";
+import CustomerModal from "./CustomerModal";
 
 const Customer = () => {
     const [form] = Form.useForm();

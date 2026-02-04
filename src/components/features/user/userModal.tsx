@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import type { ModalMode, UserType } from "./user.types";
-import UserForm from "./userForm";
+import UserForm from "./UserForm";
 
 interface Props {
   open: boolean;

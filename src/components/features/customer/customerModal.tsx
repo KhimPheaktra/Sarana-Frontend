@@ -1,6 +1,7 @@
 import { Modal } from "antd";
 import type { ModalMode,CusType } from "./cus.types";
-import CusForm from "./customerForm";
+import CustomerForm from "./CustomerForm";
+
 
 interface Props {
   open: boolean;
@@ -47,7 +48,7 @@ const CustomerModal: React.FC<Props> = ({
           Are you sure you want to delete <b>{customer?.name}</b>?
         </p>
       ) : (
-        <CusForm form={form} />
+        <CustomerForm form={form} />
       )}
     </Modal>
   );

@@ -1,5 +1,5 @@
 import { Modal } from "antd";
-import PaymentForm from "./paymentForm";
+import PaymentForm from "./PaymentForm";
 import type { ModalMode, PaymentType } from "./payment.types";
 
 

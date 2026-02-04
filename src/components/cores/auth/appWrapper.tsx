@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAuth } from './authContext';
-import { LoadingOverlay } from '../../common/loadingOverlay';
-import { AppContent } from '../../layout/appContent/appContent';
+import { LoadingOverlay } from '../../common/LoadingOverlay';
+import { AppContent } from '../../layout/appContent/AppContent';
 
 export const AppWrapper: React.FC = () => {
   const { authReady } = useAuth();

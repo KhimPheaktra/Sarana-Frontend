@@ -1,10 +1,10 @@
 import { useState } from "react";
 import type { ModalMode, SupplierType } from "./supplier.types";
 import { Card, Form, message } from "antd";
-import PageHeader from "../../layout/pageHeader/pageHeader";
-import SupplierModal from "./supplierModal";
+import PageHeader from "../../layout/pageHeader/PageHeader";
+import SupplierModal from "./SupplierModal";
 import {TruckOutlined} from "@ant-design/icons";
-import SupplierTable from "./supplierTable";
+import SupplierTable from "./SupplierTable";
 
 
 const Supplier = () => {

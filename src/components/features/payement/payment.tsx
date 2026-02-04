@@ -2,10 +2,10 @@ import { Card, Form, message } from "antd";
 import type { ModalMode, PaymentType } from "./payment.types";
 import { useState } from "react";
 import dayjs from "dayjs";
-import PageHeader from "../../layout/pageHeader/pageHeader";
+import PageHeader from "../../layout/pageHeader/PageHeader";
 import { DollarOutlined } from "@ant-design/icons";
-import PaymentTable from "./paymentTable";
-import PaymentModal from "./paymentModal";
+import PaymentTable from "./PaymentTable";
+import PaymentModal from "./PaymentModal";
 
 
 const Payment = () => {

@@ -2,9 +2,9 @@ import React from 'react';
 import { Menu } from 'antd';
 import './sidebar.css';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { menuItems } from './menuItem';
+import { menuItems } from './MenuItem';
 import { CloseOutlined } from '@ant-design/icons';
-import { mapToAntdMenuItems } from './menuMapper';
+import { mapToAntdMenuItems } from './MenuMapper';
 
 interface SidebarProps {
   collapsed: boolean;

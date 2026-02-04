@@ -2,8 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import './App.css';
 import { AuthProvider } from './components/cores/auth/authContext';
-import { AppWrapper } from './components/cores/auth/appWrapper';
-import { LoadingOverlay } from './components/common/loadingOverlay';
+import { AppWrapper } from './components/cores/auth/AppWrapper';
+import { LoadingOverlay } from './components/common/LoadingOverlay';
 ;
 
 const App: React.FC = () => {

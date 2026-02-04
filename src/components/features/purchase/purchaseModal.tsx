@@ -1,6 +1,6 @@
 import { Modal } from "antd";
 import type { ModalMode, PurchaseType } from "./purchase.types";
-import PurchaseForm from "./purchaseForm";
+import PurchaseForm from "./PurchaseForm";
 
 
 

@@ -226,3 +226,5 @@ const quickActions: QuickAction[] = [
     </>
   );
 };
+
+export default Dashboard;
