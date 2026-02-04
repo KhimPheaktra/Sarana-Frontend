@@ -13,6 +13,7 @@ import {
 import './navbar.css';
 import { useNavigate } from 'react-router-dom';
 import userAvatar from "../../../assets/images/user-avatar.png";
+import { useAuth } from '../../cores/auth/authContext';
 
 const { Header } = Layout;
 
@@ -40,9 +41,12 @@ const navigate = useNavigate();
     }
   };
 
+  const { setIsAuthenticated } = useAuth();
+
   const handleLogout = () => {
     sessionStorage.removeItem('isAuthenticated');
     sessionStorage.removeItem('username');
+    setIsAuthenticated(false);
     navigate('/login');
   };
 

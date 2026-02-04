@@ -10,6 +10,7 @@ import Purchase from './components/features/purchase/purchase';
 import Payment from './components/features/payement/payment';
 import Expenses from './components/features/expenses/expenses';
 import Login from './components/cores/login/login';
+import { useAuth } from './components/cores/auth/authContext';
 
 export interface RouteConfig {
   path: string;
@@ -17,7 +18,7 @@ export interface RouteConfig {
 }
 
 const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+  const { isAuthenticated } = useAuth();
   
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;
@@ -27,7 +28,7 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
 };
 
 const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+  const { isAuthenticated } = useAuth();
   
   if (isAuthenticated) {
     return <Navigate to="/dashboard" replace />;
@@ -37,7 +38,7 @@ const PublicRoute: React.FC<{ children: React.ReactNode }> = ({ children }) => {
 };
 
 const RootRedirect: React.FC = () => {
-  const isAuthenticated = sessionStorage.getItem('isAuthenticated') === 'true';
+  const { isAuthenticated } = useAuth();
   
   return <Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />;
 };

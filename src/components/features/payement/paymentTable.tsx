@@ -97,86 +97,99 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
 
   return (
     <div style={{ overflow: 'visible', minHeight: '600px' }}>
-      <Form form={form} layout="vertical" requiredMark={false}>
+        <Form form={form} layout="vertical" requiredMark={false}>
         <Row gutter={16} align="bottom">  
-          {isMobile ? (
+            {isMobile ? (
             <>
-              <Col xs={24} sm={12}>
+                <Col xs={24} sm={12}>
                 <Form.Item
-                  label="From Date"
-                  name="payment_date_from"
+                    label="From Date"
+                    name="payment_date_from"
                 >
-                  <DatePicker 
+                    <DatePicker 
                     placeholder="From date"
                     format="YYYY-MM-DD"
                     style={{ width: '100%' }}
-                  />
+                    />
                 </Form.Item>
-              </Col>
+                </Col>
 
-              <Col xs={24} sm={12}>
+                <Col xs={24} sm={12}>
                 <Form.Item
-                  label="To Date"
-                  name="payment_date_to"
+                    label="To Date"
+                    name="payment_date_to"
                 >
-                  <DatePicker 
+                    <DatePicker 
                     placeholder="To date"
                     format="YYYY-MM-DD"
                     style={{ width: '100%' }}
-                  />
+                    />
                 </Form.Item>
-              </Col>
+                </Col>
             </>
-          ) : (
-            <Col xs={24} sm={24} md={10}>
-              <Form.Item
+            ) : (
+            <Col xs={24} sm={24} md={8}>
+                <Form.Item
                 label="Payment Date Range"
                 name="payment_date_range"
-              >
+                >
                 <DatePicker.RangePicker 
-                  placeholder={["From date", "To date"]}
-                  format="YYYY-MM-DD"
-                  style={{ width: '100%' }}
+                    placeholder={["From date", "To date"]}
+                    format="YYYY-MM-DD"
+                    style={{ width: '100%' }}
                 />
-              </Form.Item>
+                </Form.Item>
             </Col>
-          )}
+            )}
 
-          <Col xs={24} sm={12} md={6}>
+            <Col xs={24} sm={12} md={5}>
             <Form.Item
-              label="Status"
-              name="status"
+                label="Status"
+                name="status"
             >
-              <Select placeholder="Select status">
+                <Select placeholder="Select status">
                 <Select.Option value="1">Pending</Select.Option>
                 <Select.Option value="2">Completed</Select.Option>
-              </Select>
+                </Select>
             </Form.Item>
-          </Col>
+            </Col>
 
-          <Col xs={24} sm={12} md={isMobile ? 24 : 8}>
+            <Col xs={24} sm={12} md={5}>
+            <Form.Item
+                label="Payment Type"
+                name="payment_type"
+            >
+                <Select placeholder="Select payment type">
+                <Select.Option value="1">Cash</Select.Option>
+                <Select.Option value="2">Credit Card</Select.Option>
+                <Select.Option value="3">Bakor</Select.Option>
+                </Select>
+            </Form.Item>
+            </Col>
+
+            <Col xs={24} sm={12} md={6}>
             <Form.Item>
-              <Button 
+                <Button 
                 onClick={() => form.resetFields()} 
                 icon={<ClearOutlined />}
                 block={isMobile}
-              >
+                >
                 Clear Filter
-              </Button>
+                </Button>
             </Form.Item>
-          </Col>
+            </Col>
         </Row>
-      </Form>
+        </Form>
 
-      <Table
+        <Table
         columns={columns}
         dataSource={data}
         rowKey="payment_id"
         pagination={{ pageSize: 10, simple: true }}
         scroll={{ x: 'max-content' }}
-      />
+        />
     </div>
-  );
+    );
 };
 
 export default PaymentTable;

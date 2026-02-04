@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { Layout } from 'antd';
-import { BrowserRouter, Route, Routes, useLocation } from 'react-router-dom';
+import { BrowserRouter, Route, Routes, useLocation, Navigate } from 'react-router-dom';
 
 import './App.css';
 import { Sidebar } from './components/layout/sidebar/sidebar';
 import Navbar from './components/layout/header/navbar';
 import { routes } from './router';
+import { AuthProvider, useAuth } from './components/cores/auth/authContext';
+
 
 const { Content, Sider } = Layout;
 
@@ -22,8 +24,10 @@ const AppContent: React.FC = () => {
   const [isMobile, setIsMobile] = useState(isMobileOrTablet());
   const [mobileOpen, setMobileOpen] = useState(false);
   const location = useLocation();
+  const { isAuthenticated } = useAuth(); 
 
   const isLoginPage = location.pathname === '/login';
+  const isRootPage = location.pathname === '/';
 
   useEffect(() => {
     const handleResize = () => {
@@ -48,6 +52,10 @@ const AppContent: React.FC = () => {
   const closeMobileSidebar = () => {
     if (isMobile) setMobileOpen(false);
   };
+
+  if (isRootPage) {
+    return <Navigate to={isAuthenticated ? '/dashboard' : '/login'} replace />;
+  }
 
   if (isLoginPage) {
     return (
@@ -130,7 +138,9 @@ const AppContent: React.FC = () => {
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </BrowserRouter>
   );
 };
