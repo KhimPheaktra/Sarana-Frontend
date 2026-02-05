@@ -1,6 +1,11 @@
+import ReportSelector from "../report-selector/ReportSelector";
+
 const ExpenseReport = () => {
 return (
-        <h1>Expenses Report Page</h1>
+    <div className="p-6">
+      <ReportSelector />
+        <h1 className="mb-4 text-2xl font-bold">Expenses Report</h1>
+    </div>
     )
 }
 

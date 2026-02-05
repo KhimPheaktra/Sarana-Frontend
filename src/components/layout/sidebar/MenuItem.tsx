@@ -16,6 +16,7 @@ export interface AppMenuItem {
   key: string;
   icon?: React.ReactNode;
   label: React.ReactNode;
+  hideInSidebar?: boolean;
 }
 
 export type MenuItem = Required<MenuProps>['items'][number];
@@ -97,39 +98,34 @@ export const menuItems: AppMenuItem[] = [
     ],
   },
   {
-    key: 'financial',
-    icon: <BarChartOutlined />,
-    label: 'Financial',
-    children: [
-      {
-        key: 'expenses',
-        label: 'Expenses',
-        route: '/expenses',
-      },
-      {
-        key: 'reports',
-        label: 'Reports',
-        children: [
-          {
-            key: 'reports-sales',
-            label: 'Sales Reports',
-            route: '/reports/sales',
-          },
-          {
-            key: 'reports-expenses',
-            label: 'Expense Reports',
-            route: '/reports/expenses',
-          },
-          {
-            key: 'reports-profit',
-            label: 'Profit & Loss',
-            route: '/reports/profit',
-          },
-          
-        ],
-      },
-    ],
-  },
+  key: 'financial',
+  icon: <BarChartOutlined />,
+  label: 'Financial',
+  children: [
+    {
+      key: 'expenses',
+      label: 'Expenses',
+      route: '/expenses',
+    },
+    {
+      key: 'reports-sales',
+      label: 'Sales Reports',
+      route: '/reports/sales',
+    },
+    {
+      key: 'reports-expenses',
+      label: 'Expense Reports',
+      route: '/reports/expenses',
+      hideInSidebar: true, 
+    },
+    {
+      key: 'reports-profit',
+      label: 'Profit & Loss',
+      route: '/reports/profit',
+      hideInSidebar: true,
+    },
+  ],
+},
 
  
  

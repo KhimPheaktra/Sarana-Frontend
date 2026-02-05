@@ -67,7 +67,7 @@ const Quote = () =>{
   };
     return (
        <>
-          <div className="table-container">
+        <div className="table-container">
         <PageHeader
                 title="Quotations"
                 count={quotes.length}

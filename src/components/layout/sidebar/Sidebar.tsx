@@ -4,7 +4,6 @@ import './sidebar.css';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { menuItems } from './MenuItem';
 import { CloseOutlined } from '@ant-design/icons';
-import { mapToAntdMenuItems } from './MenuMapper';
 
 interface SidebarProps {
   collapsed: boolean;
@@ -16,7 +15,6 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
   const navigate = useNavigate();
   const location = useLocation();
   
-  const menuItemslist = mapToAntdMenuItems(menuItems);
 
   const findeSelectKey = (items: any[]): string | undefined => {
     for (const item of items) {
@@ -49,6 +47,11 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
     }
   };
 
+    const visibleMenuItems = menuItems.map(item => ({
+      ...item,
+      children: item.children?.filter(child => !child.hideInSidebar)
+    }));
+
 
   return (
     <>
@@ -69,7 +72,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
       <Menu
         theme="dark"
         mode="inline"
-        items={menuItemslist}
+        items={visibleMenuItems}
         selectedKeys={selectedKey ? [selectedKey] : []}
         onClick={handleMenuClick}
       />

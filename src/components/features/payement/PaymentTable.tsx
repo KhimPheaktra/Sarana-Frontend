@@ -48,6 +48,12 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       dataIndex: "amount",
       key: "amount",
       align: "center",
+      render: (value: number) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(value);
+      },
     },
     {
       title: "Payment Date",

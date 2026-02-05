@@ -1,6 +1,7 @@
 /* Container */
 .login-container {
   min-height: 100vh;
+  min-height: 100svh; /* Small viewport height */
   width: 100vw;
   display: flex;
   justify-content: center;
@@ -10,11 +11,12 @@
   position: fixed;
   top: 0;
   left: 0;
-  overflow: hidden;
+  overflow: auto;
+  padding: 0;
 }
 
 .background-icons {
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   opacity: 0.08;
@@ -64,41 +66,46 @@
 .login-card {
   background: #fff;
   border-radius: 12px;
-  padding: 40px 32px;
-  width: 90%;
+  padding: 24px 20px;
+  width: calc(100% - 24px);
   max-width: 380px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
   z-index: 1;
+  margin: 12px;
 }
 
 .login-header {
   text-align: center;
-  margin-bottom: 28px;
+  margin-bottom: 20px;
 }
 
 .logo-container {
-  display: inline-flex;
+  display: flex;
   align-items: center;
   justify-content: center;
   gap: 10px;
   margin-bottom: 12px;
+  flex-wrap: nowrap; 
 }
 
 .logo-icon {
-  font-size: 42px;
+  font-size: 40px;
   color: #1890ff;
   animation: rotate 10s linear infinite;
+  flex-shrink: 0; 
 }
-
 .logo-title {
   margin: 0;
   color: #1890ff;
   font-weight: 700;
-  font-size: 28px;
+  font-size: 26px;
+  white-space: nowrap; 
 }
 
 .form-label {
   color: #666;
+  margin-bottom: 4px;
+  font-size: 14px;
 }
 
 .input-icon {
@@ -107,24 +114,64 @@
 
 .login-input {
   border-radius: 6px;
+  height: 38px;
 }
 
 .forgot-password {
   text-align: right;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
+  margin-top: 6px;
 }
 
 .forgot-link {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .submit-button {
   border-radius: 6px;
-  height: 48px;
-  font-size: 16px;
+  height: 40px;
+  font-size: 15px;
   font-weight: 600;
   background: #1890ff;
   border-color: #1890ff;
+  width: 100%;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+  .bg-icon {
+    display: none;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-card {
+    padding: 20px 18px;
+    margin: 10px;
+    width: calc(100% - 20px);
+  }
+
+  .logo-icon {
+    font-size: 28px;
+  }
+
+  .logo-title {
+    font-size: 19px;
+  }
+}
+
+@media (max-width: 390px) {
+  .login-card {
+    padding: 18px 16px;
+  }
+
+  .logo-icon {
+    font-size: 26px;
+  }
+
+  .logo-title {
+    font-size: 18px;
+  }
 }
 
 /* @keyframes rotate {

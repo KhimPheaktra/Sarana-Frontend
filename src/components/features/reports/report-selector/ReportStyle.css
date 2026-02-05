@@ -1,0 +1,19 @@
+.report-segmented-spaced .ant-segmented-group {
+  gap: 12px;
+  background: transparent;
+  flex-wrap: nowrap;
+}
+
+.report-segmented-spaced .ant-segmented-item {
+  background: #f5f5f5;
+  border-radius: 6px;
+  white-space: nowrap;
+}
+
+.report-segmented-spaced .ant-segmented-item-selected {
+  background: #e6f7ff;
+}
+
+.report-segmented-spaced .ant-segmented-thumb {
+  display: none;
+}

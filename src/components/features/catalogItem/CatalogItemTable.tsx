@@ -43,12 +43,24 @@ const CatalogItemTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
         dataIndex: "price",
         key: "price",
         align: "center",
+        render: (value: number) => {
+          return new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+          }).format(value);
+        },
     },
     {
         title: "Purchase Price",
         dataIndex: "purchase_price",
         key: "purchase_price",
         align: "center",
+        render: (value: number) => {
+          return new Intl.NumberFormat('en-US', {
+              style: 'currency',
+              currency: 'USD',
+          }).format(value);
+      },
     },
 
     {

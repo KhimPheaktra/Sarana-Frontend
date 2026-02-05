@@ -64,7 +64,7 @@ const ExpensesTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
   };
 
   return (
-    <div style={{ minHeight: '600px' }}>
+    <div style={{ minHeight: '300px' }}>
       {/* Filter date section */}
       <Card 
         style={{ 
@@ -100,7 +100,7 @@ const ExpensesTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                 </Col>
               </>
             ) : (
-              <Col xs={24} sm={24} md={18}>
+              <Col xs={24} sm={24} md={8}>
                 <Form.Item label="Expenses Date Range" name="expenses_date_range">
                   <DatePicker.RangePicker
                     placeholder={["From date", "To date"]}
@@ -111,7 +111,7 @@ const ExpensesTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
               </Col>
             )}
 
-            <Col xs={24} sm={12} md={6}>
+            <Col xs={24} sm={12} md={5}>
               <Form.Item>
                 <Button
                   onClick={() => form.resetFields()}

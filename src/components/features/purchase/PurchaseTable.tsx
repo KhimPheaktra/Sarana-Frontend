@@ -55,18 +55,36 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
             dataIndex: "unit_price",   
             key: "unit_price",
             align: "center",
+            render: (value: number) => {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                }).format(value);
+            },
         },
         {
             title: "Subtotal",
             dataIndex: "subtotal",
             key: "subtotal",
             align: "center",
+            render: (value: number) => {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                }).format(value);
+            },
         },
         {
             title: "Total Amount",
             dataIndex: "total_amount",
             key: "total_amount",
             align: "center",
+            render: (value: number) => {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                }).format(value);
+            },
         },
         {
             title: "Actions",

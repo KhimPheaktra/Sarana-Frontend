@@ -120,7 +120,7 @@ const quickActions: QuickAction[] = [
   {
     label: 'Report',
     icon: <BookOutlined />,
-    route: '/',
+    route: '/reports/sales',
     color: '#fa8c16',
     bgColor: '#fff7e6',
   },
@@ -201,7 +201,7 @@ const quickActions: QuickAction[] = [
                 </span>
               }
               value={20}
-              valueStyle={{ color: '#722ed1', fontWeight: 600 }}
+              style={{ color: '#722ed1', fontWeight: 600 }}
               suffix={
                 <span className="stat-suffix-down" style={{ fontSize: 14, color: '#ff4d4f' }}>
                   <ArrowDownOutlined /> 1%
@@ -228,7 +228,7 @@ const quickActions: QuickAction[] = [
                 </span>
               }
               value={50}
-              valueStyle={{ color: '#fa8c16', fontWeight: 600 }}
+              style={{ color: '#fa8c16', fontWeight: 600 }}
               suffix={
                 <span className="stat-suffix-up" style={{ fontSize: 14, color: '#52c41a' }}>
                   <ArrowUpOutlined /> 10%

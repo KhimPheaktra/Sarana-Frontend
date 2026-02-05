@@ -17,6 +17,7 @@ import { Spin } from 'antd';
 import { Navigate } from 'react-router-dom';
 import Payment from './components/features/payement/Payment';
 import Commision from './components/features/commision/Commission';
+import ReportSelector from './components/features/reports/report-selector/ReportSelector';
 
 
 
@@ -206,6 +207,14 @@ export const routes = [
     element: (
       <ProtectedRoute>
         <ProfitReport />
+      </ProtectedRoute>
+    ),
+  },
+  {
+  path: '/reports/report-selector',
+    element: (
+      <ProtectedRoute>
+        <ReportSelector />
       </ProtectedRoute>
     ),
   },

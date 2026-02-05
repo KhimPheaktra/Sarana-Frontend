@@ -66,7 +66,7 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
   };
 
   return (
-    <div style={{ minHeight: '600px' }}>
+    <div style={{ minHeight: '300px' }}>
       {/* Filter date and status section */}
       <Card 
         style={{ 
