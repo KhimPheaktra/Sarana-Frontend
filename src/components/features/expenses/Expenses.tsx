@@ -68,7 +68,7 @@ const Expenses = () => {
      <>
         <div className="table-container">
         <PageHeader
-                title="Expenses Management"
+                title="Expenses"
                 count={expenses.length}
                 countLabel="expenses"
                 onAdd={openAdd}

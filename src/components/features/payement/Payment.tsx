@@ -19,7 +19,7 @@ const Payment = () => {
         { key: "1", payment_id:1,customer_name: "Tra" ,payment_type: "Cash", reference_id: 1, amount: 100, payment_date: "2026-01-01", status: "Completed", partial_percentage: 50, note: "First payment" },
         { key: "2", payment_id:2,customer_name: "Long" ,payment_type: "Bakor", reference_id: 2, amount: 200, payment_date: "2026-01-05", status: "Pendding" },
     ];
-      const openAdd = () => {
+  const openAdd = () => {
     setModalMode("add");
     setSelectedPayment(null);
     form.resetFields();

@@ -6,17 +6,20 @@ import type { SupplierType } from "./supplier.types";
 
 interface Props {
     data: SupplierType[];
-    onEdit: (item: SupplierType) => void;
-    onDelete: (item: SupplierType) => void;
+    onEdit: (supplier: SupplierType) => void;
+    onDelete: (supplier: SupplierType) => void;
 }
 const SupplierTable:React.FC<Props> = ({ data, onEdit, onDelete }) => {
     const columns: ColumnsType<SupplierType> = [
         {
             title: "ID",
             dataIndex: "supplier_id",
+            key: "supplier_id",
             align: "center",
+            sorter: (a, b) => a.supplier_id - b.supplier_id,
+            defaultSortOrder: 'ascend',
         },
-   {
+        {
             title: "Name",
             dataIndex: "name",  
             key: "name",
