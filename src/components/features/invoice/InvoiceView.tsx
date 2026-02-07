@@ -18,14 +18,14 @@ interface Props {
 }
 
 const companyInfo = {
-  name: "Senghun Workshop",
-  subtitle: "Creative Pricing Precision",
-  services: "Latching and Repairing all machine spare parts",
-  address: "Google maps: (10.6272700, 103.5660414)",
-  website: "https://senghunworkshop.com",
-  phones: "081555282 / 070572830 / 098236788",
-  email: "senghun672@gmail.com",
-  engineerEmail: "engineer@senghunworkshop.com"
+    name: "Senghun Workshop",
+    subtitle: "Creative Pricing Precision",
+    services: "Latching and Repairing all machine spare parts",
+    address: "Google maps: (123)",
+    website: "https://senghunworkshop.com",
+    phones: "081555282 / 070572830 / 098236788",
+    email: "senghun672@gmail.com",
+    engineerEmail: "engineer@senghunworkshop.com"
 };
 
 const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
@@ -142,13 +142,13 @@ const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
             <Row gutter={16}>
               <Col span={8}>
                 <div className="signature-section">
-                  <p className="signature-label">The Buyer</p>
+                  <p className="signature-label">Buyer</p>
                   <div className="signature-line"></div>
                 </div>
               </Col>
               <Col span={8}>
                 <div className="signature-section">
-                  <p className="signature-label">Engineer/The Seller</p>
+                  <p className="signature-label">Engineer/Seller</p>
                   <div className="signature-line"></div>
                 </div>
               </Col>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import type { InvoiceType } from './invoice.types';
 import InvoiceView from './InvoiceView';
 
@@ -16,34 +16,22 @@ interface Props {
 }
 
 const InvoiceForm: React.FC<Props> = ({ selectedInvoice, items, onClose }) => {
-  const [showInvoiceView, setShowInvoiceView] = useState(false);
-
-  useEffect(() => {
-    if (selectedInvoice) {
-      setShowInvoiceView(true);
-    } else {
-      setShowInvoiceView(false);
-    }
-  }, [selectedInvoice]);
-
-  if (selectedInvoice && showInvoiceView) {
+  if (!selectedInvoice) {
     return (
-      <InvoiceView
-        invoice={selectedInvoice}
-        items={items}
-        onClose={() => {
-          setShowInvoiceView(false);
-          if (onClose) onClose();
-        }}
-      />
+      <div style={{ padding: '20px', textAlign: 'center' }}>
+        <h2>Invoice Form</h2>
+        <p>Select an invoice from the table to view details</p>
+      </div>
     );
   }
 
+
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
-      <h2>Invoice Form</h2>
-      <p>Select an invoice from the table to view details</p>
-    </div>
+    <InvoiceView
+      invoice={selectedInvoice}
+      items={items}
+      onClose={onClose || (() => {})}
+    />
   );
 };
 

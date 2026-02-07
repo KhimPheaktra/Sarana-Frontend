@@ -15,7 +15,7 @@ const Invoice: React.FC = () => {
   const invoiceData: InvoiceType[] = [
     {
       key: '1',
-      invoice_id: 68,
+      invoice_id: 1,
       customer_id: 101,
       quote_id: 201,
       invoice_date: '2024-02-07',
@@ -27,7 +27,7 @@ const Invoice: React.FC = () => {
     },
     {
       key: '2',
-      invoice_id: 69,
+      invoice_id: 2,
       customer_id: 102,
       quote_id: 202,
       invoice_date: '2024-02-06',
