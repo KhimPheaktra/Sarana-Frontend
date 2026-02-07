@@ -1,6 +1,6 @@
 import { Card, Form, message } from "antd";
 import type { SupplierType } from "./supplier.types";
-import PageHeader from "../../layout/pageHeader/PageHeader";
+import PageHeader from "../../../shared/action-header/ActionHeader";
 import SupplierTable from "./SupplierTable";
 import SupplierForm from "./SupplierForm";
 import { TruckOutlined } from "@ant-design/icons";

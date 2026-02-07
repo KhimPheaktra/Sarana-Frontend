@@ -3,7 +3,7 @@ import { Modal, Grid, Card, message } from 'antd';
 import InvoiceTable from './InvoiceTable';
 import InvoiceForm from './InvoiceForm';
 import type { InvoiceType } from './invoice.types';
-import PageHeader from '../../layout/pageHeader/PageHeader';
+import PageHeader from '../../../shared/action-header/ActionHeader';
 
 const { useBreakpoint } = Grid;
 

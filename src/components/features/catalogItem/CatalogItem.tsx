@@ -1,6 +1,6 @@
 import { Card, Form, message } from "antd";
 import type { CatalogItemType } from "./catalogItem.types";
-import PageHeader from "../../layout/pageHeader/PageHeader";
+import PageHeader from "../../../shared/action-header/ActionHeader";
 import { TagsOutlined } from "@ant-design/icons";
 import CatalogItemTable from "./CatalogItemTable";
 import CatalogItemForm from "./CatalogItemForm";

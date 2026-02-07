@@ -2,7 +2,7 @@
 import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
 import type { QuoteType } from "./quote.types";
-import PageHeader from "../../layout/pageHeader/PageHeader";
+import PageHeader from "../../../shared/action-header/ActionHeader";
 import { FileTextOutlined } from "@ant-design/icons";
 import QuoteTable from "./QuoteTable";
 import QuoteForm from "./QuoteForm";

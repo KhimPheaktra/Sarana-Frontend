@@ -1,6 +1,6 @@
 import { Card, Form, message } from "antd";
 import type { WorkerType } from "./worker.types";
-import PageHeader from "../../layout/pageHeader/PageHeader";
+import PageHeader from "../../../shared/action-header/ActionHeader";
 import WorkerTable from "./WorkerTable";
 import WorkerForm from "./WorkerForm"; 
 import { TeamOutlined } from "@ant-design/icons";

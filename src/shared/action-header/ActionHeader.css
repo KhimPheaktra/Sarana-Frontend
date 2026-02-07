@@ -1,4 +1,4 @@
-.page-header {
+.action-header {
     margin-bottom: 24px;
     padding: 20px 24px;
     background: #fff;
@@ -7,32 +7,32 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
-.page-header-content {
+.action-header-content {
     display: flex;
     align-items: center;
     gap: 12px;
 }
 
-.page-header-icon {
+.action-header-icon {
     font-size: 28px;
     color: #2E5090;
 }
 
-.page-header-title {
+.action-header-title {
     margin: 0;
     color: #262626;
     font-size: 18px;
     font-weight: 600;
 }
 
-.page-header-subtitle {
+.action-header-subtitle {
     margin: 0;
     color: #8c8c8c;
     font-size: 14px;
     margin-top: 4px;
 }
 
-.page-header-btn {
+.action-header-btn {
     background: #1890ff !important;
     color: #fff !important;
     border: none !important;
@@ -43,23 +43,23 @@
     box-shadow: 0 2px 8px rgba(24, 144, 255, 0.2);
 }
 
-.page-header-btn:hover {
+.action-header-btn:hover {
     background: #40a9ff !important;
     transform: translateY(-2px);
     box-shadow: 0 4px 12px rgba(24, 144, 255, 0.3);
     transition: all 0.3s ease;
 }
 @media (max-width: 768px) {
-    .page-header {
+    .action-header {
         padding: 16px;
     }
-    .page-header-title {
+    .action-header-title {
         font-size: 16px;
     }
-    .page-header-subtitle {
+    .action-header-subtitle {
         font-size: 12px;
     }
-    .page-header-btn {
+    .action-header-btn {
         height: 30px;
         padding: 0 12px;
         font-size: 12px;

@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
 import type { ExpensesType } from "./expenses.types";
-import PageHeader from "../../layout/pageHeader/PageHeader";
+import PageHeader from "../../../shared/action-header/ActionHeader";
 import { BookOutlined } from "@ant-design/icons";
 import ExpensesTable from "./ExpensesTable";
 import ExpensesForm from "./ExpensesForm";

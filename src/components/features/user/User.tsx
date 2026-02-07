@@ -1,6 +1,6 @@
 import { Card, Form, message } from "antd";
 import type { UserType } from "./user.types";
-import PageHeader from "../../layout/pageHeader/PageHeader";
+import PageHeader from "../../../shared/action-header/ActionHeader";
 import UserTable from "./UserTable";
 import UserForm from "./UserForm";
 import { UserOutlined } from "@ant-design/icons";

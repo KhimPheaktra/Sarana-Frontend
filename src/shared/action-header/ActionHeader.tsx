@@ -1,9 +1,9 @@
 import React from 'react';
 import { Row, Col, Button } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import './pageHeader.css';
+import './ActionHeader.css';
 
-interface PageHeaderProps {
+interface ActionHeaderProps {
     title: string;
     count: number;
     countLabel?: string;
@@ -12,7 +12,7 @@ interface PageHeaderProps {
     buttonText?: string;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = ({ 
+const ActionHeader: React.FC<ActionHeaderProps> = ({ 
     title, 
     count, 
     countLabel = 'total',
@@ -21,13 +21,13 @@ const PageHeader: React.FC<PageHeaderProps> = ({
     buttonText = 'Add New'
 }) => {
     return (
-        <Row justify="space-between" align="middle" className="page-header">
+        <Row justify="space-between" align="middle" className="action-header">
             <Col>
-                <div className="page-header-content">
-                    <div className="page-header-icon">{icon}</div>
+                <div className="action-header-content">
+                    <div className="action-header-icon">{icon}</div>
                     <div>
-                        <h3 className="page-header-title">{title}</h3>
-                        <p className="page-header-subtitle">
+                        <h3 className="action-header-title">{title}</h3>
+                        <p className="action-header-subtitle">
                             Total: {count} {countLabel}
                         </p>
                     </div>
@@ -40,7 +40,7 @@ const PageHeader: React.FC<PageHeaderProps> = ({
                         type="primary" 
                         onClick={onAdd}
                         size="large"
-                        className="page-header-btn"
+                        className="action-header-btn"
                         icon={<PlusOutlined />}
                     >
                         {buttonText}
@@ -51,4 +51,4 @@ const PageHeader: React.FC<PageHeaderProps> = ({
     );
 };
 
-export default PageHeader;
+export default ActionHeader;

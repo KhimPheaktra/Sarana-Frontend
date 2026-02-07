@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
 import type { PaymentType } from "./payment.types";
-import PageHeader from "../../layout/pageHeader/PageHeader";
+import PageHeader from "../../../shared/action-header/ActionHeader";
 import { DollarOutlined } from "@ant-design/icons";
 import PaymentTable from "./PaymentTable";
 import PaymentForm from "./PaymentForm";

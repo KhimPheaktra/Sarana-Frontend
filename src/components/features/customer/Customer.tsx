@@ -1,7 +1,7 @@
 import { Card, Form, message } from "antd";
 import type { CusType } from "./cus.types";
 import { UserOutlined } from "@ant-design/icons";
-import PageHeader from "../../layout/pageHeader/PageHeader";
+import PageHeader from "../../../shared/action-header/ActionHeader";
 import CustomerTable from "./CustomerTable";
 import CustomerForm from "./CustomerForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";

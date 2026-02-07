@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
 import type { PurchaseType } from "./purchase.types";
-import PageHeader from "../../layout/pageHeader/PageHeader";
+import PageHeader from "../../../shared/action-header/ActionHeader";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import PurchaseTable from "./PurchaseTable";
 import PurchaseForm from "./PurchaseForm"; 

@@ -118,8 +118,8 @@ const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
             <thead>
               <tr>
                 <th style={{ width: '60px' }}>No</th>
-                <th style={{ width: '40%' }}>Description</th>
-                <th style={{ width: '15%' }}>Quantity</th>
+                <th style={{ width: '40%' }}>Item</th>
+                <th style={{ width: '15%' }}>Qty</th>
                 <th style={{ width: '20%' }}>Unit Price</th>
                 <th style={{ width: '25%' }}>Amount</th>
               </tr>
@@ -148,7 +148,7 @@ const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
               </Col>
               <Col span={8}>
                 <div className="signature-section">
-                  <p className="signature-label">Engineer/Seller</p>
+                  <p className="signature-label">Worker/Seller</p>
                   <div className="signature-line"></div>
                 </div>
               </Col>
