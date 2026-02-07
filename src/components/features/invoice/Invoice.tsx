@@ -44,7 +44,7 @@ const Invoice: React.FC = () => {
     setIsModalVisible(true);
   };
 
-  const handleDelete = (invoice: InvoiceType) => {
+  const handleDelete = () => {
     message.info("No action on delete yet")
   };
 

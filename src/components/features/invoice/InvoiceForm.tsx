@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import type { InvoiceType } from './invoice.types';
 import InvoiceView from './InvoiceView';
 
@@ -11,24 +11,30 @@ interface InvoiceItem {
 
 interface Props {
   selectedInvoice?: InvoiceType;
-  items?: InvoiceItem[]; 
+  items?: InvoiceItem[];
   onClose?: () => void;
 }
 
 const InvoiceForm: React.FC<Props> = ({ selectedInvoice, items, onClose }) => {
   const [showInvoiceView, setShowInvoiceView] = useState(false);
 
-  if (selectedInvoice) {
+  useEffect(() => {
+    if (selectedInvoice) {
+      setShowInvoiceView(true);
+    } else {
+      setShowInvoiceView(false);
+    }
+  }, [selectedInvoice]);
+
+  if (selectedInvoice && showInvoiceView) {
     return (
-      <InvoiceView 
+      <InvoiceView
         invoice={selectedInvoice}
-        items={items} 
+        items={items}
         onClose={() => {
           setShowInvoiceView(false);
-          if (onClose) {
-            onClose();
-          }
-        }} 
+          if (onClose) onClose();
+        }}
       />
     );
   }

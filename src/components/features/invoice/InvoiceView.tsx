@@ -154,7 +154,7 @@ const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
               </Col>
               <Col span={8}>
                 <div className="total-section">
-                  <p className="total-label">Grand Total =</p>
+                  <p className="total-label">Grand Total </p>
                   <p className="grand-total-amount">
                     {new Intl.NumberFormat('en-US', {
                       style: 'currency',
