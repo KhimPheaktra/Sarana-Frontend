@@ -4,6 +4,8 @@ import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
 import { routes } from '../../../router';
 import { Sidebar } from '../sidebar/Sidebar';
 import Navbar from '../header/Navbar';
+import Footer from '../footer/Footer';
+
 
 const { Content, Sider } = Layout;
 
@@ -95,7 +97,6 @@ export const AppContent: React.FC = memo(() => {
         }}
       >
         <Navbar collapsed={collapsed} onToggle={toggleSidebar} />
-
         <Content style={{ margin: 16, padding: 16 }}>
           <Routes>
             {routes.map((route, i) => (
@@ -103,6 +104,7 @@ export const AppContent: React.FC = memo(() => {
             ))}
           </Routes>
         </Content>
+            <Footer/>
       </Layout>
     </Layout>
   );

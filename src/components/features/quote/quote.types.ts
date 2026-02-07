@@ -8,5 +8,3 @@ export interface QuoteType{
     status: string;
     notes?: string;
 }
-
-export type ModalMode ="add" | "edit" | "delete" | null;

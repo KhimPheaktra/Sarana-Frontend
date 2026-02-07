@@ -1,115 +1,112 @@
+import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
-import { useState } from "react";
-import type {  ModalMode, PurchaseType } from "./purchase.types";
+import type { PurchaseType } from "./purchase.types";
 import PageHeader from "../../layout/pageHeader/PageHeader";
-import PurchaseTable from "./PurchaseTable";
 import { ShoppingCartOutlined } from "@ant-design/icons";
-import PurchaseModal from "./PurchaseModal";
-import dayjs from 'dayjs';
-
+import PurchaseTable from "./PurchaseTable";
+import PurchaseForm from "./PurchaseForm"; 
+import { useAppModal } from "../../../shared/modal/AppModalProvider";
 
 const Purchase = () => {
-    const [form] = Form.useForm();
-    const [modalMode, setModalMode] = useState<ModalMode>(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedPurchase, setSelectedPurchase] = useState<PurchaseType | null>(null);
+  const [form] = Form.useForm();
+  const { openModal, closeModal } = useAppModal();
 
-    const purchases: PurchaseType[] = [
-        { key: "1", purchase_id: 1, supplier_id: 1, purchase_date: "2026-01-01", total_amount: 500, item_id: 1, quantity: 5, unit_price: 50, subtotal: 250 },
-        { key: "2", purchase_id: 2, supplier_id: 2, purchase_date: "2026-01-05", total_amount: 300, item_id: 3, quantity: 15, unit_price: 20, subtotal: 300 },
-    ];
-    const openAdd = () => {
-    setModalMode("add");
-    setSelectedPurchase(null);
-    form.resetFields();
-    setIsModalOpen(true);
-     form.setFieldsValue({
-    purchase_date: dayjs() 
-  });
+  const purchases: PurchaseType[] = [
+    { key: "1", purchase_id: 1, supplier_id: 1, purchase_date: "2026-01-01", total_amount: 500, item_id: 1, quantity: 5, unit_price: 50, subtotal: 250 },
+    { key: "2", purchase_id: 2, supplier_id: 2, purchase_date: "2026-01-05", total_amount: 300, item_id: 3, quantity: 15, unit_price: 20, subtotal: 300 },
+  ];
+
+  const titleMap = {
+    add: "Add Purchase",
+    edit: "Edit Purchase",
+    delete: "Delete Purchase",
+    view: "View Purchase",
   };
-    const openView = (purchase: PurchaseType) => {
-    setModalMode("view");
-    setSelectedPurchase(purchase);
+
+  const openAdd = () => {
+    form.resetFields();
+    form.setFieldsValue({ purchase_date: dayjs() });
+
+    openModal<"add" | "edit" | "delete">("add", {
+      titleMap,
+      content: <PurchaseForm form={form} mode="add" />,
+      onOk: async () => {
+        await form.validateFields();
+        message.success("Purchase added successfully");
+        closeModal();
+      },
+    });
+  };
+
+  const openView = (purchase: PurchaseType) => {
     form.setFieldsValue({
       ...purchase,
-      purchase_date: purchase.purchase_date ? dayjs(purchase.purchase_date) : undefined
+      purchase_date: purchase.purchase_date ? dayjs(purchase.purchase_date) : undefined,
     });
-    setIsModalOpen(true);
+
+    openModal<"view">("view", {
+      titleMap,
+      content: <PurchaseForm form={form} mode="view" />,
+      onOk: () => {
+        closeModal();
+      },
+      okTextMap: { view: "Close" },
+    });
   };
 
   const openEdit = (purchase: PurchaseType) => {
-    setModalMode("edit");
-    setSelectedPurchase(purchase);
     form.setFieldsValue({
       ...purchase,
-      purchase_date: purchase.purchase_date ? dayjs(purchase.purchase_date) : undefined
+      purchase_date: purchase.purchase_date ? dayjs(purchase.purchase_date) : undefined,
     });
-    setIsModalOpen(true);
+
+    openModal<"edit">("edit", {
+      titleMap,
+      content: <PurchaseForm form={form} mode="edit" />,
+      onOk: async () => {
+        await form.validateFields();
+        message.success("Purchase updated successfully");
+        closeModal();
+      },
+    });
   };
 
   const openDelete = (purchase: PurchaseType) => {
-    setModalMode("delete");
-    setSelectedPurchase(purchase);
-    setIsModalOpen(true);
+    openModal<"delete">("delete", {
+      titleMap,
+      content: (
+        <p>
+          Are you sure you want to delete purchase <b>#{purchase.purchase_id}</b>?
+        </p>
+      ),
+      onOk: () => {
+        message.success("Purchase deleted successfully");
+        closeModal();
+      },
+    });
   };
 
-  const handleSave = async () => {
-    await form.validateFields();
-    if(modalMode === "edit"){
-      message.success("Purchase updated successfully  ");
-    }else{
-      message.success("Purchase added successfully");
-    }
-    closeModal();
-  };
+  return (
+    <div className="table-container">
+      <PageHeader
+        title="Purchase Management"
+        count={purchases.length}
+        countLabel="purchases"
+        onAdd={openAdd}
+        buttonText="Add purchase"
+        icon={<ShoppingCartOutlined />}
+      />
 
-  const handleDelete = () => {
-    message.success("Purchase deleted successfully");
-    closeModal();
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalMode(null);
-    setSelectedPurchase(null);
-  };
-  
-
-    return (
-       <>
-        <div className="table-container">
-        <PageHeader
-                title="Purchase Management"
-                count={purchases.length}
-                countLabel="purchases"
-                onAdd={openAdd}
-                icon={<ShoppingCartOutlined />}
-            />
-        <Card>
-            <PurchaseTable
-                data={purchases}
-                onView={openView}
-                onEdit={openEdit}
-                onDelete={openDelete}
-            />
-                
-        </Card>
-          <PurchaseModal
-            open={isModalOpen}
-            mode={modalMode}
-            purchase={selectedPurchase}
-            form={form}
-            onCancel={closeModal}
-            onSave={handleSave}
-            onDelete={handleDelete}
+      <Card>
+        <PurchaseTable
+          data={purchases}
+          onView={openView}
+          onEdit={openEdit}
+          onDelete={openDelete}
         />
-
-      
-      </div>
-        </>
-    )
-        
+      </Card>
+    </div>
+  );
 };
 
 export default Purchase;
-

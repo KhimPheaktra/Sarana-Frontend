@@ -22,7 +22,8 @@ import {
   CalendarOutlined,
   DollarOutlined,
   FileTextOutlined,
-  TagOutlined
+  TagOutlined,
+  EyeOutlined
 } from "@ant-design/icons";
 import { useState } from "react";
 
@@ -31,11 +32,12 @@ const { Text, Title } = Typography;
 
 interface Props {
   data: QuoteType[];
+  onView: (quote: QuoteType) => void;
   onEdit: (quote: QuoteType) => void;
   onDelete: (quote: QuoteType) => void;
 }
 
-const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
+const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
   const [form] = Form.useForm();
   const screens = useBreakpoint();
   const isMobile = !screens.md;
@@ -263,6 +265,9 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
 
                   {/* Card actions */}
                   <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
+                    <Button type="primary" onClick={() => onView(quote)}>
+                    <EyeOutlined /> View
+                  </Button>
                     <Button
                       type="primary"
                       icon={<EditOutlined />}

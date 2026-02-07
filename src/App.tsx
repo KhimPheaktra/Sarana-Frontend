@@ -4,6 +4,7 @@ import './App.css';
 import { AuthProvider } from './components/cores/auth/authContext';
 import { AppWrapper } from './components/cores/auth/AppWrapper';
 import { LoadingOverlay } from './components/common/LoadingOverlay';
+import { AppModalProvider } from './shared/modal/AppModalProvider';
 ;
 
 const App: React.FC = () => {
@@ -22,9 +23,11 @@ const App: React.FC = () => {
   }
 
   return (
-    <BrowserRouter>
+      <BrowserRouter>
       <AuthProvider>
-        <AppWrapper />
+        <AppModalProvider>
+          <AppWrapper />
+        </AppModalProvider>
       </AuthProvider>
     </BrowserRouter>
   );

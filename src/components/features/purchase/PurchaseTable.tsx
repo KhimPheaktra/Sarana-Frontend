@@ -139,7 +139,7 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
                             </Col>
                         </>
                     ) : (
-                        <Col xs={24} sm={24} md={18}>
+                        <Col xs={24} sm={24} md={8}>
                             <Form.Item
                                 label="Purchase Date Range"
                                 name="purchase_date_range"
@@ -153,7 +153,7 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
                         </Col>
                     )}
 
-                    <Col xs={24} sm={12} md={6}>
+                    <Col xs={24} sm={12} md={5}>
                         <Form.Item>
                             <Button 
                                 onClick={() => form.resetFields()} 

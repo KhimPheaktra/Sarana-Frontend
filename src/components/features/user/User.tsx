@@ -1,75 +1,78 @@
-import {Card, Form, message } from "antd";
-import React, { useState } from "react";
-import UserTable from "./UserTable";
-import UserModal from "./UserModal";
-import { UserOutlined } from "@ant-design/icons";
-import type { ModalMode, UserType } from "./user.types";
+import { Card, Form, message } from "antd";
+import type { UserType } from "./user.types";
 import PageHeader from "../../layout/pageHeader/PageHeader";
+import UserTable from "./UserTable";
+import UserForm from "./UserForm";
+import { UserOutlined } from "@ant-design/icons";
+import { useAppModal } from "../../../shared/modal/AppModalProvider";
 
-const User: React.FC = () => {
+const User = () => {
   const [form] = Form.useForm();
-  const [modalMode, setModalMode] = useState<ModalMode>(null);
-  const [selectedUser, setSelectedUser] = useState<UserType | null>(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { openModal, closeModal } = useAppModal();
 
   const users: UserType[] = [
     { key: "1", id: 1, name: "Tra", status: "active" },
     { key: "2", id: 2, name: "Long", status: "inactive" },
   ];
 
+  const titleMap = {
+    add: "Add User",
+    edit: "Edit User",
+    delete: "Delete User",
+  };
+
   const openAdd = () => {
-    setModalMode("add");
-    setSelectedUser(null);
     form.resetFields();
-    setIsModalOpen(true);
+    openModal("add", {
+      titleMap,
+      content: <UserForm form={form} />,
+      onOk: async () => {
+        await form.validateFields();
+        message.success("User added successfully");
+        closeModal();
+      },
+    });
   };
 
   const openEdit = (user: UserType) => {
-    setModalMode("edit");
-    setSelectedUser(user);
     form.setFieldsValue(user);
-    setIsModalOpen(true);
+    openModal("edit", {
+      titleMap,
+      content: <UserForm form={form} />,
+      onOk: async () => {
+        await form.validateFields();
+        message.success("User updated successfully");
+        closeModal();
+      },
+    });
   };
 
   const openDelete = (user: UserType) => {
-    setModalMode("delete");
-    setSelectedUser(user);
-    setIsModalOpen(true);
-  };
-
-  const handleSave = async () => {
-    await form.validateFields();
-    if(modalMode === "edit"){
-      message.success("User updated successfully  ");
-    }else{
-      message.success("User added successfully");
-    }
-    closeModal();
-  };
-
-  const handleDelete = () => {
-    message.success("User deleted successfully");
-    closeModal();
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setModalMode(null);
-    setSelectedUser(null);
+    openModal("delete", {
+      titleMap,
+      content: (
+        <p>
+          Are you sure you want to delete user <b>{user.name}</b>?
+        </p>
+      ),
+      onOk: () => {
+        message.success("User deleted successfully");
+        closeModal();
+      },
+    });
   };
 
   return (
-    <>
-      <div className="table-container">
-       <PageHeader
-                title="User Management"
-                count={users.length}
-                countLabel="users"
-                icon={<UserOutlined />}
-                onAdd={openAdd}
-                buttonText="Add Customer"
-            />
-    
+    <div className="table-container">
+      <PageHeader
+        title="User Management"
+        count={users.length}
+        countLabel="users"
+        icon={<UserOutlined />}
+        onAdd={openAdd}
+        buttonText="Add User"
+      />
+
       <Card>
         <UserTable
           data={users}
@@ -77,19 +80,8 @@ const User: React.FC = () => {
           onDelete={openDelete}
         />
       </Card>
-
-      <UserModal
-        open={isModalOpen}
-        mode={modalMode}
-        user={selectedUser}
-        form={form}
-        onCancel={closeModal}
-        onSave={handleSave}
-        onDelete={handleDelete}
-      />
-      </div>
-    </>
-  )
+    </div>
+  );
 };
 
 export default User;

@@ -39,6 +39,7 @@ const ExpensesForm: React.FC<Props> = ({ form}) => {
               showTime
               format="YYYY-MM-DD HH:mm:ss" 
               style={{ width: '100%' }}
+              disabled={true}
             />
           </Form.Item>
         </Col>
