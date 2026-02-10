@@ -90,11 +90,6 @@ export const menuItems: AppMenuItem[] = [
         label: 'Customers',
         route: '/customers',
       },
-      {
-        key: 'workers',
-        label: 'Workers',
-        route: '/workers',
-      },
     ],
   },
   {

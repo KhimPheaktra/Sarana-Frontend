@@ -11,5 +11,3 @@ export interface PaymentType {
     partial_percentage?: number;
     note?: string;
 }
-
-export type ModalMode = "add" | "edit" | "delete" | null;

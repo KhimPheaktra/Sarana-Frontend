@@ -1,8 +1,9 @@
 import React from 'react';
 import { Form, Input, Button, Typography } from 'antd';
-import { UserOutlined, LockOutlined, SettingOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './login.css'
-const { Title, Text, Link } = Typography;
+const {Text, Link } = Typography;
+import Logo from "./../../../assets/images/logo.png"
 
 interface LoginFormValues {
   username: string;
@@ -19,10 +20,7 @@ const LoginCard: React.FC<LoginCardProps> = ({ onFinish, loading }) => {
     <div className="login-card">
       <div className="login-header">
         <div className="logo-container">
-          <SettingOutlined className="logo-icon" />
-          <Title level={2} className="logo-title">
-            SH WorkShop
-          </Title>
+          <img src={Logo} />
         </div>
       </div>
 

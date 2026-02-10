@@ -22,12 +22,27 @@ const UserTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
     {
       title: "Name",
       dataIndex: "name",
+      key:"name",
+      align: "center",
+    },
+    {
+      title: "Role",
+      dataIndex: "role",
+      key:"role",
+      align: "center",
+   
+    },
+        {
+      title: "Phone",
+      dataIndex: "phone_number",
+      key:"phone_number",
       align: "center",
    
     },
     {
       title: "Status",
       dataIndex: "status",
+      key: "status",
       align: "center",
       render: (status) => (
         <Tag color={status === "active" ? "green" : "red"}>

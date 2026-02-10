@@ -19,6 +19,15 @@ const QuoteForm: React.FC<Props> = ({ form}) => {
         </Form.Item>
       </Col>
         <Col xs={24} sm={12}>
+        <Form.Item
+          label="Quote To"
+          name="quote_to"
+           rules={[{ required: true, message: "Please enter quote request..." }]}
+        >
+          <Input placeholder="Enter quote request" />
+        </Form.Item>
+      </Col>
+        <Col xs={24} sm={12}>
           <Form.Item
             label="Date"
             name="quote_date"

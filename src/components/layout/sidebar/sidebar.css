@@ -1,3 +1,17 @@
+.ant-layout-sider {
+  background: #001529 !important;
+  overflow: hidden;
+}
+
+.ant-layout-sider::-webkit-scrollbar {
+  display: none;
+}
+
+.ant-layout-sider {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
 .sidebar-header {
   height: 64px;
   display: flex;
@@ -8,22 +22,22 @@
   font-size: 20px;
   font-weight: bold;
   border-bottom: 1px solid #ffffff1a;
-  background: #001529; 
-  z-index: 1001;      
+  /* background: #001529; */
+  background: #2e3492;
+  z-index: 1001;
+}
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
 }
 
-.sidebar-logo {
-  font-size: 45px;
-  font-weight: bold;
-  color: #fff;
-  text-align: center;
-  letter-spacing: 2px;
-  flex: 1;
-  background:  #1890ff;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  font-family: 'Arial Black', sans-serif;
+.sidebar-logo img {
+  padding: 5px;
+  height: 75px; 
+  width: auto;
+  object-fit: contain;
 }
 
 .sidebar-close-icon {
@@ -37,33 +51,64 @@
   color: #1890ff;
 }
 
+.ant-menu-dark {
+  background: transparent !important;
+}
+
 .ant-menu-dark .ant-menu-sub {
   background: transparent !important;
 }
 
-.ant-menu-dark {
-  background: transparent;
-}
-
-.ant-menu-item {
+.ant-menu-dark .ant-menu-item,
+.ant-menu-dark .ant-menu-submenu-title {
+  color: rgba(255, 255, 255, 0.85);
   transition: all 0.3s;
 }
 
-.ant-menu-item:hover {
+.ant-menu-dark .ant-menu-item:hover,
+.ant-menu-dark .ant-menu-submenu-title:hover {
   background-color: #343a40;
 }
 
-.ant-menu-item-selected {
+.ant-menu-dark .ant-menu-item-selected {
+  background-color: #1890ff !important;
+  color: #fff !important;
+}
+
+.ant-menu-dark .ant-menu-item-selected a {
+  color: #fff !important;
+}
+
+.ant-menu-dark .ant-menu-submenu-open > .ant-menu-submenu-title {
+  background-color: #1f2d3d;
+}
+
+.ant-menu-inline-collapsed .ant-menu-item-selected {
   background-color: #1890ff !important;
 }
 
-.ant-layout-sider::-webkit-scrollbar {
-  display: none;
+.ant-menu-dark.ant-menu-submenu-popup {
+  background: #001529 !important;
 }
 
-.ant-layout-sider {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+.ant-menu-dark.ant-menu-submenu-popup .ant-menu-item,
+.ant-menu-dark.ant-menu-submenu-popup .ant-menu-submenu-title {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+.ant-menu-dark.ant-menu-submenu-popup .ant-menu-item:hover,
+.ant-menu-dark.ant-menu-submenu-popup .ant-menu-submenu-title:hover {
+  background-color: #343a40 !important;
+  color: #fff !important;
+}
+
+.ant-menu-dark.ant-menu-submenu-popup .ant-menu-item-selected {
+  background-color: #1890ff !important;
+  color: #fff !important;
+}
+
+.ant-menu-dark.ant-menu-submenu-popup .ant-menu-item-disabled {
+  color: rgba(255, 255, 255, 0.55) !important;
 }
 
 @media (max-width: 991px) {

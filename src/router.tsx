@@ -1,6 +1,5 @@
 import Dashboard from './components/features/dashboard/Dashboard';
 import User from './components/features/user/User';
-import Worker from './components/features/worker/Worker';
 import Customer from './components/features/customer/Customer';
 import CatalogItem from './components/features/catalogItem/CatalogItem';
 import Supplier from './components/features/supplier/Supplier';
@@ -103,14 +102,6 @@ export const routes = [
     element: (
       <ProtectedRoute>
         <User />
-      </ProtectedRoute>
-    ),
-  },
-  {
-    path: '/workers',
-    element: (
-      <ProtectedRoute>
-        <Worker />
       </ProtectedRoute>
     ),
   },

@@ -10,5 +10,3 @@ export interface PurchaseType {
   unit_price: number;  
   subtotal?: number;
 }
-
-export type ModalMode = "add" | "edit" | "delete" | "view" | null;

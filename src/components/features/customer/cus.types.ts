@@ -8,5 +8,3 @@ export interface CusType {
   address: string;
   email?: string;
 }
-
-export type ModalMode = "add" | "edit" | "delete" | null;

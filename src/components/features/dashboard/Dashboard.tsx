@@ -200,7 +200,7 @@ const quickActions: QuickAction[] = [
                   <TeamOutlined/>
                 </span>
               }
-              value={20}
+              value={100}
               style={{ color: '#722ed1', fontWeight: 600 }}
               suffix={
                 <span className="stat-suffix-down" style={{ fontSize: 14, color: '#ff4d4f' }}>

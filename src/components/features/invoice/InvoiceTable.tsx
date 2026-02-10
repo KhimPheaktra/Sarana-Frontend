@@ -34,8 +34,8 @@ const InvoiceTable: React.FC<Props> = ({data, onView, onDelete}) => {
         },
         {
             title: "Quote",
-            dataIndex: "quote_id",
-            key: "quote_id",
+            dataIndex: "quote_to",
+            key: "quote_to",
             align: "center",
         },
         {

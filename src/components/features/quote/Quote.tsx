@@ -1,4 +1,3 @@
-
 import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
 import type { QuoteType } from "./quote.types";
@@ -7,15 +6,13 @@ import { FileTextOutlined } from "@ant-design/icons";
 import QuoteTable from "./QuoteTable";
 import QuoteForm from "./QuoteForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
-
 const Quote = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
-
   const quotes: QuoteType[] = [
-    { key: "1", quote_id: 1, item: "Machin Maintenance", quote_date: "2026-02-02", total_amount: 100, status: "Approved", notes: "First Approved" },
-    { key: "2", quote_id: 2, item: "Engine Service", quote_date: "2026-02-12", total_amount: 120, status: "Pendding" },
-    { key: "3", quote_id: 3, item: "Electric Maintenance", quote_date: "2026-02-03", total_amount: 200, status: "Denied" },
+    { key: "1", quote_id: 1, quote_to: "Baktrang", item: "Machin Maintenance", quote_date: "2026-02-02",unit:"SET", qty: 1, discount: 0, total_amount: 100, status: "Approved", notes: "First Approved" },
+    { key: "2", quote_id: 2, quote_to: "PP", item: "Engine Service", quote_date: "2026-02-12",unit:"PCs", qty: 1, discount: 0, total_amount: 120, status: "Pending" },
+    { key: "3", quote_id: 3, quote_to: "Koh Kong", item: "Electric Maintenance", quote_date: "2026-02-03",unit:"PCs", qty: 1, discount: 0, total_amount: 200, status: "Denied" },
   ];
 
   const titleMap = {
@@ -38,10 +35,7 @@ const Quote = () => {
       },
     });
   };
-  
-  const onView = () => {
-     message.info("No action on view yet");
-  }
+
 
 
   const openEdit = (quote: QuoteType) => {
@@ -60,7 +54,6 @@ const Quote = () => {
     });
   };
 
-
   const openDelete = (quote: QuoteType) => {
     openModal("delete", {
       titleMap,
@@ -75,6 +68,8 @@ const Quote = () => {
       },
     });
   };
+
+
 
   return (
     <div className="table-container">
@@ -92,9 +87,9 @@ const Quote = () => {
           data={quotes}
           onEdit={openEdit}
           onDelete={openDelete}
-          onView={onView}
         />
       </Card>
+
     </div>
   );
 };

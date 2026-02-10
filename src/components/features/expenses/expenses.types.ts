@@ -8,5 +8,3 @@ export interface ExpensesType {
     expenses_date: string;
     category: string;
 }
-
-export type ModalMode = "add" | "edit" | "delete" | null; 

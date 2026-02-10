@@ -12,5 +12,3 @@ export interface CatalogItemType {
     is_active: boolean;
 
 }
-
-export type ModalMode = "add" | "edit" | "delete" | null;

@@ -1,43 +1,44 @@
 import type { QuoteType } from "./quote.types";
-import { 
-  Button, 
-  Card, 
-  Col, 
-  DatePicker, 
-  Form, 
-  Grid, 
-  Row, 
-  Select, 
-  Space, 
-  Tag, 
+import {
+  Button,
+  Card,
+  Col,
+  DatePicker,
+  Form,
+  Grid,
+  Row,
+  Select,
+  Space,
+  Tag,
   Pagination,
   Typography,
   Divider,
   Empty
 } from "antd";
-import { 
-  ClearOutlined, 
-  DeleteOutlined, 
+import {
+  ClearOutlined,
+  DeleteOutlined,
   EditOutlined,
   CalendarOutlined,
   DollarOutlined,
   FileTextOutlined,
   TagOutlined,
-  EyeOutlined
+  PrinterOutlined
 } from "@ant-design/icons";
 import { useState } from "react";
+import { PrintQuote } from "./PrintQuote";
 
 const { useBreakpoint } = Grid;
 const { Text, Title } = Typography;
 
 interface Props {
   data: QuoteType[];
-  onView: (quote: QuoteType) => void;
   onEdit: (quote: QuoteType) => void;
   onDelete: (quote: QuoteType) => void;
+  onClose?: () => void;
 }
 
-const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
+const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
   const [form] = Form.useForm();
   const screens = useBreakpoint();
   const isMobile = !screens.md;
@@ -67,12 +68,13 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
     setCurrentPage(page);
   };
 
+
   return (
     <div style={{ minHeight: '300px' }}>
       {/* Filter date and status section */}
-      <Card 
-        style={{ 
-          marginBottom: 24, 
+      <Card
+        style={{
+          marginBottom: 24,
           borderRadius: 12,
           boxShadow: '0 2px 8px rgba(0,0,0,0.1)'
         }}
@@ -166,11 +168,11 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
                   className="quote-card"
                 >
                   {/* Card Header */}
-                  <div style={{ 
-                    display: 'flex', 
-                    justifyContent: 'space-between', 
+                  <div style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
                     alignItems: 'flex-start',
-                    marginBottom: 16 
+                    marginBottom: 16
                   }}>
                     <div>
                       <Text type="secondary" style={{ fontSize: 12 }}>
@@ -180,10 +182,21 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
                         {quote.quote_id}
                       </Title>
                     </div>
-                    <Tag 
-                      color={getStatusColor(quote.status)} 
-                      style={{ 
-                        fontSize: 13, 
+                    <Tag
+                      color={getStatusColor(quote.quote_to)}
+                      style={{
+                        fontSize: 16,
+                        padding: '4px 12px',
+                        borderRadius: 16,
+                        fontWeight: 500
+                      }}
+                    >
+                      {quote.quote_to}
+                    </Tag>
+                    <Tag
+                      color={getStatusColor(quote.status)}
+                      style={{
+                        fontSize: 13,
                         padding: '4px 12px',
                         borderRadius: 16,
                         fontWeight: 500
@@ -198,10 +211,10 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
                   {/* Card Content */}
                   <Space orientation="vertical" size={12} style={{ width: '100%' }}>
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <FileTextOutlined style={{ 
-                        fontSize: 16, 
-                        color: '#1890ff', 
-                        marginRight: 8 
+                      <FileTextOutlined style={{
+                        fontSize: 16,
+                        color: '#1890ff',
+                        marginRight: 8
                       }} />
                       <div style={{ flex: 1 }}>
                         <Text type="secondary" style={{ fontSize: 12 }}>Item</Text>
@@ -212,10 +225,10 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <CalendarOutlined style={{ 
-                        fontSize: 16, 
-                        color: '#52c41a', 
-                        marginRight: 8 
+                      <CalendarOutlined style={{
+                        fontSize: 16,
+                        color: '#52c41a',
+                        marginRight: 8
                       }} />
                       <div style={{ flex: 1 }}>
                         <Text type="secondary" style={{ fontSize: 12 }}>Date</Text>
@@ -226,17 +239,17 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
                     </div>
 
                     <div style={{ display: 'flex', alignItems: 'center' }}>
-                      <DollarOutlined style={{ 
-                        fontSize: 16, 
-                        color: '#faad14', 
-                        marginRight: 8 
+                      <DollarOutlined style={{
+                        fontSize: 16,
+                        color: '#faad14',
+                        marginRight: 8
                       }} />
                       <div style={{ flex: 1 }}>
                         <Text type="secondary" style={{ fontSize: 12 }}>Total Amount</Text>
                         <div>
                           <Text strong style={{ fontSize: 16, color: '#faad14' }}>
-                            ${typeof quote.total_amount === 'number' 
-                              ? quote.total_amount.toFixed(2) 
+                            ${typeof quote.total_amount === 'number'
+                              ? quote.total_amount.toFixed(2)
                               : parseFloat(quote.total_amount).toFixed(2)}
                           </Text>
                         </div>
@@ -245,9 +258,9 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
 
                     {quote.notes && (
                       <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                        <TagOutlined style={{ 
-                          fontSize: 16, 
-                          color: '#8c8c8c', 
+                        <TagOutlined style={{
+                          fontSize: 16,
+                          color: '#8c8c8c',
                           marginRight: 8,
                           marginTop: 2
                         }} />
@@ -264,23 +277,29 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
                   <Divider style={{ margin: '16px 0' }} />
 
                   {/* Card actions */}
-                  <Space style={{ width: '100%', justifyContent: 'flex-end' }}>
-                    <Button type="primary" onClick={() => onView(quote)}>
-                    <EyeOutlined /> View
-                  </Button>
+                  <Space style={{    
+                      width: "100%",
+                      justifyContent: isMobile ? "space-between" : "flex-end", }}>
+                    <Button
+                      type="primary"
+                      icon={<PrinterOutlined />}
+                      onClick={() => PrintQuote(quote)}
+                    >
+                      {!isMobile && "Print"}
+                    </Button>
                     <Button
                       type="primary"
                       icon={<EditOutlined />}
                       onClick={() => onEdit(quote)}
                     >
-                      Edit
+                      {!isMobile && "Edit"}
                     </Button>
                     <Button
                       danger
                       icon={<DeleteOutlined />}
                       onClick={() => onDelete(quote)}
                     >
-                      Delete
+                       {!isMobile && "Delete"}
                     </Button>
                   </Space>
                 </Card>
@@ -289,7 +308,7 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
           </Row>
 
           {/* Pagination */}
-          <div style={{ 
+          <div style={{
             marginTop: 24,
             padding: '16px 0',
             display: 'flex',
@@ -301,7 +320,7 @@ const QuoteTable: React.FC<Props> = ({ data,onView ,onEdit, onDelete }) => {
               pageSize={pageSize}
               onChange={handlePageChange}
               showSizeChanger={false}
-              showTotal={(total, range) => 
+              showTotal={(total, range) =>
                 `${range[0]}-${range[1]} of ${total} quotes`
               }
             />

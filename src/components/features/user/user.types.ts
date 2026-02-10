@@ -2,7 +2,8 @@ export interface UserType {
   key: string;
   id: number;
   name: string;
+  role: string;
+  phone_number: string;
   status: string;
 }
 
-export type ModalMode = "add" | "edit" | "delete" | null;

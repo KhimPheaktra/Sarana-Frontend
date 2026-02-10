@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { Modal, Grid, Card, message } from 'antd';
 import InvoiceTable from './InvoiceTable';
-import InvoiceForm from './InvoiceForm';
 import type { InvoiceType } from './invoice.types';
 import PageHeader from '../../../shared/action-header/ActionHeader';
+import InvoicePrintForm from './InvoicePrintForm';
+
 
 const { useBreakpoint } = Grid;
 
@@ -17,7 +18,7 @@ const Invoice: React.FC = () => {
       key: '1',
       invoice_id: 1,
       customer_id: 101,
-      quote_id: 201,
+      quote_to: "Baktrang",
       invoice_date: '2024-02-07',
       item_id: 1,
       unit_price: 358,
@@ -29,7 +30,7 @@ const Invoice: React.FC = () => {
       key: '2',
       invoice_id: 2,
       customer_id: 102,
-      quote_id: 202,
+      quote_to: "",
       invoice_date: '2024-02-06',
       item_id: 2,
       unit_price: 150,
@@ -94,8 +95,8 @@ const Invoice: React.FC = () => {
             destroyOnHidden
         >
             {selectedInvoice && (
-        <InvoiceForm 
-                selectedInvoice={selectedInvoice} 
+        <InvoicePrintForm 
+                invoice={selectedInvoice} 
                 onClose={handleCloseModal} 
         />
     )}
