@@ -6,7 +6,7 @@ export interface PurchaseType {
   purchase_date: string;
   total_amount: number;
   item_id: number;
-  quantity: number;
+  qty: number;
   unit_price: number;  
   subtotal?: number;
 }

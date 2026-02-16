@@ -8,11 +8,7 @@ import ExpensesForm from "./ExpensesForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
 
 
-const Expenses = () => {
-  const [form] = Form.useForm();
-  const { openModal, closeModal } = useAppModal();
-
-  const expenses: ExpensesType[] = [
+ export const expenses: ExpensesType[] = [
     {
       key: "1",
       expenses_id: 1,
@@ -22,6 +18,11 @@ const Expenses = () => {
       category: "Party",
     },
   ];
+
+const Expenses = () => {
+  const [form] = Form.useForm();
+  const { openModal, closeModal } = useAppModal();
+
 
   const titleMap = {
     add: "Add Expense",

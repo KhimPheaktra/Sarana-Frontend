@@ -28,7 +28,7 @@ const Payment = () => {
     {
       key: "2",
       payment_id: 2,
-      customer_name: "Long",
+      customer_name: "Long Zin",
       payment_type: "Bakor",
       reference_id: 2,
       amount: 200,

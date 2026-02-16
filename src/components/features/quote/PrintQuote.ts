@@ -213,6 +213,14 @@ export const PrintQuote = (quote: QuoteType) => {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
+      
+      @page {
+        margin: 0;
+      }
+      
+      body {
+        margin: 1.6cm;
+      }
     }
   </style>
 </head>

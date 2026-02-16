@@ -55,51 +55,61 @@ export const printInvoice = ({
     }
 
     .invoice-paper {
+      width: 100%;
       max-width: 210mm;
       margin: 0 auto;
       padding: 30px;
       background: white;
     }
+    
     .invoice-header {
       display: flex;
       justify-content: space-between;
-      align-items: flex-start;
+      align-items: center;
       margin-bottom: 20px;
-      gap: 20px;
+      gap: 16px;
+      width: 100%;
     }
 
     .company-banner {
-      flex: 1;
+      flex: 36;
+      min-width: 0;
     }
 
     .banner-image {
       width: 100%;
-      max-width: 550px;
       height: auto;
       object-fit: contain;
+      display: block;
     }
 
     .invoice-title-section {
-      min-width: 200px;
+      flex: 8;
+      min-width: 0;
       text-align: right;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      padding: 10px;
     }
 
     .invoice-title {
-      font-size: 32px;
+      font-size: 24px;
       font-weight: bold;
       color: #4a4de6;
-      letter-spacing: 2px;
-      margin-bottom: 10px;
+      margin: 0 0 8px 0;
     }
 
     .invoice-meta p {
-      font-size: 14px;
+      font-size: 12px;
       margin: 4px 0;
       color: #333;
     }
 
     .invoice-meta strong {
       color: #1a1a2e;
+      font-weight: 600;
     }
 
     .divider {
@@ -107,6 +117,7 @@ export const printInvoice = ({
       border-top: 1.5px solid #1a1a2e;
       margin: 15px 0;
     }
+    
     .invoice-table {
       width: 100%;
       border-collapse: collapse;
@@ -139,6 +150,7 @@ export const printInvoice = ({
       text-align: right;
       padding-right: 10px;
     }
+    
     .invoice-footer {
       display: flex;
       justify-content: space-between;
@@ -163,7 +175,7 @@ export const printInvoice = ({
     .signature-label {
       font-size: 13px;
       font-weight: 600;
-      margin-bottom: 45px;
+      margin: 0 0 50px 0;
       color: #1a1a2e;
       text-transform: uppercase;
       letter-spacing: 0.5px;
@@ -182,18 +194,20 @@ export const printInvoice = ({
     }
 
     .total-label {
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
-      color: #555;
+      color: #666;
       text-transform: uppercase;
       letter-spacing: 1px;
-      margin-bottom: 6px;
+      margin: 0 0 8px 0;
     }
 
     .grand-total-amount {
-      font-size: 22px;
+      font-size: 20px;
       font-weight: bold;
       color: #1a1a2e;
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
     }
 
     @media print {
@@ -201,7 +215,15 @@ export const printInvoice = ({
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-
+       
+      @page {
+        margin: 0;
+      }
+      
+      body {
+        margin: 1.6cm;
+      }
+      
       .invoice-table tr {
         page-break-inside: avoid;
       }

@@ -1,11 +1,16 @@
-import ReportSelector from "../report-selector/ReportSelector";
+import { Card } from "antd";
+import SaleReportTable from "./SaleReportTable";
+
 
 const SaleReport = () => {
+
   return (
-    <div className="p-6">
-      <ReportSelector />
-        <h1 className="mb-4 text-2xl font-bold">Sales Report</h1>
-    </div>
+    <>
+       <Card>
+      <h1 style={{padding:0,margin:0}}>Sale Report</h1>
+        <SaleReportTable />
+      </Card>
+    </>
   );
 };
 

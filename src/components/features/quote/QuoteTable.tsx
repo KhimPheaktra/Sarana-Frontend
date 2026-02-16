@@ -27,6 +27,8 @@ import {
 } from "@ant-design/icons";
 import { useState } from "react";
 import { PrintQuote } from "./PrintQuote";
+import { generateQuoteInvoice } from "../invoice/GenerateQuoteInvoice";
+import { useSales } from "../sales/SaleContext";
 
 const { useBreakpoint } = Grid;
 const { Text, Title } = Typography;
@@ -40,9 +42,9 @@ interface Props {
 
 const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
   const [form] = Form.useForm();
+  const { invoices, setInvoices, setQuotes } = useSales();
   const screens = useBreakpoint();
   const isMobile = !screens.md;
-
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
 
@@ -67,7 +69,19 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+  const isInvoiceGenerated = (quote: QuoteType) => {
+    return invoices.some(inv => inv.quote_id === quote.quote_id);
+  };
 
+  const handleGenerateInvoice = (quote: QuoteType) => {
+    generateQuoteInvoice(quote, invoices, setInvoices);
+  };
+
+  const quoteApprove = (quote_id: number) => {
+    setQuotes(prev =>
+      prev.map(q => (q.quote_id === quote_id ? { ...q, status: "Approved" } : q))
+    );
+  };
 
   return (
     <div style={{ minHeight: '300px' }}>
@@ -193,6 +207,19 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                     >
                       {quote.quote_to}
                     </Tag>
+                    <Tag>
+                      {quote.status === "Approved" ? (
+                        isInvoiceGenerated(quote) ? (
+                          <Button style={{ backgroundColor: '#52c41a', color: 'white' }} disabled>
+                            Done
+                          </Button>
+                        ) : (
+                          <Button type="primary" onClick={() => { handleGenerateInvoice(quote); quoteApprove(quote.quote_id); }}>
+                            Generate Invoice
+                          </Button>
+                        )
+                      ) : null}
+                    </Tag>
                     <Tag
                       color={getStatusColor(quote.status)}
                       style={{
@@ -277,11 +304,13 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                   <Divider style={{ margin: '16px 0' }} />
 
                   {/* Card actions */}
-                  <Space style={{    
-                      width: "100%",
-                      justifyContent: isMobile ? "space-between" : "flex-end", }}>
+                  <Space style={{
+                    width: "100%",
+                    justifyContent: isMobile ? "space-between" : "flex-end",
+                  }}>
                     <Button
                       type="primary"
+                      style={{ backgroundColor: '#ff14e7', color: 'white' }}
                       icon={<PrinterOutlined />}
                       onClick={() => PrintQuote(quote)}
                     >
@@ -299,7 +328,7 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                       icon={<DeleteOutlined />}
                       onClick={() => onDelete(quote)}
                     >
-                       {!isMobile && "Delete"}
+                      {!isMobile && "Delete"}
                     </Button>
                   </Space>
                 </Card>
