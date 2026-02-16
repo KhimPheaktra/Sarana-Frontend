@@ -1,7 +1,8 @@
 import type { ColumnsType } from "antd/es/table";
 import type { InvoiceType } from "./invoice.types";
-import { Grid, Tag, Space, Button, Form, Row, Col, DatePicker, Select, Table } from "antd";
+import { Grid, Tag, Space, Button, Form, Row, Col, DatePicker, Select, Table, message } from "antd";
 import { EyeOutlined, DeleteOutlined, ClearOutlined } from "@ant-design/icons";
+import { useSales } from "../sales/SaleContext";
 
 const {useBreakpoint} = Grid;
 
@@ -15,6 +16,7 @@ const InvoiceTable: React.FC<Props> = ({data, onView, onDelete}) => {
     const [form] = Form.useForm();
     const screens = useBreakpoint();
     const isMobile = !screens.md; 
+ 
 
     const columns: ColumnsType<InvoiceType> = [
         
@@ -37,6 +39,13 @@ const InvoiceTable: React.FC<Props> = ({data, onView, onDelete}) => {
             dataIndex: "quote_to",
             key: "quote_to",
             align: "center",
+            render: (_, record) => {
+                const quoteValue = record.quote_to || record.quote_id;
+                if(quoteValue) {
+                    return quoteValue;
+                }
+                return <Tag style={{color: "#a600ff",fontWeight:"bold"}}>Instant Sale</Tag>;
+            }
         },
         {
             title: "Date",
@@ -61,11 +70,35 @@ const InvoiceTable: React.FC<Props> = ({data, onView, onDelete}) => {
             dataIndex: "status",
             key: "status",
             align: "center",
-            render: (status) => (
-                <Tag color={status === "Completed" ? "green" : status === "Pendding" ? "yellow" : "default"}>
-                {status}
-                </Tag>
-            ),
+            render: (status: string , record: InvoiceType) => {
+                const color: Record<string,string> ={
+                    "Pending": "orange",
+                    "Completed": "green",   
+                };
+                return (
+                    <Select 
+                        value={status}
+                        onChange={(newStatus) => handleStatusChange(record.invoice_id, newStatus)}
+                        style={{width: 120, border: "none",boxShadow:"none"}}
+                   >
+                       {Object.keys(color).map(statusKey => (
+                            <Select.Option key={statusKey} value={statusKey}>
+                                <Tag color={color[statusKey]} 
+                                style={{
+                                    display: "block",
+                                    width: "100%",
+                                    textAlign: "center",
+                                    borderRadius: "0",
+                                    border: "none",
+                                    padding: "4px 0",
+                                    fontWeight: "bold",
+                                }}
+                                >{statusKey}</Tag>
+                            </Select.Option>
+                       ))}
+                    </Select>
+                );
+            }
         },
         {
             title: "Actions",
@@ -84,6 +117,16 @@ const InvoiceTable: React.FC<Props> = ({data, onView, onDelete}) => {
         }
 
     ]
+    const { invoices, setInvoices } = useSales(); 
+    const handleStatusChange = (invoice_id: number, newStatus: string) => {
+    const updatedInvoices = invoices.map(inv =>
+        inv.invoice_id === invoice_id ? { ...inv, status: newStatus } : inv
+    );
+
+    setInvoices(updatedInvoices);
+
+    message.success(`Status updated to ${newStatus}`);
+};
 
   return (
       <div style={{ overflow: 'visible', minHeight: '600px' }}>

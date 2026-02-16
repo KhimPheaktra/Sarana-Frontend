@@ -4,25 +4,20 @@ import InvoiceTable from './InvoiceTable';
 import type { InvoiceType } from './invoice.types';
 import PageHeader from '../../../shared/action-header/ActionHeader';
 import InvoicePrintForm from './InvoicePrintForm';
+import { useSales } from '../sales/SaleContext';
 
 
 const { useBreakpoint } = Grid;
 
-const Invoice: React.FC = () => {
-  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceType | null>(null);
-  const [isModalVisible, setIsModalVisible] = useState(false);
-  const screens = useBreakpoint();
-
-  const invoiceData: InvoiceType[] = [
+ export const invoiceData: InvoiceType[] = [
     {
       key: '1',
       invoice_id: 1,
       customer_id: 101,
-      quote_to: "Baktrang",
-      invoice_date: '2024-02-07',
-      item_id: 1,
+      invoice_date: '2026-02-07',
+      item_name: "Item 1",
       unit_price: 358,
-      quantity: 1,
+      qty: 1,
       total_amount: 358,
       status: 'Completed'
     },
@@ -31,14 +26,32 @@ const Invoice: React.FC = () => {
       invoice_id: 2,
       customer_id: 102,
       quote_to: "",
-      invoice_date: '2024-02-06',
-      item_id: 2,
+      invoice_date: '2026-02-06',
+      item_name: "Item 2",
       unit_price: 150,
-      quantity: 2,
+      qty: 2,
+      total_amount: 300,
+      status: 'Pending'
+    },
+    {
+      key: '3',
+      invoice_id: 3,
+      customer_id: 103,
+      quote_to: "",
+      invoice_date: '2025-02-06',
+      item_name: "Item 2",
+      unit_price: 150,
+      qty: 2,
       total_amount: 300,
       status: 'Pending'
     }
   ];
+
+const Invoice: React.FC = () => {
+  const [selectedInvoice, setSelectedInvoice] = useState<InvoiceType | null>(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const { invoices, setInvoices } = useSales();
+  const screens = useBreakpoint();
 
   const handleView = (invoice: InvoiceType) => {
     setSelectedInvoice(invoice);
@@ -59,17 +72,22 @@ const Invoice: React.FC = () => {
     if (!screens.lg) return '80%';   
     return '60%';                    
   };
+  React.useEffect(() => {
+    if (invoices.length === 0) {
+      setInvoices(invoiceData);
+    }
+  }, []);
 
   return (
     <div style={{ padding: '20px' }}>
         <PageHeader
             title="Invoices"
-            count={invoiceData.length}
+            count={invoices.length}
             countLabel="Invoices" icon={undefined}     
             />
         <Card>
             <InvoiceTable 
-                data={invoiceData} 
+                data={invoices} 
                 onView={handleView} 
                 onDelete={handleDelete} 
             />

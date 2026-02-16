@@ -1,12 +1,22 @@
-import ReportSelector from "../report-selector/ReportSelector";
+import { Card } from "antd";
+import ExpenseReportTable from "./ExpenseReportTable";
+import type { ExpensesType } from "../../expenses/expenses.types";
+import type { PurchaseType } from "../../purchase/purchase.types";
 
-const ExpenseReport = () => {
-return (
-    <div className="p-6">
-      <ReportSelector />
-        <h1 className="mb-4 text-2xl font-bold">Expenses Report</h1>
-    </div>
-    )
+interface ExpenseReportProps {
+    expenses: ExpensesType[];
+    purchases: PurchaseType[];
 }
+
+const ExpenseReport = ({ expenses, purchases }: ExpenseReportProps) => {
+    return (
+        <>
+            <Card>
+                <h1 style={{ padding: 0, margin: 0 }}>Expense Report</h1>
+                <ExpenseReportTable expenses={expenses} purchases={purchases} />
+            </Card>
+        </>
+    );
+};
 
 export default ExpenseReport;

@@ -25,9 +25,19 @@
   box-sizing: border-box;
 }
 
-/* .invoice-header {
-  margin-bottom: 20px;
-} */
+.invoice-header .ant-row {
+  align-items: center;
+}
+
+.invoice-header .ant-col:first-child {
+  flex: 1;
+  max-width: 80%;
+}
+
+.invoice-header .ant-col:last-child {
+  flex: 0 0 auto;
+  max-width: 20%;
+}
 
 .company-banner {
   display: flex;
@@ -37,7 +47,7 @@
 
 .banner-image {
   width: 100%;
-  max-width: 550px;
+  max-width: 100%;
   height: auto;
   display: block;
   object-fit: contain;
@@ -48,7 +58,7 @@
   padding: 10px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: flex-end;
 }
 
@@ -56,15 +66,16 @@
   font-size: 24px;
   font-weight: bold;
   color: #4a4de6;
-
+  margin: 0 0 8px 0;
 }
+
 .invoice-meta {
   text-align: right;
   font-size: 12px;
 }
 
 .invoice-meta p {
-  margin: 6px 0;
+  margin: 4px 0;
   color: #333;
 }
 
@@ -171,7 +182,7 @@
 @media print {
   @page {
     size: A4 portrait;
-    margin: 15mm;
+    margin: 0;
   }
 
   * {
@@ -238,7 +249,7 @@
   .invoice-paper {
     display: block !important;
     visibility: visible !important;
-    padding: 0 !important;
+    padding: 10mm !important;
     margin: 0 !important;
     background: white !important;
   }
@@ -310,7 +321,7 @@
   
   .banner-image {
     display: block !important;
-    max-width: 550px;
+    max-width: 100%;
     width: 100%;
     height: auto;
   }

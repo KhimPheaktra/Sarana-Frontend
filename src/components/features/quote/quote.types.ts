@@ -6,6 +6,7 @@ export interface QuoteType{
     item: string;
     quote_date: string;
     qty:number;
+    unit_price?: number;
     unit: string;
     discount?:number;
     wth?: number;

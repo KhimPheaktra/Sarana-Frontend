@@ -111,13 +111,12 @@ export const menuItems: AppMenuItem[] = [
       key: 'reports-expenses',
       label: 'Expense Reports',
       route: '/reports/expenses',
-      hideInSidebar: true, 
     },
     {
       key: 'reports-profit',
       label: 'Profit & Loss',
       route: '/reports/profit',
-      hideInSidebar: true,
+
     },
   ],
 },

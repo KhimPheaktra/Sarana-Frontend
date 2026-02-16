@@ -94,13 +94,13 @@ const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
       <div ref={componentRef} className="invoice-print-area">
         <div className="invoice-paper">
           <div className="invoice-header">
-            <Row align="middle" justify="space-between">
-              <Col xs={24} sm={16} md={18}>
+            <Row align="middle" justify="space-between" gutter={16}>
+              <Col xs={24} sm={14} md={16}>
                 <div className="company-banner">
                   <img src={Banner} alt="Company Banner" className="banner-image" />
                 </div>
               </Col>
-              <Col xs={24} sm={8} md={6}>
+              <Col xs={24} sm={10} md={8}>
                 <div className="invoice-title-section">
                   <h2 className="invoice-title">INVOICE</h2>
                   <div className="invoice-meta">

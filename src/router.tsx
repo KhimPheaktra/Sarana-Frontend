@@ -8,7 +8,6 @@ import Expenses from './components/features/expenses/Expenses';
 import { useAuth } from './components/cores/auth/authContext';
 import Quote from './components/features/quote/Quote';
 import SaleReport from './components/features/reports/saleReport/SaleReport';
-import ExpenseReport from './components/features/reports/expenseReport/ExpenseReport';
 import ProfitReport from './components/features/reports/profitReport/ProfitReport';
 import Login from './components/cores/login/Login';
 import Invoice from './components/features/invoice/Invoice';
@@ -16,7 +15,10 @@ import { Spin } from 'antd';
 import { Navigate } from 'react-router-dom';
 import Payment from './components/features/payement/Payment';
 import Commision from './components/features/commision/Commission';
-import ReportSelector from './components/features/reports/report-selector/ReportSelector';
+import ExpenseReportContext from './components/features/reports/expenseReport/ExpenseReportContext';
+
+
+
 
 
 
@@ -185,27 +187,19 @@ export const routes = [
       </ProtectedRoute>
     ),
   },
-  {
+   {
     path: '/reports/expenses',
     element: (
       <ProtectedRoute>
-        <ExpenseReport />
+        <ExpenseReportContext />
       </ProtectedRoute>
-    ),
+    )
   },
   {
     path: '/reports/profit',
     element: (
       <ProtectedRoute>
         <ProfitReport />
-      </ProtectedRoute>
-    ),
-  },
-  {
-  path: '/reports/report-selector',
-    element: (
-      <ProtectedRoute>
-        <ReportSelector />
       </ProtectedRoute>
     ),
   },

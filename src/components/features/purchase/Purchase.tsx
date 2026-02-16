@@ -6,15 +6,15 @@ import { ShoppingCartOutlined } from "@ant-design/icons";
 import PurchaseTable from "./PurchaseTable";
 import PurchaseForm from "./PurchaseForm"; 
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
-
+export const purchases: PurchaseType[] = [
+    { key: "1", purchase_id: 1, supplier_id: 1, purchase_date: "2026-01-01", total_amount: 500, item_id: 1, qty: 5, unit_price: 50, subtotal: 250 },
+    { key: "2", purchase_id: 2, supplier_id: 2, purchase_date: "2026-01-05", total_amount: 300, item_id: 3, qty: 15, unit_price: 20, subtotal: 300 },
+  ];
 const Purchase = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
 
-  const purchases: PurchaseType[] = [
-    { key: "1", purchase_id: 1, supplier_id: 1, purchase_date: "2026-01-01", total_amount: 500, item_id: 1, quantity: 5, unit_price: 50, subtotal: 250 },
-    { key: "2", purchase_id: 2, supplier_id: 2, purchase_date: "2026-01-05", total_amount: 300, item_id: 3, quantity: 15, unit_price: 20, subtotal: 300 },
-  ];
+
 
   const titleMap = {
     add: "Add Purchase",
