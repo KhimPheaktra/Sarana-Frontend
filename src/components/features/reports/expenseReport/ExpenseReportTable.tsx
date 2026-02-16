@@ -210,7 +210,7 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                             borderRadius: '8px',
                             backgroundColor: '#fff1f0'
                         }}>
-                            <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>
+                            <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px',fontWeight: 'bold' }}>
                                 Total Expenses
                             </div>
                             <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#ff4d4f' }}>
@@ -228,7 +228,7 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                             borderRadius: '8px',
                             backgroundColor: '#fffbe6'
                         }}>
-                            <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>
+                            <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px',fontWeight: 'bold' }}>
                                 Total Purchases
                             </div>
                             <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#faad14' }}>
@@ -246,7 +246,7 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                             borderRadius: '8px',
                             backgroundColor: '#f9f0ff'
                         }}>
-                            <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px' }}>
+                            <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px',fontWeight: 'bold' }}>
                                 Total Spend
                             </div>
                             <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#722ed1' }}>

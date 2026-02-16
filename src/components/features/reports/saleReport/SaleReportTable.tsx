@@ -180,7 +180,7 @@ export function SaleReportTable() {
                                         <FileDoneOutlined />
                                     </span>
                                 }
-                                title={<span style={{ fontSize: 14, color: '#2f2f2f' }}>Total Invoices</span>}
+                                title={<span style={{ fontSize: 14, color: '#2f2f2f', fontWeight: 'bold' }}>Total Invoices</span>}
                                 value={total_invoice}
                             />
                         </Card>
@@ -188,7 +188,7 @@ export function SaleReportTable() {
                     <Col xs={24} sm={12} md={12} lg={6}>
                         <Card style={{ backgroundColor: '#f300df', color: '#2f2f2f' }} variant="borderless">
                             <Statistic
-                                title={<span style={{ fontSize: 14, color: '#2f2f2f' }}>Total Quote Approve</span>}
+                                title={<span style={{ fontSize: 14, color: '#2f2f2f',fontWeight: 'bold' }}>Total Quote Approve</span>}
                                 value={total_quote_approve}
                                 prefix={
                                     <span style={{
@@ -208,7 +208,7 @@ export function SaleReportTable() {
                     <Col xs={24} sm={12} md={12} lg={6}>
                         <Card style={{ backgroundColor: '#722ed1', color: '#2f2f2f' }} variant="borderless">
                             <Statistic
-                                title={<span style={{ fontSize: 14, color: '#2f2f2f' }}>Total Item Sold</span>}
+                                title={<span style={{ fontSize: 14, color: '#2f2f2f',fontWeight: 'bold' }}>Total Item Sold</span>}
                                 prefix={
                                     <span style={{
                                         fontSize: 24,
@@ -228,7 +228,7 @@ export function SaleReportTable() {
                     <Col xs={24} sm={12} md={12} lg={6}>
                         <Card style={{ backgroundColor: '#52c41a', color: '#2f2f2f' }} variant="borderless">
                             <Statistic
-                                title={<span style={{ fontSize: 14, color: '#2f2f2f' }}>Total Revenue</span>}
+                                title={<span style={{ fontSize: 14, color: '#2f2f2f',fontWeight: 'bold' }}>Total Revenue</span>}
                                 prefix={
                                     <span style={{
                                         fontSize: 24,
