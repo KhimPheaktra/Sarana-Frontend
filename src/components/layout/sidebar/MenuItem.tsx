@@ -7,6 +7,7 @@ import {
   BarChartOutlined,
   TagsOutlined,
   TruckOutlined,
+  CreditCardOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 
@@ -28,13 +29,13 @@ export const menuItems: AppMenuItem[] = [
     label: 'Dashboard',
     route: '/dashboard',
   },
-    {
+  {
     key: 'catalogItems',
     icon: <TagsOutlined />,
     label: 'Items',
     route: '/catalog-items',
   },
-    
+
   {
     key: 'purchases',
     label: 'Purchases',
@@ -67,11 +68,6 @@ export const menuItems: AppMenuItem[] = [
         label: 'Payments',
         route: '/payments',
       },
-      {
-        key: 'commissions',
-        label: 'Commissions',
-        route: '/commissions',
-      },
     ],
   },
 
@@ -93,34 +89,46 @@ export const menuItems: AppMenuItem[] = [
     ],
   },
   {
-  key: 'financial',
-  icon: <BarChartOutlined />,
-  label: 'Financial',
-  children: [
-    {
-      key: 'expenses',
-      label: 'Expenses',
-      route: '/expenses',
-    },
-    {
-      key: 'reports-sales',
-      label: 'Sales Reports',
-      route: '/reports/sales',
-    },
-    {
-      key: 'reports-expenses',
-      label: 'Expense Reports',
-      route: '/reports/expenses',
-    },
-    {
-      key: 'reports-profit',
-      label: 'Profit & Loss',
-      route: '/reports/profit',
+    key: 'financial',
+    icon: <CreditCardOutlined  />,
+    label: 'Financial',
+    children: [
+      {
+        key: 'expenses',
+        label: 'Expenses',
+        route: '/expenses',
+      },
+      {
+        key: 'commissions',
+        label: 'Commissions',
+        route: '/commissions',
+      },
+    ],
+  },
+  {
+    key: 'reports',
+    icon: <BarChartOutlined />,
+    label: 'Reports',
+    children: [
+      {
+        key: 'reports-sales',
+        label: 'Sales Reports',
+        route: '/reports/sales',
+      },
+      {
+        key: 'reports-expenses',
+        label: 'Expense Reports',
+        route: '/reports/expenses',
+      },
+      {
+        key: 'reports-profit',
+        label: 'Profit & Loss',
+        route: '/reports/profit',
 
-    },
-  ],
-},
+      },
+    ]
+  },
 
- 
- 
+
+
 ];

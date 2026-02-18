@@ -1,4 +1,5 @@
 import { Col, DatePicker, Form, Input, InputNumber, Row, Select } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 interface Props {
   form: any;
@@ -36,7 +37,7 @@ const QuoteForm: React.FC<Props> = ({ form}) => {
             <DatePicker 
               placeholder="Enter quote date"
               showTime
-              format="YYYY-MM-DD HH:mm:ss" 
+              format="YYYY-MMMM-DD HH:mm:ss" 
               style={{ width: '100%' }}
               disabled={true}
             />
@@ -71,7 +72,7 @@ const QuoteForm: React.FC<Props> = ({ form}) => {
           label="Note"
           name="notes"
         >
-        <Input placeholder="Enter note" />
+        <TextArea placeholder="Enter note" />
         </Form.Item>
       </Col>
     </Row>

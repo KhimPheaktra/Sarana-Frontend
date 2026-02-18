@@ -5,7 +5,10 @@ export interface PaymentType {
     customer_name: string; 
     payment_type: string;
     reference_id: number;
-    amount: number;
+    item_name: string;
+    qty: number;
+    unit_price: number;
+    total_amount: number;
     payment_date: string;
     status: string;
     partial_percentage?: number;

@@ -32,6 +32,11 @@ body.ant-modal-open {
   -moz-osx-font-smoothing: grayscale;
 }
 
+/* Custom text area  */
+textarea{
+  min-height: 80px;
+  field-sizing: content;
+}
 @media (min-width: 768px) and (max-width: 1024px) {
   html, body {
     overflow-y: scroll !important;
@@ -101,3 +106,4 @@ body.ant-modal-open {
   align-items: center;
   z-index: 9999;
 }
+

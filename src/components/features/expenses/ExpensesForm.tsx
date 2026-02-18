@@ -1,5 +1,6 @@
 
 import { Col, DatePicker, Form, Input, InputNumber, Row } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 interface Props {
   form: any;
@@ -14,9 +15,9 @@ const ExpensesForm: React.FC<Props> = ({ form}) => {
         <Form.Item
           label="Description"
           name="description"
-          rules={[{ required: true, message: "Please enter " }]}
+          rules={[{ required: true, message: "Please enter description" }]}
         >
-          <Input placeholder="Enter description" />
+          <TextArea placeholder="Enter description" />
         </Form.Item>
       </Col>
       <Col xs={24} sm={12}>
@@ -37,7 +38,7 @@ const ExpensesForm: React.FC<Props> = ({ form}) => {
             <DatePicker 
               placeholder="Enter purchase date"
               showTime
-              format="YYYY-MM-DD HH:mm:ss" 
+              format="YYYY-MMMM-DD HH:mm:ss" 
               style={{ width: '100%' }}
               disabled={true}
             />

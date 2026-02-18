@@ -4,7 +4,8 @@ export interface InvoiceType {
     invoice_id: number;
     customer_id: number;
     quote_id?: number;
-    quote_to?: string;
+    quote_to?: string ;
+    engineer?: string;
     invoice_date: string;
     item_name: string;
     unit_price: number;

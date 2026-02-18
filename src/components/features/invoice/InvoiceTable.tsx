@@ -35,6 +35,18 @@ const InvoiceTable: React.FC<Props> = ({data, onView, onDelete}) => {
             align: "center",
         },
         {
+            title: "Engineer",
+            dataIndex: "engineer",
+            key: "engineer",
+            align: "center",
+            render: (engineer: string) => {
+                if(!engineer || engineer.trim() === ""){
+                    return <Tag style={{color: "#0098a9",fontWeight:"bold"}}>N/A</Tag>;
+                }
+                return <Tag style={{color: "#0000fe",fontWeight:"bold"}}>{engineer}</Tag>;
+            }
+        },
+        {
             title: "Quote",
             dataIndex: "quote_to",
             key: "quote_to",
@@ -174,6 +186,17 @@ const InvoiceTable: React.FC<Props> = ({data, onView, onDelete}) => {
                 </Form.Item>
             </Col>
             )}
+            <Col xs={24} sm={12} md={5}>
+            <Form.Item
+                label="Options"
+                name="select_option"
+            >
+                <Select placeholder="Select Option">
+                <Select.Option value="1">Sales Invoice</Select.Option>
+                <Select.Option value="2">Sales by engineer</Select.Option>
+                </Select>
+            </Form.Item>
+            </Col>
 
             <Col xs={24} sm={12} md={5}>
             <Form.Item
