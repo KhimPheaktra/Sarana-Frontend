@@ -19,7 +19,10 @@ const Payment = () => {
       customer_name: "Tra",
       payment_type: "Cash",
       reference_id: 1,
-      amount: 100,
+      item_name: "Item 1",
+      qty: 1,
+      unit_price: 100,
+      total_amount: 100,
       payment_date: "2026-01-01",
       status: "Completed",
       partial_percentage: 50,
@@ -31,7 +34,10 @@ const Payment = () => {
       customer_name: "Long Zin",
       payment_type: "Bakor",
       reference_id: 2,
-      amount: 200,
+      item_name: "Item 2",
+      qty: 1,
+      unit_price: 200,
+      total_amount: 200,
       payment_date: "2026-01-05",
       status: "Pendding",
     },
@@ -85,7 +91,7 @@ const Payment = () => {
       content: (
         <p>
           Are you sure you want to delete payment{" "}
-          <b>#{payment.payment_id}</b>?
+          <b>{payment.payment_id}</b>?
         </p>
       ),
       onOk: () => {

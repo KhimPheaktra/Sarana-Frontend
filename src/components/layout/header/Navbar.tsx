@@ -12,7 +12,7 @@ import {
   FileImageOutlined,
 } from '@ant-design/icons';
 import './navbar.css';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import userAvatar from "../../../assets/images/user-avatar.png";
 import { useAuth } from '../../cores/auth/authContext';
 import { LoadingOverlay } from '../../common/LoadingOverlay';
@@ -134,7 +134,7 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
   const userMenuItems: MenuProps['items'] = [
     {
       key: '1',
-      label: 'Profile',
+      label: <Link to="/user-profile">Profile</Link>,
       icon: <UserSwitchOutlined />
     },
     {

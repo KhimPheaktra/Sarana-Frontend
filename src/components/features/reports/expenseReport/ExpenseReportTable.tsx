@@ -6,10 +6,10 @@ import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import Banner from "../../../../assets/images/banner.png";
 import { useExpenseDateFilter } from "./expenseDateFilter";
 import { exportExpenseToExcel } from "./exportExpense";
-
 import type { ColumnsType } from "antd/es/table";
 import type { ExpensesType } from "../../expenses/expenses.types";
 import type { PurchaseType } from "../../purchase/purchase.types";
+import { ExpenseStatCards } from "./ExpenseStatCard";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -201,64 +201,11 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                     </Col>
                 </Row>
             </Form>
-            <div style={{ marginBottom: '24px' }}>
-                <Row gutter={[16, 16]}>
-                    <Col xs={24} sm={8}>
-                        <div style={{
-                            padding: '20px',
-                            border: '2px solid #ff4d4f',
-                            borderRadius: '8px',
-                            backgroundColor: '#fff1f0'
-                        }}>
-                            <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px',fontWeight: 'bold' }}>
-                                Total Expenses
-                            </div>
-                            <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#ff4d4f' }}>
-                                {new Intl.NumberFormat('en-US', {
-                                    style: 'currency',
-                                    currency: 'USD',
-                                }).format(total_expenses)}
-                            </div>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={8}>
-                        <div style={{
-                            padding: '20px',
-                            border: '2px solid #faad14',
-                            borderRadius: '8px',
-                            backgroundColor: '#fffbe6'
-                        }}>
-                            <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px',fontWeight: 'bold' }}>
-                                Total Purchases
-                            </div>
-                            <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#faad14' }}>
-                                {new Intl.NumberFormat('en-US', {
-                                    style: 'currency',
-                                    currency: 'USD',
-                                }).format(total_purchases)}
-                            </div>
-                        </div>
-                    </Col>
-                    <Col xs={24} sm={8}>
-                        <div style={{
-                            padding: '20px',
-                            border: '2px solid #722ed1',
-                            borderRadius: '8px',
-                            backgroundColor: '#f9f0ff'
-                        }}>
-                            <div style={{ fontSize: '14px', color: '#666', marginBottom: '8px',fontWeight: 'bold' }}>
-                                Total Spend
-                            </div>
-                            <div style={{ fontSize: '28px', fontWeight: 'bold', color: '#722ed1' }}>
-                                {new Intl.NumberFormat('en-US', {
-                                    style: 'currency',
-                                    currency: 'USD',
-                                }).format(total_spend)}
-                            </div>
-                        </div>
-                    </Col>
-                </Row>
-            </div>
+            <ExpenseStatCards 
+                total_expenses={total_expenses}
+                total_purchases={total_purchases}
+                total_spend={total_spend}
+                />
             <div>
                 <h3 style={{ marginBottom: '16px' }}>Expenses & Purchases</h3>
                 <Table

@@ -45,9 +45,9 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
             align: "center",
         },
         {
-            title: "Quantity",
-            dataIndex: "quantity",
-            key: "quantity",
+            title: "Qty",
+            dataIndex: "qty",
+            key: "qty",
             align: "center",
         },
         {
@@ -119,7 +119,7 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
                                 >
                                     <DatePicker 
                                         placeholder="From date"
-                                        format="YYYY-MM-DD"
+                                        format="YYYY-MMMM-DD"
                                         style={{ width: '100%' }}
                                     />
                                 </Form.Item>
@@ -132,7 +132,7 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
                                 >
                                     <DatePicker 
                                         placeholder="To date"
-                                        format="YYYY-MM-DD"
+                                        format="YYYY-MMMM-DD"
                                         style={{ width: '100%' }}
                                     />
                                 </Form.Item>
@@ -146,7 +146,7 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
                             >
                                 <DatePicker.RangePicker 
                                     placeholder={["From date", "To date"]}
-                                    format="YYYY-MM-DD"
+                                    format="YYYY-MMMM-DD"
                                     style={{ width: '100%' }}
                                 />
                             </Form.Item>

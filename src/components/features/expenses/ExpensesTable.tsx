@@ -81,7 +81,7 @@ const ExpensesTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                   <Form.Item label="From Date" name="expenses_date_from">
                     <DatePicker
                       placeholder="From date"
-                      format="YYYY-MM-DD"
+                      format="YYYY-MMMM-DD"
                       style={{ width: '100%' }}
                       suffixIcon={<CalendarOutlined />}
                     />
@@ -92,7 +92,7 @@ const ExpensesTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                   <Form.Item label="To Date" name="expenses_date_to">
                     <DatePicker
                       placeholder="To date"
-                      format="YYYY-MM-DD"
+                      format="YYYY-MMMM-DD"
                       style={{ width: '100%' }}
                       suffixIcon={<CalendarOutlined />}
                     />
@@ -104,7 +104,7 @@ const ExpensesTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                 <Form.Item label="Expenses Date Range" name="expenses_date_range">
                   <DatePicker.RangePicker
                     placeholder={["From date", "To date"]}
-                    format="YYYY-MM-DD"
+                    format="YYYY-MMMM-DD"
                     style={{ width: '100%' }}
                   />
                 </Form.Item>

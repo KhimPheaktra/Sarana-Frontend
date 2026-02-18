@@ -1,4 +1,5 @@
 import { Col, Form, Input, InputNumber, Row, Select } from "antd";
+import TextArea from "antd/es/input/TextArea";
 
 interface Props {
   form: any;
@@ -24,14 +25,6 @@ const CatalogItemForm: React.FC<Props> = ({ form }) => {
           rules={[{ required: true, message: "Please enter name" }]}
         >
           <Input placeholder="Enter name" />
-        </Form.Item>
-      </Col>
-      <Col xs={24} sm={12}>
-        <Form.Item
-          label="Description"
-          name="description"
-        >
-          <Input placeholder="Enter email" />
         </Form.Item>
       </Col>
       <Col xs={24} sm={12}>
@@ -73,10 +66,14 @@ const CatalogItemForm: React.FC<Props> = ({ form }) => {
           </Select>
         </Form.Item>
       </Col>
-    
-      
-
-
+      <Col xs={24} sm={12}>
+          <Form.Item
+            label="Description"
+            name="description"
+          >
+            <TextArea placeholder="Enter description" />
+          </Form.Item>
+        </Col>
      
     </Row>
   </Form>

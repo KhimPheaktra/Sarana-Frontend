@@ -36,7 +36,7 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
             <DatePicker
               placeholder="Enter purchase date"
               showTime
-              format="YYYY-MM-DD HH:mm:ss"
+              format="YYYY-MMMM-DD HH:mm:ss"
               style={{ width: "100%" }}
               disabled={true}
             />

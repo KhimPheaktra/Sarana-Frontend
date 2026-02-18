@@ -32,21 +32,34 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       align: "center",
     },
     {
-      title: "Payment Type",
-      dataIndex: "payment_type",
-      key: "payment_type",
+      title: "Item",
+      dataIndex: "item_name",
+      key: "item_name",
       align: "center",
     },
     {
-      title: "Reference ID",
-      dataIndex: "reference_id",
-      key: "reference_id",
+      title: "Qty",
+      dataIndex: "qty",
+      key: "qty",
       align: "center",
     },
     {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
+      title: "Unit Price",
+      dataIndex: "unit_price",
+      key: "unit_price",
+      align: "center",
+       render: (value: number) => {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(value);
+      },
+    },
+  
+    {
+      title: "Total",
+      dataIndex: "total_amount",
+      key: "total_amount",
       align: "center",
       render: (value: number) => {
         return new Intl.NumberFormat('en-US', {
@@ -56,9 +69,22 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       },
     },
     {
-      title: "Payment Date",
+      title: "Date",
       dataIndex: "payment_date",
       key: "payment_date",
+      align: "center",
+    },
+     
+     {
+      title: "Payment",
+      dataIndex: "payment_type",
+      key: "payment_type",
+      align: "center",
+    },
+    {
+      title: "Reference",
+      dataIndex: "reference_id",
+      key: "reference_id",
       align: "center",
     },
     {
@@ -114,7 +140,7 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                 >
                     <DatePicker 
                     placeholder="From date"
-                    format="YYYY-MM-DD"
+                    format="YYYY-MMMM-DD"
                     style={{ width: '100%' }}
                     />
                 </Form.Item>
@@ -127,7 +153,7 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                 >
                     <DatePicker 
                     placeholder="To date"
-                    format="YYYY-MM-DD"
+                    format="YYYY-MMMM-DD"
                     style={{ width: '100%' }}
                     />
                 </Form.Item>
@@ -141,7 +167,7 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                 >
                 <DatePicker.RangePicker 
                     placeholder={["From date", "To date"]}
-                    format="YYYY-MM-DD"
+                    format="YYYY-MMMM-DD"
                     style={{ width: '100%' }}
                 />
                 </Form.Item>

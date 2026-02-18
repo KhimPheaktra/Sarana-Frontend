@@ -16,6 +16,7 @@ import { Navigate } from 'react-router-dom';
 import Payment from './components/features/payement/Payment';
 import Commision from './components/features/commision/Commission';
 import ExpenseReportContext from './components/features/reports/expenseReport/ExpenseReportContext';
+import UserProfile from './components/features/user-profile/UserProfile';
 
 
 
@@ -89,6 +90,14 @@ export const routes = [
       <PublicRoute>
         <Login />
       </PublicRoute>
+    ),
+  },
+  {
+    path: '/user-profile',
+    element: (
+      <ProtectedRoute>
+        <UserProfile />
+      </ProtectedRoute>
     ),
   },
   {

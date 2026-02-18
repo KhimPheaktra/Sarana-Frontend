@@ -23,7 +23,9 @@ import {
   DollarOutlined,
   FileTextOutlined,
   TagOutlined,
-  PrinterOutlined
+  PrinterOutlined,
+  CheckCircleOutlined,
+  FileAddOutlined
 } from "@ant-design/icons";
 import { useState } from "react";
 import { PrintQuote } from "./PrintQuote";
@@ -44,6 +46,7 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
   const [form] = Form.useForm();
   const { invoices, setInvoices, setQuotes } = useSales();
   const screens = useBreakpoint();
+  const [loadingQuotes, setLoadingQuotes] = useState<Record<number, boolean>>({});
   const isMobile = !screens.md;
   const [currentPage, setCurrentPage] = useState(1);
   const pageSize = 6;
@@ -69,6 +72,14 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
+  const animationGen = async (quote: QuoteType) => {
+    setLoadingQuotes(prev => ({ ...prev, [quote.quote_id]: true }));
+    await new Promise(res => setTimeout(res, 1500));
+    handleGenerateInvoice(quote);
+    quoteApprove(quote.quote_id);
+    setLoadingQuotes(prev => ({ ...prev, [quote.quote_id]: false }));
+
+  }
   const isInvoiceGenerated = (quote: QuoteType) => {
     return invoices.some(inv => inv.quote_id === quote.quote_id);
   };
@@ -101,7 +112,7 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                   <Form.Item label="From Date" name="quote_date_from">
                     <DatePicker
                       placeholder="From date"
-                      format="YYYY-MM-DD"
+                      format="YYYY-MMMM-DD"
                       style={{ width: '100%' }}
                       suffixIcon={<CalendarOutlined />}
                     />
@@ -112,7 +123,7 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                   <Form.Item label="To Date" name="quote_date_to">
                     <DatePicker
                       placeholder="To date"
-                      format="YYYY-MM-DD"
+                      format="YYYY-MMMM-DD"
                       style={{ width: '100%' }}
                       suffixIcon={<CalendarOutlined />}
                     />
@@ -124,7 +135,7 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                 <Form.Item label="Quote Date Range" name="quote_date_range">
                   <DatePicker.RangePicker
                     placeholder={["From date", "To date"]}
-                    format="YYYY-MM-DD"
+                    format="YYYY-MMMM-DD"
                     style={{ width: '100%' }}
                   />
                 </Form.Item>
@@ -210,12 +221,21 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                     <Tag>
                       {quote.status === "Approved" ? (
                         isInvoiceGenerated(quote) ? (
-                          <Button style={{ backgroundColor: '#52c41a', color: 'white' }} disabled>
-                            Done
+                          <Button
+                            style={{ backgroundColor: '#52c41a', borderColor: '#52c41a', color: 'white' }}
+                            icon={<CheckCircleOutlined />}
+                            disabled
+                          >
+                            Generated
                           </Button>
                         ) : (
-                          <Button type="primary" onClick={() => { handleGenerateInvoice(quote); quoteApprove(quote.quote_id); }}>
-                            Generate Invoice
+                          <Button
+                            type="primary"
+                            loading={loadingQuotes[quote.quote_id]}
+                            icon={!loadingQuotes[quote.quote_id] ? <FileAddOutlined /> : undefined}
+                            onClick={() => animationGen(quote)}
+                          >
+                            {loadingQuotes[quote.quote_id] ? 'Generating...' : 'Generate Invoice'}
                           </Button>
                         )
                       ) : null}

@@ -16,9 +16,9 @@ const { useBreakpoint } = Grid;
       customer_id: 101,
       invoice_date: '2026-02-07',
       item_name: "Item 1",
-      unit_price: 358,
+      unit_price: 250,
       qty: 1,
-      total_amount: 358,
+      total_amount: 250,
       status: 'Completed'
     },
     {
@@ -40,6 +40,7 @@ const { useBreakpoint } = Grid;
       quote_to: "",
       invoice_date: '2025-02-06',
       item_name: "Item 2",
+      engineer: "Long",
       unit_price: 150,
       qty: 2,
       total_amount: 300,

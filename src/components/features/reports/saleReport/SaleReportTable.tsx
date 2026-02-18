@@ -1,5 +1,5 @@
-import { Button, Card, Col, DatePicker, Form, Grid, Row, Space, Statistic, Table, Tag } from "antd";
-import { ClearOutlined, DollarOutlined, DownloadOutlined, FileDoneOutlined, FileTextOutlined, TagsOutlined } from "@ant-design/icons";
+import { Button, Col, DatePicker, Form, Grid, Row, Space, Table, Tag } from "antd";
+import { ClearOutlined, DownloadOutlined,} from "@ant-design/icons";
 import { useSales } from "../../sales/SaleContext";
 import dayjs from "dayjs";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
@@ -8,6 +8,7 @@ import Banner from "../../../../assets/images/banner.png";
 import {useSaleDateFilter } from "./saleDateFilter";
 import { exportSaleToExcel } from "./exportSaleExcel";
 import type { ColumnsType } from "antd/es/table";
+import { SaleStatCards } from "./SaleStatCards";
 
 
 dayjs.extend(isSameOrAfter);
@@ -164,90 +165,14 @@ export function SaleReportTable() {
             </Form>
 
             <div className="p-6">
-                <Row gutter={[16, 16]} className="stats-row">
-                    <Col xs={24} sm={12} md={12} lg={6}>
-                        <Card style={{ backgroundColor: '#519ee1', color: '#2f2f2f' }} variant="borderless">
-                            <Statistic
-                                prefix={
-                                    <span style={{
-                                        fontSize: 24,
-                                        color: '#1890ff',
-                                        backgroundColor: '#e6f7ff',
-                                        padding: '8px 12px',
-                                        borderRadius: '8px',
-                                        marginRight: '8px'
-                                    }}>
-                                        <FileDoneOutlined />
-                                    </span>
-                                }
-                                title={<span style={{ fontSize: 14, color: '#2f2f2f', fontWeight: 'bold' }}>Total Invoices</span>}
-                                value={total_invoice}
-                            />
-                        </Card>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={6}>
-                        <Card style={{ backgroundColor: '#f300df', color: '#2f2f2f' }} variant="borderless">
-                            <Statistic
-                                title={<span style={{ fontSize: 14, color: '#2f2f2f',fontWeight: 'bold' }}>Total Quote Approve</span>}
-                                value={total_quote_approve}
-                                prefix={
-                                    <span style={{
-                                        fontSize: 24,
-                                        color: '#f300df',
-                                        backgroundColor: '#f6ffed',
-                                        padding: '8px 12px',
-                                        borderRadius: '8px',
-                                        marginRight: '8px'
-                                    }}>
-                                        <FileTextOutlined />
-                                    </span>
-                                }
-                            />
-                        </Card>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={6}>
-                        <Card style={{ backgroundColor: '#722ed1', color: '#2f2f2f' }} variant="borderless">
-                            <Statistic
-                                title={<span style={{ fontSize: 14, color: '#2f2f2f',fontWeight: 'bold' }}>Total Item Sold</span>}
-                                prefix={
-                                    <span style={{
-                                        fontSize: 24,
-                                        color: '#722ed1',
-                                        backgroundColor: '#f9f0ff',
-                                        padding: '8px 12px',
-                                        borderRadius: '8px',
-                                        marginRight: '8px'
-                                    }}>
-                                        <TagsOutlined />
-                                    </span>
-                                }
-                                value={total_items_sold}
-                            />
-                        </Card>
-                    </Col>
-                    <Col xs={24} sm={12} md={12} lg={6}>
-                        <Card style={{ backgroundColor: '#52c41a', color: '#2f2f2f' }} variant="borderless">
-                            <Statistic
-                                title={<span style={{ fontSize: 14, color: '#2f2f2f',fontWeight: 'bold' }}>Total Revenue</span>}
-                                prefix={
-                                    <span style={{
-                                        fontSize: 24,
-                                        color: '#52c41a',
-                                        backgroundColor: '#f6ffed',
-                                        padding: '8px 12px',
-                                        borderRadius: '8px',
-                                        marginRight: '8px'
-                                    }}>
-                                        <DollarOutlined />
-                                    </span>
-                                }
-                                value={total_revenue.toFixed(2)}
-                            />
-                        </Card>
-                    </Col>
-                </Row>
+               <SaleStatCards
+                    total_invoice={total_invoice}
+                    total_quote_approve={total_quote_approve}
+                    total_items_sold={total_items_sold}
+                    total_revenue={total_revenue}
+                />
             </div>
-
+              <h3 style={{ marginBottom: '16px' }}>Sales</h3>     
             <Table
                 columns={reportColumns}
                 dataSource={tableData}
