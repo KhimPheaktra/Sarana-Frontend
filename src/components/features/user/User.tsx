@@ -11,8 +11,8 @@ const User = () => {
   const { openModal, closeModal } = useAppModal();
 
   const users: UserType[] = [
-    { key: "1", id: 1, name: "Tra",role:"Admin",phone_number:"012312112", status: "active" },
-    { key: "2", id: 2, name: "Long",role:"Engineer",phone_number:"02141142", status: "inactive" },
+    { key: "1", id: 1, username: "Tra",role:"Admin",phone_number:"012312112", status: "active" },
+    { key: "2", id: 2, username: "Long",role:"Engineer",phone_number:"02141142", status: "inactive" },
   ];
 
   const titleMap = {
@@ -52,7 +52,7 @@ const User = () => {
       titleMap,
       content: (
         <p>
-          Are you sure you want to delete user <b>{user.name}</b>?
+          Are you sure you want to delete user <b>{user.username}</b>?
         </p>
       ),
       onOk: () => {
