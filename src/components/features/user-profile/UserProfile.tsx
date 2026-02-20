@@ -1,8 +1,13 @@
+import { Card } from "antd"
+import UserProfileCard from "./UserProfileCard"
 
 
 function UserProfile() {
   return (
-    <div>User Profile Page</div>
+    <Card>
+      <UserProfileCard />
+    </Card>
+
   )
 }
 
