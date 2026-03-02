@@ -5,17 +5,25 @@ import type { ColumnsType } from "antd/es/table";
 
 const { useBreakpoint } = Grid;
 
-interface Props{
-    data: PaymentType[];
-    onEdit: (payment: PaymentType) => void;
-    onDelete: (payment: PaymentType) => void;
+interface Props {
+  data: PaymentType[];
+  onEdit: (payment: PaymentType) => void;
+  onDelete: (payment: PaymentType) => void;
 }
 
 const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
   const [form] = Form.useForm();
   const screens = useBreakpoint();
-  const isMobile = !screens.md; 
-  
+  const isMobile = !screens.md;
+  const renderItems = (record: PaymentType, render: (item: any) => React.ReactNode) => (
+    <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+      {record.payments.map((item, index) => (
+        <div key={index} style={{ lineHeight: "22px" }}>
+          {render(item)}
+        </div>
+      ))}
+    </div>
+  );
   const columns: ColumnsType<PaymentType> = [
     {
       title: "ID",
@@ -23,7 +31,7 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       key: "payment_id",
       align: "center",
       sorter: (a, b) => a.payment_id - b.payment_id,
-      defaultSortOrder: 'ascend',
+      defaultSortOrder: "ascend",
     },
     {
       title: "Customer",
@@ -33,40 +41,32 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
     },
     {
       title: "Item",
-      dataIndex: "item_name",
       key: "item_name",
       align: "center",
+      render: (_, record) => renderItems(record, (item) => item.item_name),
     },
     {
       title: "Qty",
-      dataIndex: "qty",
       key: "qty",
       align: "center",
+      render: (_, record) => renderItems(record, (item) => item.qty),
     },
     {
       title: "Unit Price",
-      dataIndex: "unit_price",
       key: "unit_price",
       align: "center",
-       render: (value: number) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        }).format(value);
-      },
+      render: (_, record) =>
+        renderItems(record, (item) =>
+          new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(item.unit_price)
+        ),
     },
-  
     {
       title: "Total",
       dataIndex: "total_amount",
       key: "total_amount",
       align: "center",
-      render: (value: number) => {
-        return new Intl.NumberFormat('en-US', {
-            style: 'currency',
-            currency: 'USD',
-        }).format(value);
-      },
+      render: (value: number) =>
+        new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value),
     },
     {
       title: "Date",
@@ -74,8 +74,7 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       key: "payment_date",
       align: "center",
     },
-     
-     {
+    {
       title: "Payment",
       dataIndex: "payment_type",
       key: "payment_type",
@@ -93,7 +92,7 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       key: "status",
       align: "center",
       render: (status) => (
-        <Tag color={status === "Completed" ? "green" : status === "Pendding" ? "yellow" : "default"}>
+        <Tag color={status === "Completed" ? "green" : status === "Pending" ? "yellow" : "default"}>
           {status}
         </Tag>
       ),
@@ -102,7 +101,13 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       title: "Partial",
       dataIndex: "partial_percentage",
       key: "partial_percentage",
-      align: "center", 
+      align: "center",
+    },
+     {
+      title: "Engineer",
+      dataIndex: "engineer",
+      key: "engineer",
+      align: "center",
     },
     {
       title: "Note",
@@ -123,105 +128,122 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
             <DeleteOutlined /> Delete
           </Button>
         </Space>
-      )
-    }
+      ),
+    },
   ];
+
 
   return (
     <div style={{ overflow: 'visible', minHeight: '600px' }}>
-        <Form form={form} layout="vertical" requiredMark={false}>
-        <Row gutter={16} align="bottom">  
-            {isMobile ? (
+      <Form form={form} layout="vertical" requiredMark={false}>
+        <Row gutter={16} align="bottom">
+          {isMobile ? (
             <>
-                <Col xs={24} sm={12}>
+              <Col xs={24} sm={12}>
                 <Form.Item
-                    label="From Date"
-                    name="payment_date_from"
+                  label="From Date"
+                  name="payment_date_from"
                 >
-                    <DatePicker 
+                  <DatePicker
                     placeholder="From date"
                     format="YYYY-MMMM-DD"
                     style={{ width: '100%' }}
-                    />
+                  />
                 </Form.Item>
-                </Col>
+              </Col>
 
-                <Col xs={24} sm={12}>
+              <Col xs={24} sm={12}>
                 <Form.Item
-                    label="To Date"
-                    name="payment_date_to"
+                  label="To Date"
+                  name="payment_date_to"
                 >
-                    <DatePicker 
+                  <DatePicker
                     placeholder="To date"
                     format="YYYY-MMMM-DD"
                     style={{ width: '100%' }}
-                    />
+                  />
                 </Form.Item>
-                </Col>
+              </Col>
             </>
-            ) : (
+          ) : (
             <Col xs={24} sm={24} md={8}>
-                <Form.Item
+              <Form.Item
                 label="Payment Date Range"
                 name="payment_date_range"
-                >
-                <DatePicker.RangePicker 
-                    placeholder={["From date", "To date"]}
-                    format="YYYY-MMMM-DD"
-                    style={{ width: '100%' }}
+              >
+                <DatePicker.RangePicker
+                  placeholder={["From date", "To date"]}
+                  format="YYYY-MMMM-DD"
+                  style={{ width: '100%' }}
                 />
-                </Form.Item>
+              </Form.Item>
             </Col>
-            )}
+          )}
 
-            <Col xs={24} sm={12} md={5}>
+          <Col xs={24} sm={12} md={5}>
             <Form.Item
-                label="Status"
-                name="status"
+              label="Status"
+              name="status"
             >
-                <Select placeholder="Select status">
+              <Select placeholder="Select status">
                 <Select.Option value="1">Pending</Select.Option>
                 <Select.Option value="2">Completed</Select.Option>
-                </Select>
+              </Select>
             </Form.Item>
-            </Col>
+          </Col>
 
-            <Col xs={24} sm={12} md={5}>
+          <Col xs={24} sm={12} md={5}>
             <Form.Item
-                label="Payment Type"
-                name="payment_type"
+              label="Payment Type"
+              name="payment_type"
             >
-                <Select placeholder="Select payment type">
+              <Select placeholder="Select payment type">
                 <Select.Option value="1">Cash</Select.Option>
                 <Select.Option value="2">Credit Card</Select.Option>
                 <Select.Option value="3">Bakor</Select.Option>
-                </Select>
+              </Select>
             </Form.Item>
-            </Col>
+          </Col>
 
-            <Col xs={24} sm={12} md={6}>
+          <Col xs={24} sm={12} md={6}>
             <Form.Item>
-                <Button 
-                onClick={() => form.resetFields()} 
+              <Button
+                onClick={() => form.resetFields()}
                 icon={<ClearOutlined />}
                 block={isMobile}
-                >
+              >
                 Clear Filter
-                </Button>
+              </Button>
             </Form.Item>
-            </Col>
+          </Col>
         </Row>
-        </Form>
+      </Form>
 
-        <Table
+      <Table
         columns={columns}
         dataSource={data}
+        size="small"
         rowKey="payment_id"
         pagination={{ pageSize: 10, simple: true }}
         scroll={{ x: 'max-content' }}
-        />
+        locale={{ emptyText: "No Payment Found" }}
+        components={{
+          body: {
+            cell: (props: any) => (
+              <td
+                {...props}
+                style={{
+                  ...props.style,
+                  verticalAlign: "middle",
+                  padding: "8px 12px",
+                }}
+              />
+            ),
+          },
+        }}
+      />
     </div>
-    );
+  );
 };
 
 export default PaymentTable;

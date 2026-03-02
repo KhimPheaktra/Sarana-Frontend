@@ -117,16 +117,18 @@ export const exportProfit = async (
         'FFB7EB8F',
         'FFD9F7BE',
         ['Invoice Date', 'Customer', 'Item', 'Quote To', 'Qty', 'Unit Price', 'Total Amount'],
-        filteredInvoices.map(i => [
+      filteredInvoices.flatMap(i =>
+        i.items.map(item => [
             dayjs(i.invoice_date).format('DD-MMMM-YYYY'),
             i.customer_id,
-            i.item_name,
+            item.item_name,
             i.quote_to || 'Instant Sale',
-            i.qty,
-            i.unit_price,
-            i.total_amount,
+            item.qty,
+            item.unit_price,
+            item.amount,
         ])
-    );
+        ));
+
 
     addSection(
         'Expenses',
@@ -143,19 +145,23 @@ export const exportProfit = async (
     );
 
     addSection(
-        'Purchases',
-        'FFFAAD14',
-        'FFFFEDD3',
-        ['Purchase ID', 'Supplier ID', 'Item ID', 'Date', 'Qty', 'Unit Price', 'Total Amount'],
-        filteredPurchases.map(p => [
-            p.purchase_id,
-            p.supplier_id,
-            p.item_id,
-            dayjs(p.purchase_date).format('DD-MMMM-YYYY'),
-            p.qty,
-            p.unit_price,
-            p.total_amount,
+    'Purchases',
+    'FFFAAD14',
+    'FFFFEDD3',
+    ['Purchase ID', 'Supplier ID', 'Item ID', 'Date', 'Qty', 'Unit Price', 'Line Subtotal', 'Purchase Total'],
+
+    filteredPurchases.flatMap(purchase =>
+        (purchase.items || []).map(item => [
+        purchase.purchase_id,
+        purchase.supplier_id,
+        item.item_id ?? '',
+        dayjs(purchase.purchase_date).format('DD-MMMM-YYYY'),
+        item.qty ?? 0,
+        item.unit_price ?? 0,
+        (item.qty ?? 0) * (item.unit_price ?? 0),   
+        purchase.total_amount,
         ])
+    )
     );
 
     addSection(

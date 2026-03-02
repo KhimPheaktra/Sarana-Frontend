@@ -1,11 +1,11 @@
 import { Button, Col, DatePicker, Form, Grid, Row, Space, Table, Tag } from "antd";
-import { ClearOutlined, DownloadOutlined,} from "@ant-design/icons";
+import { ClearOutlined, DownloadOutlined, } from "@ant-design/icons";
 import { useSales } from "../../sales/SaleContext";
 import dayjs from "dayjs";
 import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import Banner from "../../../../assets/images/banner.png";
-import {useSaleDateFilter } from "./saleDateFilter";
+import { useSaleDateFilter } from "./saleDateFilter";
 import { exportSaleToExcel } from "./exportSaleExcel";
 import type { ColumnsType } from "antd/es/table";
 import { SaleStatCards } from "./SaleStatCards";
@@ -33,81 +33,83 @@ export function SaleReportTable() {
         await exportSaleToExcel(filteredInvoices, Banner);
     };
 
-    const tableData = filteredInvoices.map((invoice, index) => ({
-        key: index,
-        customer_id: invoice.customer_id,
-        quote_id: invoice.quote_id,
-        quote_to: invoice.quote_to,
-        item_name: invoice.item_name,
-        invoice_date: invoice.invoice_date,
-        unit_price: invoice.unit_price,
-        qty: invoice.qty,
-        total_amount: invoice.total_amount,
-    }));
-
-    const total_invoice = filteredInvoices.length;
+    const tableData = filteredInvoices.flatMap((invoice, index) =>
+        (invoice.items ?? []).map((item, itemIndex) => ({
+            key: `${index}-${itemIndex}`,
+            customer_id: invoice.customer_id,
+            quote_id: invoice.quote_id,
+            quote_to: invoice.quote_to,
+            item_name: item.item_name,
+            invoice_date: invoice.invoice_date,
+            unit_price: item.unit_price,
+            qty: item.qty,
+            total_amount: invoice.total_amount,
+        }))
+    );
     const total_quote_approve = quotes.filter(q => q.status === "Approved").length;
-    const total_items_sold = filteredInvoices.reduce((total, invoice) => total + invoice.qty, 0);
+    const total_items_sold = filteredInvoices.reduce((total, invoice) =>
+        total + (invoice.items ?? []).reduce((s, item) => s + item.qty, 0), 0
+    )
+    const total_invoice = filteredInvoices.length;
     const total_revenue = filteredInvoices.reduce((total, invoice) => total + invoice.total_amount, 0);
 
+    const reportColumns: ColumnsType<any> = [
+        {
+            title: "Customer",
+            dataIndex: "customer_id",
+            key: "customer_id"
+        },
+        {
+            title: "Item",
+            dataIndex: "item_name",
+            key: "item_name"
+        },
 
-     const reportColumns: ColumnsType<any> = [
-    {
-        title: "Customer",
-        dataIndex: "customer_id",
-        key: "customer_id"
-    },
-    {
-        title: "Item",
-        dataIndex: "item_name",
-        key: "item_name"
-    },
-
-    {
-        title: "Quote To",
-        dataIndex: "quote_to",
-        key: "quote_to",
-        render: (_, record) => {
-            const quoteValue = record.quote_to || record.quote_id;
-            if(quoteValue) {
-                return quoteValue;
+        {
+            title: "Quote To",
+            dataIndex: "quote_to",
+            key: "quote_to",
+            render: (_, record) => {
+                const quoteValue = record.quote_to || record.quote_id;
+                if (quoteValue) {
+                    return quoteValue;
+                }
+                return <Tag style={{ color: "#a600ff", fontWeight: "bold" }}>Instant Sale</Tag>;
             }
-            return <Tag style={{color: "#a600ff",fontWeight:"bold"}}>Instant Sale</Tag>;
-        }
-    },
-    {
-        title: "Date",
-        dataIndex: "invoice_date",
-        key: "invoice_date"
-    },
-    {
-        title: "Qty",
-        dataIndex: "qty",
-        key: "qty"
-    },
-    {
-        title: "Unit Price",
-        dataIndex: "unit_price",
-        key: "unit_price",
-        render: (value: number) => {
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-            }).format(value);
         },
-    },
-    {
-        title: "Total",
-        dataIndex: "total_amount",
-        key: "total_amount",
-        render: (value: number) => {
-            return new Intl.NumberFormat('en-US', {
-                style: 'currency',
-                currency: 'USD',
-            }).format(value);
+        {
+            title: "Date",
+            dataIndex: "invoice_date",
+            key: "invoice_date"
         },
-    },
-];
+        {
+            title: "Qty",
+            dataIndex: "qty",
+            key: "qty"
+        },
+        {
+            title: "Unit Price",
+            dataIndex: "unit_price",
+            key: "unit_price",
+            render: (value: number) => {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                }).format(value);
+            },
+        },
+        {
+            title: "Total",
+            dataIndex: "total_amount",
+            key: "total_amount",
+            render: (value: number) => {
+                return new Intl.NumberFormat('en-US', {
+                    style: 'currency',
+                    currency: 'USD',
+                }).format(value);
+            },
+        },
+    ];
 
     return (
         <div style={{ overflow: 'visible', minHeight: '600px' }}>
@@ -165,19 +167,20 @@ export function SaleReportTable() {
             </Form>
 
             <div className="p-6">
-               <SaleStatCards
+                <SaleStatCards
                     total_invoice={total_invoice}
                     total_quote_approve={total_quote_approve}
                     total_items_sold={total_items_sold}
                     total_revenue={total_revenue}
                 />
             </div>
-              <h3 style={{ marginBottom: '16px' }}>Sales</h3>     
+            <h3 style={{ marginBottom: '16px' }}>Sales</h3>
             <Table
                 columns={reportColumns}
                 dataSource={tableData}
                 pagination={false}
                 scroll={{ x: 'max-content' }}
+                size="small"
             />
         </div>
     );

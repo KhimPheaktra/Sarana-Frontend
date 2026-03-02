@@ -6,6 +6,7 @@ export interface ModalConfig<T extends ModalMode = ModalMode> {
   okTextMap?: Partial<Record<T, string>>;
   content: React.ReactNode;
   onOk: () => void;
+  width?: number; 
 }
 
 interface AppModalContextType {
@@ -43,6 +44,7 @@ export const AppModalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           okTextMap={config.okTextMap}
           onCancel={closeModal}
           onOk={config.onOk}
+          width={config.width} 
         >
           {config.content}
         </AppModal>

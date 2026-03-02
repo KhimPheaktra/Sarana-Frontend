@@ -6,42 +6,36 @@ import { DollarOutlined } from "@ant-design/icons";
 import PaymentTable from "./PaymentTable";
 import PaymentForm from "./PaymentForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
+import { generatePaymentInvoice } from "./generatePaymentInvoice";
+import { useSales } from "../sales/SaleContext";
 
+
+export const paymentData: PaymentType[] = [
+  {
+    payment_id: 1,
+    customer_name: "Tra",
+    payment_type: "Cash",
+    reference_id: 1,
+    payments: [{
+      item_name: 'Item 1',
+      qty: 1,
+      unit_price: 120,
+      discount: 0,
+      amount: 120,
+    }],
+    engineer: "Tra",
+    total_amount: 120,
+    payment_date: "2026-02-02",
+    status: "Pending",
+    key: "",
+    customer_id: 0
+  }
+]
 
 const Payment = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
-
-  const payments: PaymentType[] = [
-    {
-      key: "1",
-      payment_id: 1,
-      customer_name: "Tra",
-      payment_type: "Cash",
-      reference_id: 1,
-      item_name: "Item 1",
-      qty: 1,
-      unit_price: 100,
-      total_amount: 100,
-      payment_date: "2026-01-01",
-      status: "Completed",
-      partial_percentage: 50,
-      note: "First payment",
-    },
-    {
-      key: "2",
-      payment_id: 2,
-      customer_name: "Long Zin",
-      payment_type: "Bakor",
-      reference_id: 2,
-      item_name: "Item 2",
-      qty: 1,
-      unit_price: 200,
-      total_amount: 200,
-      payment_date: "2026-01-05",
-      status: "Pendding",
-    },
-  ];
+  const { invoices, setInvoices, payments, setPayments } = useSales(); 
 
   const titleMap = {
     add: "Add Payment",
@@ -51,15 +45,32 @@ const Payment = () => {
 
   const openAdd = () => {
     form.resetFields();
-    form.setFieldsValue({
-      payment_date: dayjs(),
-    });
+    form.setFieldsValue({ payment_date: dayjs() });
 
     openModal("add", {
       titleMap,
       content: <PaymentForm form={form} />,
+      width: 800,
       onOk: async () => {
-        await form.validateFields();
+        const values = await form.validateFields();
+
+        const newPayment: PaymentType = {
+          key: `pay-${Date.now()}`,
+          payment_id: payments.length + 1,
+          customer_id: values.customer_id ?? 0,
+          customer_name: values.customer_name,
+          payment_type: values.payment_type,
+          reference_id: values.reference_id,
+          payments: values.payments ?? [],
+          engineer: values.engineer,
+          total_amount: values.total_amount,
+          payment_date: values.payment_date?.format("YYYY-MM-DD") ?? "",
+          status: values.status,
+          note: values.note,
+        };
+
+        setPayments(prev => [...prev, newPayment]);
+        generatePaymentInvoice(newPayment, invoices, setInvoices);
         message.success("Payment added successfully");
         closeModal();
       },
@@ -69,16 +80,25 @@ const Payment = () => {
   const openEdit = (payment: PaymentType) => {
     form.setFieldsValue({
       ...payment,
-      payment_date: payment.payment_date
-        ? dayjs(payment.payment_date)
-        : undefined,
+      payment_date: payment.payment_date ? dayjs(payment.payment_date) : undefined,
     });
 
     openModal("edit", {
       titleMap,
       content: <PaymentForm form={form} />,
       onOk: async () => {
-        await form.validateFields();
+        const values = await form.validateFields();
+
+        const updatedPayment: PaymentType = {
+          ...payment,
+          ...values,
+          payment_date: values.payment_date?.format("YYYY-MM-DD") ?? "",
+        };
+
+        setPayments(prev =>
+          prev.map(p => p.key === payment.key ? updatedPayment : p)
+        );
+        generatePaymentInvoice(updatedPayment, invoices, setInvoices);
         message.success("Payment updated successfully");
         closeModal();
       },
@@ -88,13 +108,9 @@ const Payment = () => {
   const openDelete = (payment: PaymentType) => {
     openModal("delete", {
       titleMap,
-      content: (
-        <p>
-          Are you sure you want to delete payment{" "}
-          <b>{payment.payment_id}</b>?
-        </p>
-      ),
+      content: <p>Are you sure you want to delete payment <b>{payment.payment_id}</b>?</p>,
       onOk: () => {
+        setPayments(prev => prev.filter(p => p.key !== payment.key));
         message.success("Payment deleted successfully");
         closeModal();
       },
@@ -105,16 +121,15 @@ const Payment = () => {
     <div className="table-container">
       <PageHeader
         title="Payment Management"
-        count={payments.length}
+        count={payments.length}       
         countLabel="payments"
         onAdd={openAdd}
         buttonText="Add Payment"
         icon={<DollarOutlined />}
       />
-
       <Card>
         <PaymentTable
-          data={payments}
+          data={payments}       
           onEdit={openEdit}
           onDelete={openDelete}
         />

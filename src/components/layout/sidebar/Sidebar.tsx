@@ -55,23 +55,36 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
 
     const onOpenChange = (keys: string[]) => {
       const latestOpenKey = keys.find(key=> !openKeys.includes(key));
-      setOpenKeys(latestOpenKey ? [latestOpenKey] : []);
-    }
-    const findParentKey = (items: any[], targetKey?: string): string | undefined => {
-      for (const item of items) {
-        if (item.children?.some((child: { key: string | undefined; }) => child.key === targetKey)) {
-          return item.key;
-        }
-        if (item.children) {
-          const parent = findParentKey(item.children, targetKey);
-          if (parent) return parent;
-        }
+      if(!latestOpenKey) {
+        setOpenKeys([]);
+        return;
       }
+      const parentKeys = findParentKey(menuItems,latestOpenKey);
+
+      const newKeys = [
+        ...parentKeys,
+        latestOpenKey
+      ];
+      setOpenKeys(newKeys);
+    }
+    const findParentKey = (items: any[], targetKey?: string ,parents: string[] = []): string[] => {
+        for (const item of items){
+          if(item.key === targetKey) return parents;
+          if(item.children){
+            const result = findParentKey(
+              item.children,
+              targetKey,
+              [...parents, item.key]
+            );
+            if(result.length) return result;
+          }
+        }
+        return [];
     };
     React.useEffect(() => {
       if (selectedKey) {
         const parentKey = findParentKey(menuItems, selectedKey);
-        setOpenKeys(parentKey ? [parentKey] : []);
+        setOpenKeys(parentKey);
       }
     }, [selectedKey]);
 

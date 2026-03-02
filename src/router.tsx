@@ -14,9 +14,10 @@ import Invoice from './components/features/invoice/Invoice';
 import { Spin } from 'antd';
 import { Navigate } from 'react-router-dom';
 import Payment from './components/features/payement/Payment';
-import Commision from './components/features/commision/Commission';
 import ExpenseReportContext from './components/features/reports/expenseReport/ExpenseReportContext';
 import UserProfile from './components/features/user-profile/UserProfile';
+import PersonalCommision from './components/features/commision/personal-commission/PersonalCommision';
+import ProjectCommission from './components/features/commision/project-commission/ProjectCommission';
 
 
 
@@ -181,10 +182,18 @@ export const routes = [
     ),
   },
   {
-    path: '/commissions',
+    path: '/persional-commissions',
     element: (
       <ProtectedRoute>
-        <Commision />
+        <PersonalCommision />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/project-commissions',
+    element: (
+      <ProtectedRoute>
+        <ProjectCommission />
       </ProtectedRoute>
     ),
   },

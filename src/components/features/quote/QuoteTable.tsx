@@ -9,11 +9,12 @@ import {
   Row,
   Select,
   Pagination,
-  Empty
+  Empty,
+  message
 } from "antd";
 import { CalendarOutlined, ClearOutlined } from "@ant-design/icons";
 import { useState } from "react";
-import { generateQuoteInvoice } from "../invoice/GenerateQuoteInvoice";
+import { generateQuoteInvoice } from "./GenerateQuoteInvoice";
 import { useSales } from "../sales/SaleContext";
 
 import QuoteCardContent from "./QuoteCardContent";
@@ -25,10 +26,11 @@ interface Props {
   data: QuoteType[];
   onEdit: (quote: QuoteType) => void;
   onDelete: (quote: QuoteType) => void;
+  onView: (quote: QuoteType) => void;  
   onClose?: () => void;
 }
 
-const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
+const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete,onView }) => {
   const [form] = Form.useForm();
   const { invoices, setInvoices, setQuotes } = useSales();
   const screens = useBreakpoint();
@@ -71,6 +73,10 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
   };
 
   const handleGenerateInvoice = (quote: QuoteType) => {
+    if(!quote.engineer || quote.engineer.trim() === ''){
+      message.info("Please assign engineer !")
+      return
+    }
     generateQuoteInvoice(quote, invoices, setInvoices);
   };
 
@@ -160,6 +166,7 @@ const QuoteTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
                 onGenerateInvoice={animationGen}
                 onEdit={onEdit}
                 onDelete={onDelete}
+                onView={onView}
               />
             </Col>
           ))}

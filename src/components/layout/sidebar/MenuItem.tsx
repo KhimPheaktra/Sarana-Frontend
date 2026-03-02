@@ -101,8 +101,19 @@ export const menuItems: AppMenuItem[] = [
       {
         key: 'commissions',
         label: 'Commissions',
-        route: '/commissions',
-      },
+        children: [
+          {
+            key: 'personal-commissions',
+            label: 'Personal Commissions',
+            route: '/persional-commissions',
+          },
+          {
+            key: 'project-commissions',
+            label: 'Project Commissions',
+            route: '/project-commissions',
+          },
+        ]
+      }
     ],
   },
   {

@@ -5,7 +5,7 @@ interface Props {
     form: any;
 }
 
-const CommissionForm: React.FC<Props> = ({ form }) => {
+const PersonalCommissionForm: React.FC<Props> = ({ form }) => {
 
     return (
         <Form form={form} layout="vertical" requiredMark={false}>
@@ -60,4 +60,4 @@ const CommissionForm: React.FC<Props> = ({ form }) => {
     );
 };
 
-export default CommissionForm;
+export default PersonalCommissionForm;

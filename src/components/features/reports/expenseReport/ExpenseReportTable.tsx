@@ -65,14 +65,15 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
             key: `purchase-${purchase.purchase_id}`,
             type: 'Purchase' as const,
             id: purchase.purchase_id,
-            description: `Item: ${purchase.item_id} (Qty: ${purchase.qty})`,
+            description: purchase.items
+                .map((it) => `Item ${it.item_id}${it.item_name ? ` (${it.item_name})` : ''} ×${it.qty}`)
+                .join(', ') || 'Multiple items',
             date: purchase.purchase_date,
-            amount: purchase.total_amount,
+            amount: -purchase.total_amount, 
             supplier_id: purchase.supplier_id,
-            item_id: purchase.item_id,
-            qty: purchase.qty,
-            unit_price: purchase.unit_price,
-        }))
+            purchase_total: purchase.total_amount,
+            status: purchase.status,
+            })),
     ].sort((a, b) => dayjs(b.date).valueOf() - dayjs(a.date).valueOf()); 
 
     const combinedColumns: ColumnsType<CombinedExpenseType> = [
@@ -213,6 +214,7 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                     dataSource={combinedTableData}
                     pagination={false}
                     scroll={{ x: 'max-content' }}
+                    size="small"
                 />
             </div>
         </div>

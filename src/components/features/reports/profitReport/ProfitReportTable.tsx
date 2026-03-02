@@ -27,7 +27,6 @@ dayjs.extend(isSameOrBefore);
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-
 interface ProfitReportTableProps {
     invoices?: InvoiceType[];
     expenses?: ExpensesType[];
@@ -54,13 +53,22 @@ function ProfitReportTable({
         isMobile,
     } = useProfitDateFilter(invoices, expenses, purchases, commissions, form);
 
-    const totalRevenue     = filteredInvoices.reduce((s, i) => s + i.total_amount, 0);
-    const totalExpenses    = filteredExpenses.reduce((s, e) => s + e.amount, 0);
-    const totalPurchases   = filteredPurchases.reduce((s, p) => s + p.total_amount, 0);
-    const totalCommissions = filteredCommissions.reduce((s, c) => s + c.amount, 0);
-    const totalSpend       = totalExpenses + totalPurchases + totalCommissions;
-    const netProfit        = totalRevenue - totalSpend;
-    const isProfit         = netProfit >= 0;
+    //  Calculations
+    const totalRevenue     = filteredInvoices.reduce((s, i) => s + (i.total_amount || 0), 0);
+    const totalExpenses    = filteredExpenses.reduce((s, e) => s + (e.amount || 0), 0);
+    const totalPurchases   = filteredPurchases.reduce((s, p) => s + (p.total_amount || 0), 0);
+
+    // Split commissions properly using filtered data
+    const filteredProjectCommissions  = filteredCommissions.filter(c => c.project?.trim());
+    const filteredPersonalCommissions = filteredCommissions.filter(c => !c.project?.trim());
+
+    const totalProjectCommission  = filteredProjectCommissions.reduce((s, c) => s + (c.amount || 0), 0);
+    const totalPersonalCommission = filteredPersonalCommissions.reduce((s, c) => s + (c.amount || 0), 0);
+    const totalCommissions        = totalProjectCommission + totalPersonalCommission;
+
+    const totalSpend = totalExpenses + totalPurchases + totalCommissions;
+    const netProfit  = totalRevenue - totalSpend;
+    const isProfit   = netProfit >= 0;
 
     const handleExport = async () => {
         await exportProfit(
@@ -135,10 +143,13 @@ function ProfitReportTable({
                     totalExpenses={totalExpenses}
                     totalPurchases={totalPurchases}
                     totalCommissions={totalCommissions}
+                    totalPersonalCommission={totalPersonalCommission}
+                    totalProjectCommission={totalProjectCommission}
                     totalSpend={totalSpend}
                     netProfit={netProfit}
                     isProfit={isProfit}
                 />
+
                 <ProfitChart
                     totalRevenue={totalRevenue}
                     totalExpenses={totalExpenses}

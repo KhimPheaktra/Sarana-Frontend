@@ -1,0 +1,167 @@
+/* Toolbar */
+.quote-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 16px;
+}
+
+/* Paper wrapper */
+.quote-paper {
+  width: 100%;
+  background-color: #fff;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  font-size: 11pt;
+  box-sizing: border-box;
+}
+
+/* Banner */
+.quote-banner {
+  margin-bottom: 20px;
+}
+
+.quote-banner img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Company info + Title row */
+.quote-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  gap: 10px;
+}
+
+.quote-title-block {
+  text-align: right;
+}
+
+.quote-title-block h1 {
+  font-size: 28px;
+  font-weight: bold;
+  margin: 0 0 10px 0;
+}
+
+.quote-title-block .quote-date {
+  color: #1e40af;
+}
+
+/* Shared table base */
+.quote-table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+}
+
+.quote-table td {
+  padding: 6px 10px;
+  border: 1px solid #000;
+}
+
+.quote-table th {
+  padding: 8px;
+  border: 1px solid #000;
+  background-color: #1e5a8e;
+  color: #fff;
+  text-align: center;
+}
+
+/* Customer table */
+.quote-customer-table {
+  margin-bottom: 15px;
+}
+
+.quote-customer-table .label-col {
+  font-weight: bold;
+  width: 20%;
+}
+
+.quote-customer-table .address-row {
+  height: 60px;
+}
+
+/* WorkShop info table */
+.quote-info-table {
+  flex: 1;
+}
+
+.quote-info-table .label-col {
+  font-weight: bold;
+  width: 30%;
+}
+
+/*  Items table  */
+.quote-items-table {
+  margin-bottom: 15px;
+}
+
+.quote-items-table .col-center {
+  text-align: center;
+}
+
+.quote-items-table .col-right {
+  text-align: right;
+}
+
+/*  Totals */
+.quote-totals {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.quote-totals-table {
+  width: 300px;
+  border-collapse: collapse;
+  border: 1px solid #000;
+}
+
+.quote-totals-table td {
+  padding: 6px 10px;
+  border: 1px solid #000;
+  background-color: #1e5a8e;
+  color: #fff;
+}
+
+.quote-totals-table .value-col {
+  text-align: right;
+}
+
+.quote-totals-table .total-paid {
+  font-weight: bold;
+}
+
+/* Remark */
+.quote-remark {
+  margin-bottom: 60px;
+}
+
+.quote-remark .remark-title {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.quote-remark .remark-content {
+  padding-left: 80px;
+  line-height: 1.6;
+}
+
+/* Signatures */
+.quote-signatures {
+  display: flex;
+  justify-content: space-between;
+  gap: 40px;
+  margin-top: 60px;
+}
+
+.quote-signatures .sig-block {
+  flex: 1;
+}
+
+.quote-signatures .sig-line {
+  border-bottom: 1px solid #000;
+  height: 60px;
+  margin-bottom: 8px;
+}

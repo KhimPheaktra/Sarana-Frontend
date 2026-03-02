@@ -6,12 +6,12 @@ import {
   DeleteOutlined,
   DollarOutlined,
   EditOutlined,
+  EyeOutlined,
   FileAddOutlined,
   FileTextOutlined,
-  PrinterOutlined,
   TagOutlined,
+  UserOutlined,
 } from "@ant-design/icons";
-import { PrintQuote } from "./PrintQuote";
 
 const { useBreakpoint } = Grid;
 const { Text, Title } = Typography;
@@ -24,6 +24,7 @@ interface QuoteCardProps {
   onGenerateInvoice: (quote: QuoteType) => void;
   onEdit: (quote: QuoteType) => void;
   onDelete: (quote: QuoteType) => void;
+  onView: (quote: QuoteType) => void;
 }
 
 const QuoteCardContent: React.FC<QuoteCardProps> = ({
@@ -34,6 +35,7 @@ const QuoteCardContent: React.FC<QuoteCardProps> = ({
   onGenerateInvoice,
   onEdit,
   onDelete,
+   onView,  
 }) => {
   const screens = useBreakpoint();
   const isMobile = !screens.md;
@@ -52,7 +54,7 @@ const QuoteCardContent: React.FC<QuoteCardProps> = ({
     >
       {/* Header */}
       <div style={{ marginBottom: 16 }}>
-        {/* Row 1: ID + Tags */}
+        {/*ID + Tags */}
         <div
           style={{
             display: "flex",
@@ -107,7 +109,7 @@ const QuoteCardContent: React.FC<QuoteCardProps> = ({
           </div>
         </div>
 
-        {/* Row 2: Generate Invoice (Approved only) */}
+        {/* Generate Invoice (Approved only) */}
         {quote.status === "Approved" && (
           <div style={{ marginTop: 4 }}>
             {isInvoiceGenerated(quote) ? (
@@ -143,7 +145,7 @@ const QuoteCardContent: React.FC<QuoteCardProps> = ({
       <Divider style={{ margin: "16px 0" }} />
 
       {/* Content */}
-      <Space direction="vertical" size={12} style={{ width: "100%" }}>
+      <Space orientation="vertical" size={12} style={{ width: "100%" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
           <FileTextOutlined
             style={{ fontSize: 16, color: "#1890ff", marginRight: 8 }}
@@ -153,7 +155,11 @@ const QuoteCardContent: React.FC<QuoteCardProps> = ({
               Item
             </Text>
             <div>
-              <Text strong>{quote.item}</Text>
+             {quote.items.map((row, i) => (
+                <Text key={i} strong style={{ display: "block" }}>
+                  {row.item}
+                </Text>
+              ))}
             </div>
           </div>
         </div>
@@ -190,6 +196,26 @@ const QuoteCardContent: React.FC<QuoteCardProps> = ({
             </div>
           </div>
         </div>
+        {quote.engineer && (
+          <div style={{ display: "flex", alignItems: "flex-start" }}>
+            <UserOutlined
+              style={{
+                fontSize: 16,
+                color: "#8c8c8c",
+                marginRight: 8,
+                marginTop: 2,
+              }}
+            />
+            <div style={{ flex: 1 }}>
+              <Text type="secondary" style={{ fontSize: 12 }}>
+                Engineer
+              </Text>
+              <div>
+                <Text style={{ fontSize: 13 }}>{quote.engineer}</Text>
+              </div>
+            </div>
+          </div>
+        )}
 
         {quote.notes && (
           <div style={{ display: "flex", alignItems: "flex-start" }}>
@@ -224,11 +250,10 @@ const QuoteCardContent: React.FC<QuoteCardProps> = ({
       >
         <Button
           type="primary"
-          style={{ backgroundColor: "#ff14e7", color: "white" }}
-          icon={<PrinterOutlined />}
-          onClick={() => PrintQuote(quote)}
+          icon={<EyeOutlined />}
+          onClick={() => onView(quote)}
         >
-          {!isMobile && "Print"}
+          {!isMobile && "View"}
         </Button>
         <Button
           type="primary"

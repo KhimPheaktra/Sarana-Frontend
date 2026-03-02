@@ -104,6 +104,8 @@ const CatalogItemTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       pagination={{ pageSize: 10,simple: true }}
       scroll={{x: 'max-content'}}
       rowKey="item_id"
+      size="small"
+      locale={{emptyText: "No Item found"}}
     />
   );
 };

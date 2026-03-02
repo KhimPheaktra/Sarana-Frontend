@@ -45,6 +45,12 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
             align: "center",
         },
         {
+            title: "Item Name",
+            dataIndex: "item_name",
+            key: "item_name",
+            align: "center",
+        },
+        {
             title: "Qty",
             dataIndex: "qty",
             key: "qty",
@@ -173,6 +179,8 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
                 pagination={{ pageSize: 10, simple: true }}
                 scroll={{ x: 'max-content' }}
                 rowKey="purchase_id"
+                locale={{emptyText: "No Purchas Found"}}
+                size="small"
             />
         </div>
     );

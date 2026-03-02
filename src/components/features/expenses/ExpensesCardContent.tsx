@@ -76,7 +76,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense, onEdit, onDelete }) 
       <Divider style={{ margin: "16px 0" }} />
 
       {/* Content */}
-      <Space direction="vertical" size={12} style={{ width: "100%" }}>
+      <Space orientation="vertical" size={12} style={{ width: "100%" }}>
         <div style={{ display: "flex", alignItems: "flex-start" }}>
           <FileTextOutlined
             style={{ fontSize: 16, color: "#1890ff", marginRight: 8, marginTop: 2 }}
