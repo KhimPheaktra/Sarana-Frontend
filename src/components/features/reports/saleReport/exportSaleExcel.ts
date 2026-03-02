@@ -53,20 +53,21 @@ export const exportSaleToExcel = async (
 
   // data rows
   dataToExport.forEach(invoice => {
-    worksheet.addRow([
-      invoice.customer_id,
-      invoice.item_name,
-      invoice.quote_to || 'Instant Sale',
-      dayjs(invoice.invoice_date).format('DD-MMMM-YYYY'),
-      invoice.qty,
-      invoice.unit_price,
-      invoice.total_amount
-    ]);
+    invoice.items.forEach(item => {
+      worksheet.addRow([
+        invoice.customer_id,
+        item.item_name,
+        invoice.quote_to || 'Instant Sale',
+        dayjs(invoice.invoice_date).format('DD-MMMM-YYYY'),
+        item.qty,
+        item.unit_price,
+        item.amount
+      ]);
+    });
   });
 
   // Calculate total sales
   const totalSales = dataToExport.reduce((sum, invoice) => sum + invoice.total_amount, 0);
-
   // Add empty row for spacing
   worksheet.addRow([]);
 

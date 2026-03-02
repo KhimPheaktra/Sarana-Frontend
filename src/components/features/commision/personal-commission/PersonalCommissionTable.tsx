@@ -1,7 +1,8 @@
 import type { ColumnsType } from "antd/es/table";
-import type { CommissionType } from "./commission.types";
+import type { CommissionType } from "../commission.types";
 import { Button, Col, DatePicker, Form, Grid, Row, Space, Table } from "antd";
 import { ClearOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import React from "react";
 
 const { useBreakpoint } = Grid;
 
@@ -11,10 +12,11 @@ interface Props{
     onDelete: (commission: CommissionType) => void;
 }
 
-const CommissionTable:React.FC<Props> = ({ data, onEdit, onDelete }) => {
+const PersonalCommissionTable:React.FC<Props> = ({ data, onEdit, onDelete }) => {
     const [form] = Form.useForm();
     const screens = useBreakpoint();
     const isMobile = !screens.md; 
+
     const columns: ColumnsType<CommissionType> = [
         {
             title: "ID",
@@ -124,17 +126,17 @@ const CommissionTable:React.FC<Props> = ({ data, onEdit, onDelete }) => {
             </Col>
         </Row>
         </Form>
-
         <Table
             columns={columns}
             dataSource={data}
             pagination={{ pageSize: 10, simple: true }}
             rowKey="commission_id"
             scroll={{x: 'max-content'}}
+            size="small"
+            locale={{emptyText: "No Personal Commissions Found"}}
             />
-
         </div>
     )
 };
 
-export default CommissionTable;
+export default PersonalCommissionTable;

@@ -1,4 +1,4 @@
-import { Button, Space, Table } from "antd";
+import { Button, Empty, Space, Table } from "antd";
 import type { CusType } from "./cus.types";
 import { EditOutlined,DeleteOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
@@ -67,6 +67,8 @@ const CustomerTable:React.FC<Props> = ({ data, onEdit, onDelete }) => {
             pagination={{ pageSize: 10, simple: true }}
             scroll={{ x: 'max-content' }}
             rowKey="id"
+            locale={{ emptyText: <Empty description="No Customer Found" /> }}
+            size="small"
         />
     );
 };

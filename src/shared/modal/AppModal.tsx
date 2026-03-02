@@ -11,6 +11,7 @@ interface AppModalProps<T extends ModalMode = ModalMode> {
   onCancel: () => void;
   onOk: () => void;
   children?: React.ReactNode;
+  width?: number;
 }
 
 const AppModal = <T extends ModalMode = ModalMode>({
@@ -21,6 +22,7 @@ const AppModal = <T extends ModalMode = ModalMode>({
   onCancel,
   onOk,
   children,
+  width, 
 }: AppModalProps<T>) => {
   return (
     <Modal
@@ -33,6 +35,7 @@ const AppModal = <T extends ModalMode = ModalMode>({
       maskClosable={false}
       destroyOnHidden={false}
       forceRender
+      width={width ?? 600}
     >
       {children}
     </Modal>

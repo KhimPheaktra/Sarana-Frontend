@@ -134,17 +134,22 @@ export const exportExpenseToExcel = async (
     }
 
     // Purchase data
-    filteredPurchases.forEach(purchase => {
+    filteredPurchases.forEach((purchase) => {
+    purchase.items.forEach((item) => {
         worksheet.addRow([
-            purchase.purchase_id,
-            purchase.supplier_id,
-            purchase.item_id,
-            dayjs(purchase.purchase_date).format('DD-MMMM-YYYY'),
-            purchase.qty,
-            purchase.unit_price,
-            purchase.total_amount
+        purchase.purchase_id,
+        purchase.supplier_id,
+        item.item_id,
+        dayjs(purchase.purchase_date).format('DD-MMMM-YYYY'),
+        item.qty,
+        item.unit_price,
+        item.subtotal || item.qty * item.unit_price, 
+        purchase.total_amount, 
+        purchase.status || '',
+        purchase.note || '',
         ]);
     });
+});
 
     // columns
     worksheet.columns.forEach((column) => {

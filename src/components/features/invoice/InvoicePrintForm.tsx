@@ -20,7 +20,7 @@ interface Props {
   onClose: () => void;
 }
 
-const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
+const InvoicePrintForm: React.FC<Props> = ({ invoice, onClose }) => {
   const componentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -31,48 +31,22 @@ const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
     };
   }, []);
 
-  const lineItems = items && items.length > 0 
-    ? items.map((item, index) => ({
-        no: index + 1,
-        description: item.description,
-        quantity: item.quantity,
-        unitPrice: item.unitPrice,
-        discount: item.discount,
-        amount: item.amount
-      }))
-    : [
-        {
-          no: 1,
-          description: 'Item 1',
-          quantity: 1,
-          unitPrice: 100,
-          discount: 0,
-          amount: 100
-        },
-        {
-          no: 2,
-          description: 'Item 2',
-          quantity: 2,
-          unitPrice: 50,
-          discount: 0,
-          amount: 100
-        },
-        {
-          no: 3,
-          description: 'Item 3',
-          quantity: 1,
-          unitPrice: 158,
-          discount: 0,
-          amount: 158
-        }
-      ];
+  const lineItems = invoice.items.map((item, index) => ({
+  no:          index + 1,
+  item_name: item.item_name,
+  quantity:    item.qty,
+  unitPrice:   item.unit_price,
+  discount:    item.discount,
+  amount:      item.amount,
+}));
 
-  const grandTotal = lineItems.reduce((sum, item) => sum + item.amount, 0);
+const grandTotal = lineItems.reduce((sum, item) => sum + item.amount, 0);
 
   const handlePrint = () => {
     printInvoice({
       invoiceId: invoice.invoice_id,
       invoiceDate: invoice.invoice_date,
+      engineer: invoice.engineer,
       lineItems,
       grandTotal,
     });
@@ -129,7 +103,7 @@ const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
               {lineItems.map((item) => (
                 <tr key={item.no}>
                   <td className="text-center">{item.no}</td>
-                  <td>{item.description}</td>
+                  <td>{item.item_name}</td>
                   <td className="text-center">{item.quantity}</td>
                   <td className="text-right">${item.unitPrice.toFixed(2)}</td>
                   <td className="text-center">{item.discount}%</td>
@@ -155,6 +129,9 @@ const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
                       <div className="signature-section">
                         <p className="signature-label">Engineer</p>
                         <div className="signature-line"></div>
+                        <span style={{ display: 'block', textAlign: 'center', fontSize: 12 ,fontWeight: "bold"}}>
+                          {invoice.engineer || ""}
+                        </span>
                       </div>
                     </Col>
                     <Col xs={8}>
@@ -187,4 +164,4 @@ const InvoiceView: React.FC<Props> = ({ invoice, items, onClose }) => {
   );
 };
 
-export default InvoiceView;
+export default InvoicePrintForm;

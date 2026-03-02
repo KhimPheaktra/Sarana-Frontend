@@ -2,11 +2,12 @@ import Banner from './../../../assets/images/banner.png';
 
 interface InvoiceItem {
   no: number;
-  description: string;
+  item_name: string;
   quantity: number;
   unitPrice: number;
   discount: number;
   amount: number;
+  engineer?: string;
 }
 
 interface PrintInvoiceParams {
@@ -14,6 +15,7 @@ interface PrintInvoiceParams {
   invoiceDate: string;
   lineItems: InvoiceItem[];
   grandTotal: number;
+  engineer?: string;
 }
 
 export const printInvoice = ({
@@ -21,6 +23,7 @@ export const printInvoice = ({
   invoiceDate,
   lineItems,
   grandTotal,
+  engineer
 }: PrintInvoiceParams) => {
   const printWindow = window.open('', '', 'width=900,height=650');
   if (!printWindow) return;
@@ -264,7 +267,7 @@ export const printInvoice = ({
         ${lineItems.map(item => `
           <tr>
             <td class="text-center">${item.no}</td>
-            <td>${item.description}</td>
+            <td>${item.item_name}</td>
             <td class="text-center">${item.quantity}</td>
             <td class="text-right">$${item.unitPrice.toFixed(2)}</td>
             <td class="text-center">${item.discount}%</td>
@@ -283,6 +286,9 @@ export const printInvoice = ({
         <div class="signature-section">
           <div class="signature-label">Engineer</div>
           <div class="signature-line"></div>
+          <span style={{ display: 'block', textAlign: 'center', fontSize: 12 ,fontWeight: "bold"}}>
+          ${engineer || ""}
+          </span>
         </div>
         <div class="signature-section">
           <div class="signature-label">Seller</div>

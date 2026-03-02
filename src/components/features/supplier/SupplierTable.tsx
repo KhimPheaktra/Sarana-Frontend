@@ -66,6 +66,7 @@ const SupplierTable:React.FC<Props> = ({ data, onEdit, onDelete }) => {
             pagination={{ pageSize: 10, simple: true }}
             scroll={{ x: 'max-content' }}
             rowKey="supplier_id"
+            locale={{emptyText: "No Supplier Found"}}
         />
     );
 

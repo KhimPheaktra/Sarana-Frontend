@@ -23,6 +23,8 @@ export const PrintQuote = (quote: QuoteType) => {
     return subTotal - discount + vat;
   };
 
+  const bannerUrl = new URL(Banner, window.location.href).href;
+
   printWindow.document.write(`
 <!DOCTYPE html>
 <html>
@@ -34,6 +36,8 @@ export const PrintQuote = (quote: QuoteType) => {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
+      -webkit-print-color-adjust: exact !important;
+      print-color-adjust: exact !important;
     }
 
     body {
@@ -47,8 +51,7 @@ export const PrintQuote = (quote: QuoteType) => {
     }
 
     .quotation-paper {
-      width: 210mm;
-      min-height: 297mm;
+      width: 100%;
       background-color: #fff;
       padding: 10mm;
       font-family: Arial, sans-serif;
@@ -91,6 +94,7 @@ export const PrintQuote = (quote: QuoteType) => {
 
     .quote-header-right {
       text-align: right;
+      min-width: 180px;
     }
 
     .quote-title {
@@ -121,33 +125,57 @@ export const PrintQuote = (quote: QuoteType) => {
       width: 20%;
     }
 
+    /*
+     * ✅ FINAL FIX: Wrap the table in a div that provides all 4 outer borders.
+     * The table itself only draws internal cell borders (top + right per cell).
+     * This completely removes the dependency on the table element's own border,
+     * which browsers frequently clip in print mode.
+     */
+    .items-table-wrapper {
+      border: 2px solid #000;
+      margin-bottom: 15px;
+      /* overflow:hidden clips any 1px rounding gaps at corners */
+      overflow: hidden;
+    }
+
     .items-table {
       width: 100%;
       border-collapse: collapse;
-      border: 1px solid #000;
-      margin-bottom: 15px;
+      table-layout: fixed;
+      /* No outer border — the wrapper div handles it */
+      border: none;
     }
 
     .items-table th {
       padding: 8px;
-      border: 1px solid #000;
-      background-color: #1e5a8e;
-      color: #fff;
+      border-right: 1px solid rgba(255,255,255,0.4);
+      border-bottom: 2px solid #000;
+      background-color: #1e5a8e !important;
+      color: #fff !important;
       text-align: center;
+    }
+
+    .items-table th:last-child {
+      border-right: none;
     }
 
     .items-table td {
       padding: 8px;
-      border: 1px solid #000;
+      /* Only top border needed — previous row's bottom = this row's top */
+      border-top: 1px solid #000;
+      border-right: 1px solid #000;
     }
 
-    .text-center {
-      text-align: center;
+    .items-table tbody tr:first-child td {
+      border-top: none;
     }
 
-    .text-right {
-      text-align: right;
+    .items-table td:last-child {
+      border-right: none;
     }
+
+    .text-center { text-align: center; }
+    .text-right  { text-align: right; }
 
     .totals-section {
       display: flex;
@@ -155,26 +183,36 @@ export const PrintQuote = (quote: QuoteType) => {
       margin-bottom: 20px;
     }
 
-    .totals-table {
+    .totals-table-wrapper {
+      border: 2px solid #000;
+      overflow: hidden;
       width: 300px;
+    }
+
+    .totals-table {
+      width: 100%;
       border-collapse: collapse;
-      border: 1px solid #000;
+      border: none;
     }
 
     .totals-table td {
       padding: 6px 10px;
-      border: 1px solid #000;
-      background-color: #1e5a8e;
-      color: #fff;
+      border-top: 1px solid rgba(255,255,255,0.25);
+      border-right: 1px solid rgba(255,255,255,0.25);
+      background-color: #1e5a8e !important;
+      color: #fff !important;
     }
 
-    .totals-label {
-      font-weight: bold;
+    .totals-table tbody tr:first-child td {
+      border-top: none;
     }
 
-    .totals-value {
-      text-align: right;
+    .totals-table td:last-child {
+      border-right: none;
     }
+
+    .totals-label { font-weight: bold; }
+    .totals-value { text-align: right; }
 
     .remark-section {
       margin-bottom: 60px;
@@ -213,13 +251,28 @@ export const PrintQuote = (quote: QuoteType) => {
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
       }
-      
+
       @page {
-        margin: 0;
+        size: A4;
+        margin: 10mm;
       }
-      
-      body {
-        margin: 1.6cm;
+
+      body { margin: 0; padding: 0; }
+
+      .quotation-paper {
+        width: 100%;
+        margin: 0 auto;
+        padding: 0;
+      }
+
+      .items-table th {
+        background-color: #1e5a8e !important;
+        color: #fff !important;
+      }
+
+      .totals-table td {
+        background-color: #1e5a8e !important;
+        color: #fff !important;
       }
     }
   </style>
@@ -227,8 +280,9 @@ export const PrintQuote = (quote: QuoteType) => {
 
 <body>
   <div class="quotation-paper">
+
     <div class="banner-header">
-      <img src="${Banner}" alt="Company Banner" class="banner-image" />
+      <img src="${bannerUrl}" alt="Company Banner" class="banner-image" />
     </div>
 
     <div class="company-quote-info">
@@ -252,13 +306,14 @@ export const PrintQuote = (quote: QuoteType) => {
       </div>
 
       <div class="quote-header-right">
-        <h1 class="quote-title">Qoutation</h1>
-        <strong>NO :</strong> ${(quote.quote_id)}
+        <h1 class="quote-title">Quotation</h1>
+        <strong>NO :</strong> ${quote.quote_id}
         <div class="quote-date">
           <strong>Date :</strong> ${dayjs(quote.quote_date).format('DD/MM/YYYY')}
         </div>
       </div>
     </div>
+
     <table class="customer-table">
       <tbody>
         <tr>
@@ -275,67 +330,75 @@ export const PrintQuote = (quote: QuoteType) => {
         </tr>
       </tbody>
     </table>
-    <table class="items-table">
-      <thead>
-        <tr>
-          <th style="width: 8%;">No</th>
-          <th style="width: 42%;">Description</th>
-          <th style="width: 10%;">Qty</th>
-          <th style="width: 12%;">Unit</th>
-          <th style="width: 14%;">Unit Price</th>
-          <th style="width: 14%;">Amount (USD)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="text-center">1</td>
-          <td>${quote.item}</td>
-          <td class="text-center">${quote.qty}</td>
-          <td class="text-center">${quote.unit}</td>
-          <td class="text-right">$ ${formatCurrency(quote.total_amount)}</td>
-          <td class="text-right">$ ${formatCurrency(quote.total_amount)}</td>
-        </tr>
-      </tbody>
-    </table>
 
-    <div class="totals-section">
-      <table class="totals-table">
+    <!-- Wrapper div provides the 4 outer borders; table draws only internal lines -->
+    <div class="items-table-wrapper">
+      <table class="items-table">
+        <thead>
+          <tr>
+            <th style="width: 8%;">No</th>
+            <th style="width: 42%;">Description</th>
+            <th style="width: 10%;">Qty</th>
+            <th style="width: 12%;">Unit</th>
+            <th style="width: 14%;">Unit Price</th>
+            <th style="width: 14%;">Amount (USD)</th>
+          </tr>
+        </thead>
         <tbody>
-          <tr>
-            <td class="totals-label">Sub Total</td>
-            <td class="totals-value">$ ${formatCurrency(calculateSubTotal())}</td>
-          </tr>
-          <tr>
-            <td class="totals-label">Discount</td>
-            <td class="totals-value">$ ${formatCurrency(calculateDiscount())}</td>
-          </tr>
-          <tr>
-            <td class="totals-label">VAT</td>
-            <td class="totals-value">${calculateVAT() > 0 ? `$ ${formatCurrency(calculateVAT())}` : 'N/A'}</td>
-          </tr>
-          <tr>
-            <td class="totals-label">Total Paid</td>
-            <td class="totals-value" style="font-weight: bold;">$ ${formatCurrency(calculateTotalPaid())}</td>
-          </tr>
+          ${quote.items.map((row, i) => `
+            <tr>
+              <td class="text-center">${i + 1}</td>
+              <td>${row.item}</td>
+              <td class="text-center">${row.qty}</td>
+              <td class="text-center">${row.unit}</td>
+              <td class="text-right">$ ${formatCurrency(row.unit_price)}</td>
+              <td class="text-right">$ ${formatCurrency(row.amount)}</td>
+            </tr>
+          `).join('')}
         </tbody>
       </table>
+    </div>
+
+    <div class="totals-section">
+      <div class="totals-table-wrapper">
+        <table class="totals-table">
+          <tbody>
+            <tr>
+              <td class="totals-label">Sub Total</td>
+              <td class="totals-value">$ ${formatCurrency(calculateSubTotal())}</td>
+            </tr>
+            <tr>
+              <td class="totals-label">Discount</td>
+              <td class="totals-value">$ ${formatCurrency(calculateDiscount())}</td>
+            </tr>
+            <tr>
+              <td class="totals-label">VAT</td>
+              <td class="totals-value">${calculateVAT() > 0 ? `$ ${formatCurrency(calculateVAT())}` : 'N/A'}</td>
+            </tr>
+            <tr>
+              <td class="totals-label">Total Paid</td>
+              <td class="totals-value" style="font-weight: bold;">$ ${formatCurrency(calculateTotalPaid())}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
 
     <div class="remark-section">
       <div class="remark-title">REMARK :</div>
       <div class="remark-content">
-        ${quote.notes || ""}<br />
+        ${quote.notes || ''}<br />
       </div>
     </div>
 
     <div class="signatures-section">
       <div class="signature-block">
         <div class="signature-line"></div>
-        <div>Customer Name & Signature</div>
+        <div>Customer Name &amp; Signature</div>
       </div>
       <div class="signature-block">
         <div class="signature-line"></div>
-        <div>Seller Name & Signature</div>
+        <div>Seller Name &amp; Signature</div>
       </div>
     </div>
 
@@ -347,9 +410,15 @@ export const PrintQuote = (quote: QuoteType) => {
   printWindow.document.close();
   printWindow.focus();
 
-  setTimeout(() => {
-    printWindow.print();
-    printWindow.close();
-  }, 300);
-  
+  const img = printWindow.document.querySelector('img');
+  if (img) {
+    img.onload = () => {
+      setTimeout(() => { printWindow.print(); printWindow.close(); }, 100);
+    };
+    img.onerror = () => {
+      setTimeout(() => { printWindow.print(); printWindow.close(); }, 300);
+    };
+  } else {
+    setTimeout(() => { printWindow.print(); printWindow.close(); }, 300);
+  }
 };

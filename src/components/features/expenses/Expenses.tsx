@@ -6,23 +6,23 @@ import { BookOutlined } from "@ant-design/icons";
 import ExpensesTable from "./ExpensesTable";
 import ExpensesForm from "./ExpensesForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
+import { useSales } from "../sales/SaleContext";
 
-
- export const expenses: ExpensesType[] = [
-    {
-      key: "1",
-      expenses_id: 1,
-      description: "Party",
-      amount: 50,
-      expenses_date: "2026-02-02",
-      category: "Party",
-    },
-  ];
+export const expensesData: ExpensesType[] = [
+  {
+    key: "1",
+    expenses_id: 1,
+    description: "Party",
+    amount: 50,
+    expenses_date: "2026-02-02",
+    category: "Party",
+  },
+]
 
 const Expenses = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
-
+  const { expenses, setExpenses } = useSales();
 
   const titleMap = {
     add: "Add Expense",
@@ -40,9 +40,28 @@ const Expenses = () => {
       titleMap,
       content: <ExpensesForm form={form} />,
       onOk: async () => {
-        await form.validateFields();
-        message.success("Expenses added successfully");
-        closeModal();
+        try {
+          const values = await form.validateFields();
+
+          const newId = expenses.length
+            ? Math.max(...expenses.map(e => e.expenses_id || 0)) + 1
+            : 1;
+
+          const newExpense: ExpensesType = {
+            key: String(newId),
+            expenses_id: newId,
+            description: values.description,
+            amount: Number(values.amount),
+            expenses_date: dayjs(values.expenses_date).format("YYYY-MM-DD"),
+            category: values.category,
+          };
+
+          setExpenses(prev => [...prev, newExpense]);
+          message.success("Expense added successfully");
+          closeModal();
+        } catch (err) {
+          console.error(err);
+        }
       },
     });
   };
@@ -50,18 +69,35 @@ const Expenses = () => {
   const openEdit = (expense: ExpensesType) => {
     form.setFieldsValue({
       ...expense,
-      expenses_date: expense.expenses_date
-        ? dayjs(expense.expenses_date)
-        : undefined,
+      expenses_date: expense.expenses_date ? dayjs(expense.expenses_date) : undefined,
     });
 
     openModal("edit", {
       titleMap,
       content: <ExpensesForm form={form} />,
       onOk: async () => {
-        await form.validateFields();
-        message.success("Expenses updated successfully");
-        closeModal();
+        try {
+          const values = await form.validateFields();
+
+          setExpenses(prev =>
+            prev.map(e =>
+              e.expenses_id === expense.expenses_id
+                ? {
+                  ...e,
+                  description: values.description,
+                  amount: Number(values.amount),
+                  expenses_date: dayjs(values.expenses_date).format("YYYY-MM-DD"),
+                  category: values.category,
+                }
+                : e
+            )
+          );
+
+          message.success("Expense updated successfully");
+          closeModal();
+        } catch (err) {
+          console.error(err);
+        }
       },
     });
   };
@@ -71,12 +107,12 @@ const Expenses = () => {
       titleMap,
       content: (
         <p>
-          Are you sure you want to delete expense{" "}
-          <b>#{expense.expenses_id}</b>?
+          Are you sure you want to delete expense <b>#{expense.expenses_id}</b>?
         </p>
       ),
       onOk: () => {
-        message.success("Expenses deleted successfully");
+        setExpenses(prev => prev.filter(e => e.expenses_id !== expense.expenses_id));
+        message.success("Expense deleted successfully");
         closeModal();
       },
     });

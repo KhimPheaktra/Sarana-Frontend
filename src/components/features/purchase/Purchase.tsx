@@ -4,17 +4,14 @@ import type { PurchaseType } from "./purchase.types";
 import PageHeader from "../../../shared/action-header/ActionHeader";
 import { ShoppingCartOutlined } from "@ant-design/icons";
 import PurchaseTable from "./PurchaseTable";
-import PurchaseForm from "./PurchaseForm"; 
+import PurchaseForm from "./PurchaseForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
-export const purchases: PurchaseType[] = [
-    { key: "1", purchase_id: 1, supplier_id: 1, purchase_date: "2026-01-01", total_amount: 500, item_id: 1, qty: 5, unit_price: 50, subtotal: 250 },
-    { key: "2", purchase_id: 2, supplier_id: 2, purchase_date: "2026-01-05", total_amount: 300, item_id: 3, qty: 15, unit_price: 20, subtotal: 300 },
-  ];
+import { useSales } from "../sales/SaleContext";
+
 const Purchase = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
-
-
+  const { purchases, setPurchase } = useSales(); 
 
   const titleMap = {
     add: "Add Purchase",
@@ -25,15 +22,92 @@ const Purchase = () => {
 
   const openAdd = () => {
     form.resetFields();
-    form.setFieldsValue({ purchase_date: dayjs() });
+    form.setFieldsValue({
+      purchase_date: dayjs(),
+      items: [{ item_id: undefined, qty: 1, unit_price: 0, subtotal: 0 }],
+      status: "Pending",
+    });
 
-    openModal<"add" | "edit" | "delete">("add", {
+    openModal("add", {
       titleMap,
       content: <PurchaseForm form={form} mode="add" />,
+      width: 900,
       onOk: async () => {
-        await form.validateFields();
-        message.success("Purchase added successfully");
-        closeModal();
+        try {
+          const values = await form.validateFields();
+
+          const newId =
+            purchases.length > 0
+              ? Math.max(...purchases.map((p) => p.purchase_id || 0)) + 1
+              : 1;
+
+          const newPurchase: PurchaseType = {
+            key: String(newId),
+            purchase_id: newId,
+            supplier_id: values.supplier_id,
+            purchase_date: values.purchase_date?.format("YYYY-MM-DD") ?? "",
+            items: values.items.map((item: any) => ({
+              item_id: item.item_id,
+              qty: Number(item.qty),
+              unit_price: Number(item.unit_price),
+              subtotal: Number(item.subtotal),
+            })),
+            total_amount: Number(values.total_amount),
+            note: values.note ?? "",
+            status: values.status,
+          };
+
+          setPurchase((prev) => [...prev, newPurchase]);
+          message.success("Purchase added successfully");
+          closeModal();
+        } catch (err) {
+          console.error("Add failed:", err);
+        }
+      },
+    });
+  };
+
+  const openEdit = (purchase: PurchaseType) => {
+    form.setFieldsValue({
+      ...purchase,
+      purchase_date: purchase.purchase_date ? dayjs(purchase.purchase_date) : undefined,
+      items: purchase.items.map((i) => ({ ...i })),
+    });
+
+    openModal("edit", {
+      titleMap,
+      content: <PurchaseForm form={form} mode="edit" />,
+      width: 900,
+      onOk: async () => {
+        try {
+          const values = await form.validateFields();
+
+          setPurchase((prev) =>
+            prev.map((p) =>
+              p.purchase_id === purchase.purchase_id
+                ? {
+                    ...p,
+                    supplier_id: values.supplier_id,
+                    purchase_date: values.purchase_date?.format("YYYY-MM-DD") ?? "",
+                    items: values.items.map((item: any) => ({
+                      item_id: item.item_id,
+                      qty: Number(item.qty),
+                      unit_price: Number(item.unit_price),
+                      subtotal: Number(item.subtotal),
+                    })),
+                    total_amount: Number(values.total_amount),
+                    note: values.note ?? "",
+                    status: values.status,
+                  }
+                : p
+            )
+          );
+
+          message.success("Purchase updated successfully");
+          closeModal();
+        } catch (err) {
+          console.error("Edit failed:", err);
+        }
       },
     });
   };
@@ -42,37 +116,20 @@ const Purchase = () => {
     form.setFieldsValue({
       ...purchase,
       purchase_date: purchase.purchase_date ? dayjs(purchase.purchase_date) : undefined,
+      items: purchase.items.map((i) => ({ ...i })),
     });
 
-    openModal<"view">("view", {
+    openModal("view", {
       titleMap,
       content: <PurchaseForm form={form} mode="view" />,
-      onOk: () => {
-        closeModal();
-      },
+      width: 900,
+      onOk: () => closeModal(),
       okTextMap: { view: "Close" },
     });
   };
 
-  const openEdit = (purchase: PurchaseType) => {
-    form.setFieldsValue({
-      ...purchase,
-      purchase_date: purchase.purchase_date ? dayjs(purchase.purchase_date) : undefined,
-    });
-
-    openModal<"edit">("edit", {
-      titleMap,
-      content: <PurchaseForm form={form} mode="edit" />,
-      onOk: async () => {
-        await form.validateFields();
-        message.success("Purchase updated successfully");
-        closeModal();
-      },
-    });
-  };
-
   const openDelete = (purchase: PurchaseType) => {
-    openModal<"delete">("delete", {
+    openModal("delete", {
       titleMap,
       content: (
         <p>
@@ -80,6 +137,7 @@ const Purchase = () => {
         </p>
       ),
       onOk: () => {
+        setPurchase((prev) => prev.filter((p) => p.purchase_id !== purchase.purchase_id));
         message.success("Purchase deleted successfully");
         closeModal();
       },
@@ -93,10 +151,9 @@ const Purchase = () => {
         count={purchases.length}
         countLabel="purchases"
         onAdd={openAdd}
-        buttonText="Add purchase"
+        buttonText="Add Purchase"
         icon={<ShoppingCartOutlined />}
       />
-
       <Card>
         <PurchaseTable
           data={purchases}

@@ -73,6 +73,7 @@ const UserTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       pagination={{ pageSize: 10,simple: true }}
       scroll={{x: 'max-content'}}
       rowKey="id"
+      locale={{emptyText: "No User Found"}}
     />
   );
 };
