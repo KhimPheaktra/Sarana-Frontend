@@ -6,7 +6,7 @@ import dayjs from "dayjs";
 import { useSales } from "../../sales/SaleContext";
 import ProjectCommissionForm from "./ProjectCommissionForm";
 import ProjectCommissionTable from "./ProjectCommissionTable";
-import React from "react"; 
+import React from "react";
 
 const ProjectCommission = () => {
   const [form] = Form.useForm();
@@ -28,7 +28,7 @@ const ProjectCommission = () => {
     form.resetFields();
     form.setFieldsValue({
       commission_date: dayjs(),
-      commission_rate: 30,       
+      commission_rate: 30,
       status: "Pending",
     });
     openModal("add", {
@@ -63,11 +63,6 @@ const ProjectCommission = () => {
   };
 
   const openEdit = (commission: CommissionType) => {
-    form.setFieldsValue({
-      ...commission,
-      commission_date: commission.commission_date ? dayjs(commission.commission_date) : undefined,
-    });
-
     openModal("edit", {
       titleMap,
       content: <ProjectCommissionForm form={form} />,
@@ -78,14 +73,20 @@ const ProjectCommission = () => {
           prev.map((c) =>
             c.commission_id === commission.commission_id
               ? {
-                  ...c,
-                  ...v,
-                  project: v.project?.trim() || "",
-                  commission_date: dayjs(v.commission_date).format("YYYY-MM-DD"),
-                  amount: Number(v.amount),
-                  invoice_total: Number(v.invoice_total ?? c.invoice_total),
-                  commission_rate: Number(v.commission_rate),
-                }
+                ...c,
+                project: v.project?.trim() || c.project,
+                engineer: v.engineer ?? c.engineer,
+                commission_date: v.commission_date
+                  ? dayjs(v.commission_date).format("YYYY-MM-DD")
+                  : c.commission_date,
+                amount: v.invoice_total && v.commission_rate
+                  ? parseFloat(((Number(v.invoice_total) * Number(v.commission_rate)) / 100).toFixed(2))
+                  : v.amount !== undefined ? Number(v.amount) : c.amount,
+                invoice_total: v.invoice_total !== undefined ? Number(v.invoice_total) : c.invoice_total,
+                commission_rate: v.commission_rate !== undefined ? Number(v.commission_rate) : c.commission_rate,
+                description: v.description ?? c.description,
+                status: v.status ?? c.status,
+              }
               : c
           )
         );
@@ -93,6 +94,15 @@ const ProjectCommission = () => {
         closeModal();
       },
     });
+    setTimeout(() => {
+      form.resetFields();
+      form.setFieldsValue({
+        ...commission,
+        commission_date: commission.commission_date
+          ? dayjs(commission.commission_date)
+          : undefined,
+      });
+    }, 0);
   };
 
   const openDelete = (commission: CommissionType) => {
@@ -122,7 +132,7 @@ const ProjectCommission = () => {
       />
       <Card>
         <ProjectCommissionTable
-          data={projectCommissions}  
+          data={projectCommissions}
           onEdit={openEdit}
           onDelete={openDelete}
         />

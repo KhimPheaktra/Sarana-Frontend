@@ -38,6 +38,7 @@ export const AppModalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
 
       {config && (
         <AppModal
+          key={`${mode}-${open}`}
           open={open}
           mode={mode}
           titleMap={config.titleMap}
