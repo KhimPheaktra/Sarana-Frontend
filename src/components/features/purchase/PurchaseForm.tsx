@@ -152,7 +152,7 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
                 <Button
                   type="dashed"
                   onClick={() => {
-                    add({ item_id: undefined, qty: 1, unit_price: 0, subtotal: 0 });
+                    add({ item_name: "", qty: 1, unit_price: 0, subtotal: 0 });
                     setTimeout(recalcTotal, 0);
                   }}
                   block

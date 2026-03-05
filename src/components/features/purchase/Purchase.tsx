@@ -46,8 +46,9 @@ const Purchase = () => {
             purchase_id: newId,
             supplier_id: values.supplier_id,
             purchase_date: values.purchase_date?.format("YYYY-MM-DD") ?? "",
-            items: values.items.map((item: any) => ({
-              item_id: item.item_id,
+            items: values.items.map((item: any, index: number) => ({
+              item_id: item.item_id ?? index +1,
+              item_name: item.item_name,
               qty: Number(item.qty),
               unit_price: Number(item.unit_price),
               subtotal: Number(item.subtotal),
@@ -91,6 +92,7 @@ const Purchase = () => {
                     purchase_date: values.purchase_date?.format("YYYY-MM-DD") ?? "",
                     items: values.items.map((item: any) => ({
                       item_id: item.item_id,
+                      item_name: item.item_name,
                       qty: Number(item.qty),
                       unit_price: Number(item.unit_price),
                       subtotal: Number(item.subtotal),

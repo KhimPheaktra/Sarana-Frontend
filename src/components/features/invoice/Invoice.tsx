@@ -77,15 +77,8 @@ const Invoice: React.FC = () => {
     commissionForm.setFieldsValue(prefilledValues);
 
     openModal('add', {
-      titleMap: {
-        add: `Add Commission For: ${invoice.engineer}`,
-      },
-      content: (
-        <ProjectCommissionForm
-          form={commissionForm}
-          lockedFields={['invoice_id', 'project', 'invoice_total']}
-        />
-      ),
+      titleMap: { add: `Add Commission For: ${invoice.engineer}` },
+      content: <ProjectCommissionForm form={commissionForm} lockedFields={['invoice_id', 'project', 'invoice_total']} />,
       onOk: async () => {
         const v = await commissionForm.validateFields();
 
@@ -111,7 +104,15 @@ const Invoice: React.FC = () => {
         message.success(`Commission $${newCommission.amount.toFixed(2)} added for ${newCommission.engineer || 'engineer'}`);
         closeModal();
       },
+
     });
+
+    setTimeout(() => {
+      commissionForm.resetFields();
+      commissionForm.setFieldsValue(prefilledValues);
+    }, 0);
+
+
   };
 
   const getModalWidth = () => {

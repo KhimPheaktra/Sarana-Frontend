@@ -33,7 +33,7 @@ const AppModal = <T extends ModalMode = ModalMode>({
       okText={okTextMap?.[mode] || titleMap[mode] || "Ok"} 
       okButtonProps={{ danger: mode === "delete" }}
       maskClosable={false}
-      destroyOnHidden={false}
+      destroyOnHidden={true}
       forceRender
       width={width ?? 600}
     >
