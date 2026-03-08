@@ -33,16 +33,16 @@ const CatalogItemForm: React.FC<Props> = ({ form }) => {
           name="price"
           rules={[{ required: true, message: "Please enter price" }]}
         >
-          <InputNumber placeholder="Enter price" precision={2} style={{ width: '100%' }}/>
+          <InputNumber placeholder="$0.00" precision={2} style={{ width: '100%' }}/>
         </Form.Item>
       </Col>
       <Col xs={24} sm={12}>
         <Form.Item
           label="Purchase Price"
           name="purchase_price"
-          rules={[{ required: true, message: "Please enter purchase price" }]}
+          rules={[{ required: true, message: "Please enter price" }]}
         >
-          <InputNumber placeholder="Enter purchase price" precision={2} style={{ width: '100%' }}/>
+          <InputNumber placeholder="$0.00" precision={2} style={{ width: '100%' }}/>
         </Form.Item>
       </Col>
         <Col xs={24} sm={12}>
