@@ -15,7 +15,7 @@ export const paymentData: PaymentType[] = [
     payment_id: 1,
     customer_name: "Tra",
     payment_type: "Cash",
-    reference_id: 1,
+    reference_id: "INV0001",
     payments: [{
       item_name: 'Item 1',
       qty: 1,
@@ -29,13 +29,31 @@ export const paymentData: PaymentType[] = [
     status: "Pending",
     key: "",
     customer_id: 0
+  },
+  {
+    payment_id: 2,
+    supplier_name: "Long",
+    payment_type: "Cash",
+    reference_id: "P0001",
+    payments: [{
+      item_name: 'Item 1',
+      qty: 1,
+      unit_price: 120,
+      discount: 0,
+      amount: 120,
+    }],
+    total_amount: 120,
+    payment_date: "2026-02-02",
+    status: "Pending",
+    key: "",
+    customer_id: 0
   }
 ]
 
 const Payment = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
-  const { invoices, setInvoices, payments, setPayments } = useSales(); 
+  const { invoices, setInvoices, payments, setPayments } = useSales();
 
   const titleMap = {
     add: "Add Payment",
@@ -121,7 +139,7 @@ const Payment = () => {
     <div className="table-container">
       <PageHeader
         title="Payment Management"
-        count={payments.length}       
+        count={payments.length}
         countLabel="payments"
         onAdd={openAdd}
         buttonText="Add Payment"
@@ -129,7 +147,7 @@ const Payment = () => {
       />
       <Card>
         <PaymentTable
-          data={payments}       
+          data={payments}
           onEdit={openEdit}
           onDelete={openDelete}
         />

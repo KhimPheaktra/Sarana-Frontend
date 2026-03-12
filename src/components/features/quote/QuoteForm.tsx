@@ -1,6 +1,7 @@
 import { Button, Col, DatePicker, Form, Input, InputNumber, Row, Select } from "antd";
 import { DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import TextArea from "antd/es/input/TextArea";
+import { catalogItemsData } from "../catalogItem/CatalogItem";
 
 interface Props {
   form: any;
@@ -21,6 +22,18 @@ const QuoteForm: React.FC<Props> = ({ form }) => {
 
     form.setFieldsValue({ items: updatedItems });
   };
+  const handleItemSelect = (value: number, name: number) => {
+    const selected = catalogItemsData.find((item) => item.item_id === value);
+    if (!selected) return;
+    const rows = form.getFieldValue("items") ?? [] ;
+    rows[name] = {
+      ...rows[name],
+      item: selected.name,
+      unit_price: selected.price,
+      amount: (rows[name]?.qty || 1) * selected.price,
+    };
+    form.setFieldsValue({items: rows});
+  }
   return (
     <Form form={form} layout="vertical" requiredMark={false}>
       <Row gutter={16}>
@@ -31,12 +44,11 @@ const QuoteForm: React.FC<Props> = ({ form }) => {
         </Col>
         <Col xs={24} sm={12}>
           <Form.Item name="quote_date" label="Quote Date" rules={[{ required: true }]}>
-            <DatePicker style={{ width: "100%" }} />
+            <DatePicker disabled={true} format="YYYY-MM-DD HH:mm:ss" style={{ width: "100%" }} />
           </Form.Item>
         </Col>
       </Row>
 
-      {/* Dynamic Items */}
       <Form.List name="items" initialValue={[{ item: "", qty: 1, unit: "PCs", unit_price: 0, amount: 0 }]}>
         {(fields, { add, remove }) => (
           <>
@@ -62,16 +74,37 @@ const QuoteForm: React.FC<Props> = ({ form }) => {
                   />
                 </div>
                 <Row gutter={16}>
-                  <Col xs={24} sm={12}>
-                    <Form.Item
-                      {...restField}
-                      name={[name, "item"]}
-                      label="Description"
-                      rules={[{ required: true, message: "Required" }]}
-                    >
-                      <Input placeholder="Item description" />
-                    </Form.Item>
-                  </Col>
+                <Col xs={24} sm={12}>
+                <Form.Item
+                  {...restField}
+                  name={[name, "item"]}
+                  label="Description"
+                  rules={[{ required: true, message: "Required" }]}
+                >
+                  <Select
+                    showSearch
+                    placeholder="Search item..."
+                    optionFilterProp="label"
+                    filterOption={(input, option) =>
+                      (option?.label as string)?.toLowerCase().includes(input.toLowerCase())
+                    }
+                    onChange={(value) => handleItemSelect(value, name)}
+                    options={catalogItemsData
+                      .filter((i) => i.is_active)
+                      .map((item) => ({
+                        value: item.item_id,
+                        label: item.name,
+                        price: item.price,
+                      }))}
+                    optionRender={(option) => (
+                      <div style={{ display: "flex", justifyContent: "space-between" }}>
+                        <span>{option.label}</span>
+                        <span style={{ color: "#aaa", fontSize: 12 }}>${option.data.price}</span>
+                      </div>
+                    )}
+                  />
+                </Form.Item>
+              </Col>
                   <Col xs={12} sm={6}>
                     <Form.Item
                       {...restField}
@@ -164,7 +197,7 @@ const QuoteForm: React.FC<Props> = ({ form }) => {
           </Form.Item>
         </Col>
         <Col xs={24} sm={8}>
-          <Form.Item name="status" label="Status" rules={[{ required: true }]}>
+          <Form.Item name="status" label="Status" initialValue={"Pending"} rules={[{ required: true }]}>
             <Select>
               <Select.Option value="Approved">Approved</Select.Option>
               <Select.Option value="Pending">Pending</Select.Option>

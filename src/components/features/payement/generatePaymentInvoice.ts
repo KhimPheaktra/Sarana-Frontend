@@ -24,7 +24,7 @@ export const generatePaymentInvoice = (
     key: `inv-${Date.now()}`,
     invoice_id: maxInvoiceId + 1,
     payment_id: payment.payment_id,
-    customer_id: payment.customer_id + 1,
+    customer_id: payment.customer_id ?? 0 + 1,
     customer_name: payment.customer_name,
     invoice_date: payment.payment_date,
     items: payment.payments.map(item => ({

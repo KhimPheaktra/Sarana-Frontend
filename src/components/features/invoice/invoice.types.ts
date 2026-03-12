@@ -12,7 +12,7 @@ export interface InvoiceType {
   quote_id?: number;
   quote_to?: string;
   payment_id: number;
-  reference_id?: number;
+  reference_id?: string;
   invoice_date: string;
   items: InvoiceItem[];      
   total_amount: number;
@@ -20,4 +20,5 @@ export interface InvoiceType {
   engineer?: string;
   customer_id: number;
   customer_name?: string;
+  payment_detail?: string;
 }

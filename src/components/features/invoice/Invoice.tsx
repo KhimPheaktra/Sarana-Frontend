@@ -9,6 +9,9 @@ import InvoicePrintForm from './InvoicePrintForm';
 import ProjectCommissionForm from '../commision/project-commission/ProjectCommissionForm';
 import { useSales } from '../sales/SaleContext';
 import { useAppModal } from '../../../shared/modal/AppModalProvider';
+import InvoiceForm from './InvoiceForm';
+import { paymentFromInvoice } from '../payement/Autogeneratepayment';
+
 
 const { useBreakpoint } = Grid;
 
@@ -36,10 +39,10 @@ export const invoiceData: InvoiceType[] = [
 const Invoice: React.FC = () => {
   const [selectedInvoice, setSelectedInvoice] = useState<InvoiceType | null>(null);
   const [isModalVisible, setIsModalVisible] = useState(false);
-
+  const [form] = Form.useForm();
   const [commissionForm] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
-  const { invoices, setInvoices, commissions, setCommissions } = useSales();
+  const { invoices, setInvoices, commissions, setCommissions,payments, setPayments } = useSales();
   const screens = useBreakpoint();
 
   const handleView = (invoice: InvoiceType) => {
@@ -120,6 +123,52 @@ const Invoice: React.FC = () => {
     if (!screens.lg) return '80%';
     return '60%';
   };
+  const titleMap = {
+    add: "Add Invoice",
+    edit: "Edit Invoice",
+    delete: "Delete Invoice",
+  }
+  
+  const openAdd = () => {
+    form.resetFields();
+    form.setFieldsValue({invoice_date: dayjs()});
+    openModal("add" , {
+      titleMap,
+      content: <InvoiceForm form={form} />,
+      width: 800,
+      onOk: async () => {
+        const values = await form.validateFields();
+        const newId = invoices.length > 0 ? Math.max(...invoices.map((inv) => inv.invoice_id)) + 1 : 1;
+
+        const newInvoice: InvoiceType = {
+          key: String(newId),
+          invoice_id: newId,
+          customer_id: values.customer_id ?? 0,
+          customer_name: values.customer_name,
+          reference_id: values.reference_id,
+          engineer: values.engineer,
+          invoice_date: values.invoice_date?.format("YYYY-MM-DD") ?? dayjs().format("YYYY-MM-DD"),
+          items: (values.invoices ?? []).map((item: any) => ({
+            item_name: item.item_name,
+            qty: Number(item.qty),
+            unit_price: Number(item.unit_price),
+            discount: Number(item.discount ?? 0),
+            amount: Number(item.amount),
+
+          })),
+            total_amount: Number(values.total_amount),
+            status: values.status,
+            payment_id: 0,
+            quote_to: "",
+        };
+        setInvoices((prev) => [...prev, newInvoice]);
+        const autoPayment = paymentFromInvoice(newInvoice, payments);
+        setPayments((prev) => [...prev, autoPayment]);
+        message.success("Invoice added successfully");
+        closeModal();
+      }
+    })
+  }
 
   React.useEffect(() => {
     if (invoices.length === 0) setInvoices(invoiceData);
@@ -127,7 +176,13 @@ const Invoice: React.FC = () => {
 
   return (
     <div style={{ padding: '20px' }}>
-      <PageHeader title="Invoices" count={invoices.length} countLabel="Invoices" icon={undefined} />
+      <PageHeader 
+      title="Invoices" 
+      count={invoices.length} 
+      countLabel="Invoices" 
+      onAdd={openAdd}
+      buttonText='Add Invoice'
+      icon={undefined} />
 
       <Card>
         <InvoiceTable

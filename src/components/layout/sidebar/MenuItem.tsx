@@ -6,7 +6,6 @@ import {
   TeamOutlined,
   BarChartOutlined,
   TagsOutlined,
-  TruckOutlined,
   CreditCardOutlined,
 } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
@@ -41,12 +40,6 @@ export const menuItems: AppMenuItem[] = [
     label: 'Purchases',
     icon: <ShoppingOutlined />,
     route: '/purchases',
-  },
-  {
-    key: 'suppliers',
-    label: 'Suppliers',
-    icon: <TruckOutlined />,
-    route: '/suppliers',
   },
   {
     key: 'sales',
@@ -86,11 +79,16 @@ export const menuItems: AppMenuItem[] = [
         label: 'Customers',
         route: '/customers',
       },
+      {
+        key: 'suppliers',
+        label: 'Suppliers',
+        route: '/suppliers',
+      },
     ],
   },
   {
     key: 'financial',
-    icon: <CreditCardOutlined  />,
+    icon: <CreditCardOutlined />,
     label: 'Financial',
     children: [
       {

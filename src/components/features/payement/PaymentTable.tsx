@@ -1,6 +1,6 @@
 import type { PaymentType } from "./payment.types";
 import { Button, Col, DatePicker, Form, Row, Select, Space, Table, Tag, Grid } from "antd";
-import { ClearOutlined, DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { ClearOutlined, DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
 
 const { useBreakpoint } = Grid;
@@ -34,9 +34,18 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       defaultSortOrder: "ascend",
     },
     {
-      title: "Customer",
+      title: "Customer / Supplier",
       dataIndex: "customer_name",
       key: "customer_name",
+      align: "center",
+      render: (_: any, record: any) => (
+        record.customer_name || record.supplier_name || "—"
+      ),
+    },
+    {
+      title: "Reference",
+      dataIndex: "reference_id",
+      key: "reference_id",
       align: "center",
     },
     {
@@ -81,10 +90,18 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       align: "center",
     },
     {
-      title: "Reference",
-      dataIndex: "reference_id",
-      key: "reference_id",
+      title: "Payment Detail",
+      dataIndex: "payment_detail",
+      key: "payment_detail",
       align: "center",
+      render: (_, payment_detail) => {
+        return (
+          <Space size={"small"}>
+            <Button size="small" icon={<EyeOutlined />} onClick={() => { payment_detail }} />
+          </Space>
+        )
+      }
+
     },
     {
       title: "Status",
@@ -97,13 +114,13 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
         </Tag>
       ),
     },
+    // {
+    //   title: "Partial",
+    //   dataIndex: "partial_percentage",
+    //   key: "partial_percentage",
+    //   align: "center",
+    // },
     {
-      title: "Partial",
-      dataIndex: "partial_percentage",
-      key: "partial_percentage",
-      align: "center",
-    },
-     {
       title: "Engineer",
       dataIndex: "engineer",
       key: "engineer",
@@ -120,11 +137,11 @@ const PaymentTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
       key: "actions",
       align: "center",
       render: (_, record) => (
-        <Space>
-          <Button type="primary" onClick={() => onEdit(record)}>
+        <Space size={"small"}>
+          <Button size={"small"} type="primary" onClick={() => onEdit(record)}>
             <EditOutlined /> Edit
           </Button>
-          <Button danger onClick={() => onDelete(record)}>
+          <Button size={"small"} danger onClick={() => onDelete(record)}>
             <DeleteOutlined /> Delete
           </Button>
         </Space>
