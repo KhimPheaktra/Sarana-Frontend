@@ -1,39 +1,41 @@
 import { DeleteOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { Button, Col, DatePicker, Form, Input, InputNumber, Row, Select, Upload } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import { catalogItemsData } from "../catalogItem/CatalogItem";
+import {catalogItemsData } from "../catalogItem/CatalogItem";
 
 interface Props {
   form: any;
 }
 
-const PaymentForm: React.FC<Props> = ({ form }) => {
+const InvoiceForm: React.FC<Props> = ({ form }) => {
 const calcAmount = (name: number) => {
-  const qty = form.getFieldValue(["payments", name, "qty"]) || 0;
-  const price = form.getFieldValue(["payments", name, "unit_price"]) || 0;
-  form.setFieldValue(["payments", name, "amount"], qty * price);
-  recalcTotal();
-};
+    const qty = form.getFieldValue(["invoices", name, "qty"]) || 0;
+    const price = form.getFieldValue(["invoices", name, "unit_price"]) || 0;
+    form.setFieldValue(["invoices", name, "amount"], qty * price);
+    recalcTotal();
+  };
 
   const recalcTotal = () => {
-    const items = form.getFieldValue("payments") ?? [];
+    const items = form.getFieldValue("invoices") ?? [];
     const total = items.reduce((sum: number, row: any) => sum + (row?.amount || 0), 0);
     form.setFieldsValue({ total_amount: total });
   };
+
+ 
   const handleItemSelect = (value: number, name: number) => {
     const selected = catalogItemsData.find((item) => item.item_id === value);
-    const rows = form.getFieldValue("payments") ?? [];
-    if(!selected) return;
+    if (!selected) return;
+
+    const rows = form.getFieldValue("invoices") ?? [];
     rows[name] = {
       ...rows[name],
       item_name: selected.name,
       unit_price: selected.price,
-      amount: (rows[name]?.qty || 1) * selected.price
-
+      amount: (rows[name]?.qty || 1) * selected.price,
     };
     form.setFieldsValue({ invoices: rows });
     recalcTotal();
-  }
+  };
 
   return (
     <Form form={form} layout="vertical" requiredMark={false}>
@@ -60,7 +62,7 @@ const calcAmount = (name: number) => {
         </Col>
       </Row>
       <div style={{ maxHeight: 260, overflowY: "auto", paddingRight: 4 }}>
-        <Form.List name="payments" initialValue={[{ item_name: "", qty: 1, unit_price: 0, amount: 0 }]}>
+        <Form.List name="invoices" initialValue={[{ item_name: "", qty: 1, unit_price: 0, amount: 0 }]}>
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
@@ -71,8 +73,8 @@ const calcAmount = (name: number) => {
                   marginBottom: 8,
                   background: "#fafafa",
                 }}>
-                  <Row gutter={8} align="middle">
-                   <Col xs={24} sm={8}>
+                  <Row gutter={8} align="middle"> 
+                    <Col xs={24} sm={8}>
                       <Form.Item
                         {...restField}
                         name={[name, "item_name"]}
@@ -96,7 +98,7 @@ const calcAmount = (name: number) => {
                             }))}
                           optionRender={(option) => (
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
-                              <span>{option.data.label}</span>
+                              <span>{option.label}</span>
                               <span style={{ color: "#aaa", fontSize: 12 }}>
                                 ${option.data.price}
                               </span>
@@ -105,6 +107,7 @@ const calcAmount = (name: number) => {
                         />
                       </Form.Item>
                     </Col>
+
                     <Col xs={8} sm={4}>
                       <Form.Item {...restField} name={[name, "qty"]} label="Qty"
                         rules={[{ required: true, message: "Required" }]}>
@@ -134,10 +137,9 @@ const calcAmount = (name: number) => {
                   </Row>
                 </div>
               ))}
-              <Button type="dashed" onClick={() => {
-                add({ item_name: "", qty: 1, unit_price: 0, amount: 0 });
-                setTimeout(recalcTotal, 0);
-              }} icon={<PlusOutlined />} style={{ width: "100%", marginBottom: 12 }}>
+              <Button type="dashed" onClick={() =>
+                add({ item_name: undefined, qty: 1, unit_price: 0, amount: 0 })
+              } icon={<PlusOutlined />} style={{ width: "100%", marginBottom: 12 }}>
                 Add Item
               </Button>
             </>
@@ -156,40 +158,31 @@ const calcAmount = (name: number) => {
             <InputNumber min={0} style={{ width: "100%" }} prefix="$" />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={8}>
-          <Form.Item label="Payment Type" name="payment_type"
-            rules={[{ required: true, message: "Required" }]}>
-            <Select placeholder="Select payment type">
-              <Select.Option value="Cash">Cash</Select.Option>
-              <Select.Option value="Credit Card">Credit Card</Select.Option>
-              <Select.Option value="Bakor">Bakor</Select.Option>
-            </Select>
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={16}>
-        <Col xs={24} sm={6}>
-          <Form.Item label="Date" name="payment_date"
+          <Col xs={24} sm={8}>
+          <Form.Item label="Date" name="invoice_date"
             rules={[{ required: true, message: "Required" }]}>
             <DatePicker placeholder="Select date" format="YYYY-MM-DD HH:mm:ss" disabled={true}
               style={{ width: "100%" }} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={6}>
+      </Row>
+      <Row gutter={16}>
+        <Col xs={24} sm={8}>
           <Form.Item label="Status" name="status"
-            rules={[{ required: true, message: "Required" }]}>
+            rules={[{ required: true, message: "Required" }]} 
+            initialValue={"Pending"} >
             <Select placeholder="Select status">
               <Select.Option value="Completed">Completed</Select.Option>
               <Select.Option value="Pending">Pending</Select.Option>
             </Select>
           </Form.Item>
         </Col>
-        <Col xs={24} sm={6}>
+        <Col xs={24} sm={8}>
           <Form.Item label="Note" name="note">
             <TextArea rows={1} placeholder="Enter note" />
           </Form.Item>
         </Col>
-         <Col xs={24} sm={6}>
+        <Col xs={24} sm={8}>
           <Form.Item label="Attach Payment" name="payment_detail"
             valuePropName="fileList"
             getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
@@ -209,4 +202,4 @@ const calcAmount = (name: number) => {
     </Form>
   );
 };
-export default PaymentForm;
+export default InvoiceForm;

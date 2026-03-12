@@ -36,9 +36,9 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
             defaultSortOrder: 'ascend',
         },
         {
-            title: "Supplier ID",
-            dataIndex: "supplier_id",
-            key: "supplier_id",
+            title: "Supplier",
+            dataIndex: "supplier_name",
+            key: "suppsupplier_namelier",
             align: "center",
         },
         {
@@ -46,13 +46,6 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
             dataIndex: "purchase_date",
             key: "purchase_date",
             align: "center",
-        },
-        {
-            title: "Item Id",
-            dataIndex: "item_id",
-            key: "item_id",
-            align: "center",
-            render: (_, record) => renderItems(record, (item) => item.item_id),
         },
         {
             title: "Item Name",

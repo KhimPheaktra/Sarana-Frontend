@@ -116,6 +116,19 @@ const ProjectCommissionTable: React.FC<Props> = ({ data, onEdit, onDelete }) => 
       align: "center",
     },
     {
+      title: "Payment",
+      dataIndex: "payment_detail",
+      key: "payment_detail",
+      align: "center",
+      render: (_, payment_detail) => {
+        return (
+          <Space size={"small"}>
+            <Button size="small" icon={<EyeOutlined />} onClick={() => {payment_detail}} />
+          </Space>
+        )
+      }
+    },
+    {
       title: "Status",
       dataIndex: "status",
       key: "status",

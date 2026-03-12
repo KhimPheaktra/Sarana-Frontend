@@ -21,8 +21,8 @@ const UserTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
     },
     {
       title: "Name",
-      dataIndex: "name",
-      key:"name",
+      dataIndex: "username",
+      key:"username",
       align: "center",
     },
     {

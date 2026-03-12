@@ -14,5 +14,6 @@ export interface CommissionType {
   invoice_id?: number; 
   invoice_total?: number;      
   commission_rate?: number;
+  payment_detail?: string;
   status?: CommissionStatus; 
 }

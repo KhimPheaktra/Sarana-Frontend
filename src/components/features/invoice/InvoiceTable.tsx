@@ -41,6 +41,9 @@ const InvoiceTable: React.FC<Props> = ({ data, onView, onDelete, onAddCommission
             dataIndex: "customer_name",
             key: "customer_name",
             align: "center",
+            render: (_: any, record: any) => (
+                 record.customer_name || record.quote_to || "_"
+            ),
         },
         {
             title: "Engineer",

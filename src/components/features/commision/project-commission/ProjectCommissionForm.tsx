@@ -1,6 +1,7 @@
 import React from "react";
-import { Col, DatePicker, Form, InputNumber, Row, Select } from "antd";
+import { Button, Col, DatePicker, Form, InputNumber, Row, Select, Upload } from "antd";
 import TextArea from "antd/es/input/TextArea";
+import { UploadOutlined } from "@ant-design/icons";
 
 interface Props {
   form: any;
@@ -76,7 +77,6 @@ const ProjectCommissionForm: React.FC<Props> = ({ form, lockedFields = [] }) => 
               min={0}
               max={100}
               precision={1}
-              addonAfter="%"
               style={{ width: "100%" }}
               onChange={handleRateOrTotalChange}
             />
@@ -124,6 +124,21 @@ const ProjectCommissionForm: React.FC<Props> = ({ form, lockedFields = [] }) => 
         <Col xs={24} sm={12}>
           <Form.Item label="Description" name="description">
             <TextArea placeholder="Enter description" autoSize={{ minRows: 2 }} />
+          </Form.Item>
+        </Col>
+        <Col xs={24} sm={12}>
+          <Form.Item label="Attach Payment" name="payment_detail"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
+          >
+            <Upload
+              accept="image/*"
+              listType="picture"
+              maxCount={1}
+              beforeUpload={() => false}
+            >
+              <Button icon={<UploadOutlined />}>Attach Payment</Button>
+            </Upload>
           </Form.Item>
         </Col>
       </Row>

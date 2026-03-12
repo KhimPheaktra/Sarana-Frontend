@@ -9,14 +9,17 @@ export interface PaymentItem {
 export interface PaymentType {
     key: string;
     payment_id: number;
-    customer_id: number; 
-    customer_name: string; 
+    customer_id?: number; 
+    customer_name?: string; 
+    supplier_id?: number;
+    supplier_name?: string;
     payment_type: string;
-    reference_id?: number;
-    engineer: string;
+    reference_id?: string;
+    engineer?: string;
     payments: PaymentItem[];
     total_amount: number;
     payment_date: string;
+    payment_detail?: string;
     status: string;
     partial_percentage?: number;
     note?: string;

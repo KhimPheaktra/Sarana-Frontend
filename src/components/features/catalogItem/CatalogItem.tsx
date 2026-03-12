@@ -6,16 +6,15 @@ import CatalogItemTable from "./CatalogItemTable";
 import CatalogItemForm from "./CatalogItemForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
 
-
+export const catalogItemsData: CatalogItemType[] = [
+    { key: "1", item_id: 1, item_type: "Item", name: "Meterial", description: "120mm", price: 15, purchase_price: 10, stock_quantity: 10, is_active: true },
+    { key: "2", item_id: 2, item_type: "Service", name: "Fire Service", description: "Fire Service", price: 150, purchase_price: 120, stock_quantity: 0, is_active: true },
+    { key: "3", item_id: 3, item_type: "Service", name: "Electrice Service", description: "Electrice Service", price: 200, purchase_price: 150, stock_quantity: 0, is_active: false },
+  ];
 const CatalogItem = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
 
-  const catalogItems: CatalogItemType[] = [
-    { key: "1", item_id: 1, item_type: "Electronics", name: "Laptop", description: "A high-performance laptop", price: 1200, purchase_price: 1000, stock_quantity: 10, is_active: true },
-    { key: "2", item_id: 2, item_type: "Furniture", name: "Chair", description: "A comfortable office chair", price: 150, purchase_price: 120, stock_quantity: 25, is_active: true },
-    { key: "3", item_id: 3, item_type: "Appliances", name: "Microwave", description: "A compact microwave oven", price: 200, purchase_price: 150, stock_quantity: 15, is_active: false },
-  ];
 
   const titleMap = {
     add: "Add Catalog Item",
@@ -68,7 +67,7 @@ const CatalogItem = () => {
     <div className="table-container">
       <PageHeader
         title="Catalog Item Management"
-        count={catalogItems.length}
+        count={catalogItemsData.length}
         countLabel="catalog items"
         icon={<TagsOutlined />}
         onAdd={openAdd}
@@ -77,7 +76,7 @@ const CatalogItem = () => {
 
       <Card>
         <CatalogItemTable
-          data={catalogItems}
+          data={catalogItemsData}
           onEdit={openEdit}
           onDelete={openDelete}
         />
