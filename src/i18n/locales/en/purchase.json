@@ -1,0 +1,52 @@
+{
+  "purchase": {
+    "supplier": "Supplier",
+    "purchaseDate": "Purchase Date",
+    "item": "Item",
+    "qty": "Quantity",
+    "unitPrice": "Unit Price",
+    "subtotal": "Subtotal",
+    "totalAmount": "Total Amount",
+    "note": "Note",
+    "status": "Status",
+    "attachPayment": "Attach Payment",
+    "dateRange": "Purchase Date Range"
+  },
+  "placeholder": {
+    "selectSupplier": "Select supplier",
+    "searchItem": "Search item...",
+    "note": "Optional note / remarks",
+    "selectStatus": "Select status"
+  },
+  "status": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "cancelled": "Cancelled"
+  },
+  "validation": {
+    "supplierRequired": "Please select supplier",
+    "required": "Required"
+  },
+  "button": {
+    "addItem": "Add Item",
+    "addNewItem": "Add New Item",
+    "clearFilter": "Clear Filter",
+    "attachPayment": "Attach Payment"
+  },
+  "modal": {
+    "quickAddTitle": "Quick Add Catalog Item",
+    "okText": "Add & Select"
+  },
+  "table": {
+    "id": "ID",
+    "supplier": "Supplier",
+    "purchaseDate": "Purchase Date",
+    "itemName": "Item Name",
+    "qty": "Qty",
+    "unitPrice": "Unit Price",
+    "subtotal": "Subtotal",
+    "totalAmount": "Total Amount",
+    "actions": "Actions",
+    "noData": "No Purchases Found"
+  }
+}

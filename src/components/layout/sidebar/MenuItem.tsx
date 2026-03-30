@@ -1,143 +1,115 @@
-import React from 'react';
+
+import { useTranslation } from 'react-i18next';
 import {
-  HomeOutlined,
-  DollarCircleOutlined,
-  ShoppingOutlined,
-  TeamOutlined,
-  BarChartOutlined,
-  TagsOutlined,
-  CreditCardOutlined,
+  HomeOutlined, DollarCircleOutlined, ShoppingOutlined,
+  TeamOutlined, BarChartOutlined, TagsOutlined, CreditCardOutlined,
 } from '@ant-design/icons';
-import type { MenuProps } from 'antd';
+import type { AppMenuItem } from './menu.types';
 
-export interface AppMenuItem {
-  route?: string;
-  children?: AppMenuItem[];
-  key: string;
-  icon?: React.ReactNode;
-  label: React.ReactNode;
-  hideInSidebar?: boolean;
-}
-
-export type MenuItem = Required<MenuProps>['items'][number];
-
-export const menuItems: AppMenuItem[] = [
-  {
-    key: 'dashboard',
-    icon: <HomeOutlined />,
-    label: 'Dashboard',
-    route: '/dashboard',
-  },
-  {
-    key: 'catalogItems',
-    icon: <TagsOutlined />,
-    label: 'Items',
-    route: '/catalog-items',
-  },
-
-  {
-    key: 'purchases',
-    label: 'Purchases',
-    icon: <ShoppingOutlined />,
-    route: '/purchases',
-  },
-  {
-    key: 'sales',
-    icon: <DollarCircleOutlined />,
-    label: 'Sales & Revenue',
-    children: [
-      {
-        key: 'quotes',
-        label: 'Quotes',
-        route: '/quotes',
-      },
-      {
-        key: 'invoices',
-        label: 'Invoices',
-        route: '/invoices',
-      },
-      {
-        key: 'payments',
-        label: 'Payments',
-        route: '/payments',
-      },
-    ],
-  },
-
-  {
-    key: 'people',
-    icon: <TeamOutlined />,
-    label: 'People',
-    children: [
-      {
-        key: 'users',
-        label: 'Users',
-        route: '/users',
-      },
-      {
-        key: 'customers',
-        label: 'Customers',
-        route: '/customers',
-      },
-      {
-        key: 'suppliers',
-        label: 'Suppliers',
-        route: '/suppliers',
-      },
-    ],
-  },
-  {
-    key: 'financial',
-    icon: <CreditCardOutlined />,
-    label: 'Financial',
-    children: [
-      {
-        key: 'expenses',
-        label: 'Expenses',
-        route: '/expenses',
-      },
-      {
-        key: 'commissions',
-        label: 'Commissions',
-        children: [
-          {
-            key: 'personal-commissions',
-            label: 'Personal Commissions',
-            route: '/persional-commissions',
-          },
-          {
-            key: 'project-commissions',
-            label: 'Project Commissions',
-            route: '/project-commissions',
-          },
-        ]
-      }
-    ],
-  },
-  {
-    key: 'reports',
-    icon: <BarChartOutlined />,
-    label: 'Reports',
-    children: [
-      {
-        key: 'reports-sales',
-        label: 'Sales Reports',
-        route: '/reports/sales',
-      },
-      {
-        key: 'reports-expenses',
-        label: 'Expense Reports',
-        route: '/reports/expenses',
-      },
-      {
-        key: 'reports-profit',
-        label: 'Profit & Loss',
-        route: '/reports/profit',
-
-      },
-    ]
-  },
-
-
-
-];
+export const useMenuItems = (): AppMenuItem[] => {
+  const { t } = useTranslation();
+  return [
+    {
+      key: 'dashboard',
+      icon: <HomeOutlined />,
+      label: t('menu.dashboard'),
+      route: '/dashboard'
+    },
+    { 
+      key: 'catalogItems', 
+      icon: <TagsOutlined />, 
+      label: t('menu.items'), 
+      route: '/catalog-items' 
+    },
+    { 
+      key: 'purchases', 
+      icon: <ShoppingOutlined />, 
+      label: t('menu.purchases'), 
+      route: '/purchases' 
+    },
+    {
+      key: 'sales', icon: <DollarCircleOutlined />, label: t('menu.salesRevenue'),
+      children: [
+        { 
+          key: 'quotes', 
+          label: t('menu.quotes'),
+          route: '/quotes' },
+        { 
+          key: 'invoices', 
+          label: t('menu.invoices'), 
+          route: '/invoices' 
+        },
+        { 
+          key: 'payments', 
+          label: t('menu.payments'), 
+          route: '/payments' 
+        },
+      ],
+    },
+    {
+      key: 'people', icon: <TeamOutlined />, label: t('menu.people'),
+      children: [
+        { 
+          key: 'users', 
+          label: t('menu.users'), 
+          route: '/users' 
+        },
+        {
+          key: 'customers', 
+          label: t('menu.customers'), 
+          route: '/customers' 
+        },
+        { 
+          key: 'suppliers', 
+          label: t('menu.suppliers'), 
+          route: '/suppliers' 
+        },
+      ],
+    },
+    {
+      key: 'financial', icon: <CreditCardOutlined />, label: t('menu.financial'),
+      children: [
+        { 
+          key: 'expenses', 
+          label: t('menu.expenses'), 
+          route: '/expenses' 
+        },
+        {
+          key: 'commissions', label: t('menu.commissions'),
+          children: [
+            { 
+              key: 'personal-commissions', 
+              label: t('menu.personalCommissions'), 
+              route: '/personal-commissions' 
+            },
+            { 
+              key: 'project-commissions', 
+              label: t('menu.projectCommissions'), 
+              route: '/project-commissions' 
+            },
+          ],
+        },
+      ],
+    },
+    {
+      key: 'reports', icon: <BarChartOutlined />, label: t('menu.reports'),
+      children: [
+        { 
+          key: 'reports-sales', 
+          label: t('menu.salesReports'), 
+          route: '/reports/sales' 
+        },
+        { 
+          key: 'reports-expenses', 
+          label: t('menu.expenseReports'), 
+          route: '/reports/expenses' 
+        },
+        { 
+          key: 'reports-profit', 
+          label: t('menu.profitLoss'), 
+          route: '/reports/profit' 
+        },
+      ],
+    },
+  ];
+};

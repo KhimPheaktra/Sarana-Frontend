@@ -23,7 +23,6 @@ const QuotePrintView: React.FC<Props> = ({ quote, onClose }) => {
   const discount  = quote.discount || 0;
   const vat       = quote.wth || 0;
   const totalPaid = subTotal - discount + vat;
-
   return (
     <>
       {/* Toolbar */}
@@ -65,7 +64,8 @@ const QuotePrintView: React.FC<Props> = ({ quote, onClose }) => {
 
           <div className="quote-title-block">
             <h1>Quotation</h1>
-            <div><strong>NO :</strong> {quote.quote_id}</div>
+            <div><strong>Seller :</strong> {quote.created_by}</div>
+            <div><strong>NO  :</strong> {quote.quote_id}</div>
             <div className="quote-date">
               <strong>Date :</strong> {dayjs(quote.quote_date).format('DD/MM/YYYY')}
             </div>
@@ -106,7 +106,7 @@ const QuotePrintView: React.FC<Props> = ({ quote, onClose }) => {
             {quote.items.map((row, i) => (
               <tr key={i}>
                 <td className="col-center">{i + 1}</td>
-                <td>{row.item}</td>
+                <td>{row.item_name}</td>
                 <td className="col-center">{row.qty}</td>
                 <td className="col-center">{row.unit}</td>
                 <td className="col-right">$ {formatCurrency(row.unit_price)}</td>
@@ -143,8 +143,9 @@ const QuotePrintView: React.FC<Props> = ({ quote, onClose }) => {
 
         {/* Signatures */}
         <div className="quote-signatures">
+        
           {['Customer Name & Signature', 'Seller Name & Signature'].map((label) => (
-            <div key={label} className="sig-block">
+            <div key={label} className="sig-block"> 
               <div className="sig-line" />
               <div>{label}</div>
             </div>

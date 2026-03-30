@@ -1,0 +1,28 @@
+{
+  "customer": {
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address"
+  },
+  "placeholder": {
+    "name": "Enter name",
+    "phone": "Enter phone number",
+    "email": "Enter email",
+    "address": "Enter address"
+  },
+  "validation": {
+    "nameRequired": "Please enter name",
+    "phoneRequired": "Please enter phone number",
+    "addressRequired": "Please enter address"
+  },
+  "table": {
+    "id": "ID",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "actions": "Actions",
+    "noData": "No Customer Found"
+  }
+}

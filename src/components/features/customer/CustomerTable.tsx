@@ -1,8 +1,8 @@
 import { Button, Empty, Space, Table } from "antd";
 import type { CusType } from "./cus.types";
-import { EditOutlined,DeleteOutlined } from "@ant-design/icons";
+import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import type { ColumnsType } from "antd/es/table";
-
+import { useTranslation } from "react-i18next";
 
 interface Props {
     data: CusType[];
@@ -10,10 +10,12 @@ interface Props {
     onDelete: (customer: CusType) => void;
 }
 
-const CustomerTable:React.FC<Props> = ({ data, onEdit, onDelete }) => {
+const CustomerTable: React.FC<Props> = ({ data, onEdit, onDelete }) => {
+    const { t } = useTranslation(["customer", "common"]);
+
     const columns: ColumnsType<CusType> = [
         {
-            title: "ID",
+            title: t("table.id", { ns: "customer" }),
             dataIndex: "id",
             key: "id",
             align: "center",
@@ -21,45 +23,46 @@ const CustomerTable:React.FC<Props> = ({ data, onEdit, onDelete }) => {
             defaultSortOrder: 'ascend',
         },
         {
-            title: "Name",
-            dataIndex: "name",  
+            title: t("table.name", { ns: "customer" }),
+            dataIndex: "name",
             key: "name",
             align: "center",
         },
-           {
-            title: "Phone",
-            dataIndex: "phone_number",  
+        {
+            title: t("table.phone", { ns: "customer" }),
+            dataIndex: "phone_number",
             key: "phone_number",
             align: "center",
         },
-           {
-            title: "Email",
-            dataIndex: "email",  
+        {
+            title: t("table.email", { ns: "customer" }),
+            dataIndex: "email",
             key: "email",
             align: "center",
         },
-           {
-            title: "Address",
-            dataIndex: "address",  
+        {
+            title: t("table.address", { ns: "customer" }),
+            dataIndex: "address",
             key: "address",
             align: "center",
         },
-         {
-            title: "Actions",
+        {
+            title: t("table.actions", { ns: "customer" }),
             key: "actions",
             align: "center",
             render: (_, record) => (
                 <Space>
                     <Button type="primary" onClick={() => onEdit(record)}>
-                        <EditOutlined /> Edit
-                        </Button>
+                        <EditOutlined /> {t("button.edit", { ns: "common" })}
+                    </Button>
                     <Button danger onClick={() => onDelete(record)}>
-                        <DeleteOutlined /> Delete
+                        <DeleteOutlined /> {t("button.delete", { ns: "common" })}
                     </Button>
                 </Space>
             )
         }
     ];
+
     return (
         <Table
             columns={columns}
@@ -67,9 +70,10 @@ const CustomerTable:React.FC<Props> = ({ data, onEdit, onDelete }) => {
             pagination={{ pageSize: 10, simple: true }}
             scroll={{ x: 'max-content' }}
             rowKey="id"
-            locale={{ emptyText: <Empty description="No Customer Found" /> }}
+            locale={{ emptyText: <Empty description={t("table.noData", { ns: "customer" })} /> }}
             size="small"
         />
     );
 };
+
 export default CustomerTable;

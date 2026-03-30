@@ -1,0 +1,44 @@
+{
+  "catalogItem": {
+    "itemType": "Item Type",
+    "name": "Name",
+    "price": "Price",
+    "purchasePrice": "Purchase Price",
+    "stockQuantity": "Stock Quantity",
+    "description": "Description"
+  },
+  "placeholder": {
+    "itemType": "Enter item type",
+    "name": "Enter name",
+    "price": "Enter price",
+    "purchasePrice": "Enter purchase price",
+    "stockQuantity": "0",
+    "description": "Enter description",
+    "selectStatus": "Select status"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive",
+    "selectStatus": "Select status"
+  },
+  "validation": {
+    "itemTypeRequired": "Please enter item type",
+    "nameRequired": "Please enter name",
+    "priceRequired": "Please enter price",
+    "purchasePriceRequired": "Please enter purchase price",
+    "stockQuantityRequired": "Please enter stock quantity",
+    "statusRequired": "Please select status"
+  },
+  "table": {
+    "id": "ID",
+    "itemType": "Item Type",
+    "name": "Name",
+    "description": "Description",
+    "price": "Price",
+    "purchasePrice": "Purchase Price",
+    "stockQuantity": "Stock Quantity",
+    "status": "Status",
+    "actions": "Actions",
+    "noData": "No Item Found"
+  }
+}

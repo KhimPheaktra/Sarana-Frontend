@@ -1,4 +1,5 @@
 import type { InvoiceType } from "../invoice/invoice.types";
+import type { PaymentDetail } from "../payement/payment.types";
 
 export type CommissionStatus = "Pending" | "Paid" | "Cancelled";
 
@@ -14,6 +15,7 @@ export interface CommissionType {
   invoice_id?: number; 
   invoice_total?: number;      
   commission_rate?: number;
-  payment_detail?: string;
   status?: CommissionStatus; 
+  payment_details?: PaymentDetail[];
+  paid_amount?: number; 
 }

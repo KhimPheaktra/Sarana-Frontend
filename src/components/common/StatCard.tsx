@@ -1,4 +1,5 @@
 import { Card, Statistic } from "antd";
+import React from "react";
 
 export interface StatCardProps {
     label: string;
@@ -7,17 +8,17 @@ export interface StatCardProps {
     bgColor: string;
     textColor: string;
     prefix?: string;
-
+    icon?: React.ReactNode;      
+    suffix?: React.ReactNode;   
 }
 
-
-export function StatCard({ label, value, borderColor, textColor }: StatCardProps) {
+export function StatCard({ label, value, borderColor, textColor, bgColor, icon, suffix }: StatCardProps) {
     return (
-        <Card 
-            variant="borderless" 
-            style={{ 
+        <Card
+            variant="borderless"
+            style={{
                 borderRadius: '8px',
-                boxShadow: '0 1px 8px rgba(0,0,0,0.08)', 
+                boxShadow: '0 1px 8px rgba(0,0,0,0.08)',
             }}
         >
             <Statistic
@@ -28,14 +29,15 @@ export function StatCard({ label, value, borderColor, textColor }: StatCardProps
                     <span style={{
                         fontSize: 20,
                         color: textColor,
-                        backgroundColor: `${borderColor}20`,
+                        backgroundColor: bgColor ?? `${borderColor}20`,
                         padding: '6px 10px',
                         borderRadius: '8px',
                         marginRight: '8px',
                     }}>
-                        $
+                        {icon ?? '$'}
                     </span>
                 }
+                suffix={suffix}
                 style={{ color: textColor, fontWeight: 600 }}
             />
         </Card>

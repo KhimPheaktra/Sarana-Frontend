@@ -27,7 +27,7 @@ export const generateQuoteInvoice = (
     quote_to: quote.quote_to,
     invoice_date: quote.quote_date,
     items: quote.items.map(row => ({
-      item_name: row.item,
+      item_name: row.item_name,
       qty: row.qty,
       unit_price: row.unit_price,
       discount: 0,
@@ -37,7 +37,8 @@ export const generateQuoteInvoice = (
     status: "Completed",
     engineer: quote.engineer,
     customer_id: countCustomer + 1,
-    payment_id: 0
+    payment_id: 0,
+    type: "quote"
   };
 
   setInvoices(prev => [...prev, newInvoice]);

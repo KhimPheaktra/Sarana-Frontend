@@ -1,0 +1,26 @@
+{
+  "expenses": {
+    "expenseId": "លេខសម្គាល់ការចំណាយ",
+    "description": "ការពិពណ៌នា",
+    "amount": "ចំនួនទឹកប្រាក់",
+    "date": "កាលបរិច្ឆេទ",
+    "category": "ប្រភេទ",
+    "expensesDate": "កាលបរិច្ឆេទចំណាយ",
+    "dateRange": "ជួរកាលបរិច្ឆេទចំណាយ"
+  },
+  "placeholder": {
+    "description": "បញ្ចូលការពិពណ៌នា",
+    "amount": "បញ្ចូលចំនួនទឹកប្រាក់",
+    "expensesDate": "បញ្ចូលកាលបរិច្ឆេទទិញ",
+    "category": "បញ្ចូលប្រភេទ"
+  },
+  "validation": {
+    "descriptionRequired": "សូមបញ្ចូលការពិពណ៌នា",
+    "amountRequired": "សូមបញ្ចូលចំនួនទឹកប្រាក់",
+    "expensesDateRequired": "សូមបញ្ចូលកាលបរិច្ឆេទទិញ",
+    "categoryRequired": "សូមបញ្ចូលប្រភេទ"
+  },
+  "table": {
+    "noData": "រកមិនឃើញការចំណាយ"
+  }
+}

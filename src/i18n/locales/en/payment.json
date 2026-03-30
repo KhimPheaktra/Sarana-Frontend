@@ -1,0 +1,68 @@
+{
+  "payment": {
+    "party": "Party",
+    "customerName": "Customer",
+    "supplierName": "Supplier",
+    "reference": "Reference",
+    "engineer": "Engineer",
+    "item": "Item",
+    "qty": "Qty",
+    "unitPrice": "Unit Price",
+    "amount": "Amount",
+    "totalAmount": "Total Amount",
+    "discount": "Discount ($)",
+    "paymentType": "Payment Type",
+    "date": "Date",
+    "status": "Status",
+    "note": "Note",
+    "attachPayment": "Attach Payment",
+    "paymentDetail": "Payment Detail",
+    "dateRange": "Payment Date Range"
+  },
+  "placeholder": {
+    "partyName": "Enter name",
+    "customerName": "Enter customer name",
+    "reference": "Reference",
+    "selectEngineer": "Select engineer",
+    "searchItem": "Search item...",
+    "selectDate": "Select date",
+    "note": "Enter note",
+    "selectStatus": "Select status",
+    "selectPaymentType": "Select payment type"
+  },
+  "status": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "selectStatus": "Select status"
+  },
+  "paymentType": {
+    "cash": "Cash",
+    "creditCard": "Credit Card",
+    "bakor": "Bakor"
+  },
+  "validation": {
+    "customerRequired": "Please input Customer",
+    "required": "Required"
+  },
+  "button": {
+    "addItem": "Add Item",
+    "clearFilter": "Clear Filter"
+  },
+  "table": {
+    "id": "ID",
+    "customerSupplier": "Customer / Supplier",
+    "reference": "Reference",
+    "item": "Item",
+    "qty": "Qty",
+    "unitPrice": "Unit Price",
+    "total": "Total",
+    "date": "Date",
+    "payment": "Payment",
+    "paymentDetail": "Payment Detail",
+    "status": "Status",
+    "engineer": "Engineer",
+    "note": "Note",
+    "actions": "Actions",
+    "noData": "No Payment Found"
+  }
+}

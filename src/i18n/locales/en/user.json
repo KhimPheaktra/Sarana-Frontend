@@ -1,0 +1,38 @@
+{
+  "user": {
+    "name": "Name",
+    "role": "Role",
+    "phone": "Phone Number",
+    "status": "Status"
+  },
+  "placeholder": {
+    "name": "Enter name",
+    "phone": "Enter phone number",
+    "selectRole": "Select role",
+    "selectStatus": "Select status"
+  },
+  "role": {
+    "admin": "Admin",
+    "engineer": "Engineer",
+    "user": "User"
+  },
+  "status": {
+    "active": "Active",
+    "inactive": "Inactive"
+  },
+  "validation": {
+    "nameRequired": "Please enter name",
+    "roleRequired": "Please select role",
+    "phoneRequired": "Please enter phone number",
+    "statusRequired": "Please select status"
+  },
+  "table": {
+    "id": "ID",
+    "name": "Name",
+    "role": "Role",
+    "phone": "Phone",
+    "status": "Status",
+    "actions": "Actions",
+    "noData": "No User Found"
+  }
+}

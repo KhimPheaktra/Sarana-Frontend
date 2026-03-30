@@ -1,0 +1,75 @@
+{
+  "menu": {
+    "dashboard": "Dashboard",
+    "items": "Items",
+    "purchases": "Purchases",
+    "salesRevenue": "Sales & Revenue",
+    "quotes": "Quotes",
+    "invoices": "Invoices",
+    "payments": "Payments",
+    "people": "People",
+    "users": "Users",
+    "customers": "Customers",
+    "suppliers": "Suppliers",
+    "financial": "Financial",
+    "expenses": "Expenses",
+    "commissions": "Commissions",
+    "personalCommissions": "Personal Commissions",
+    "projectCommissions": "Project Commissions",
+    "reports": "Reports",
+    "salesReports": "Sales Reports",
+    "expenseReports": "Expense Reports",
+    "profitLoss": "Profit & Loss"
+  },
+  "title": {
+    "dashboard": "Dashboard",
+    "invoice": "Invoice",
+    "item": "Item",
+    "purchase": "Purchase",
+    "quotation": "Quote",
+    "inovice": "Invoice",
+    "payment": "Payment",
+    "user": "User",
+    "customer": "Customer",
+    "supplier": "Supplier",
+    "expenses": "Expenses",
+    "persionalCommission": "Personal Commission",
+    "projectCommission": "Project Commission",
+    "saleReport": "Sale Report",
+    "expenseReport": "Expense Report",
+    "profitLostReport": "Profit & Lost Statment"
+  },
+  "navbar": {
+    "search": "Search..."
+  },
+  "button": {
+    "add": "Add",
+    "save": "Save",
+    "edit": "Edit",
+    "delete": "Delete",
+    "view": "View",
+    "all": "All"
+  },
+  "filterDate": {
+    "from_date": "From Date",
+    "to_date": "To Date"
+  },
+  "dateRange": {
+    "selectDateRange": "Select Date Range"
+  },
+  "options": {
+    "selectOptions": "Select Options"
+  },
+  "status": {
+    "selectStatus": "Select Status"
+  },
+  "modal": {
+    "addTitle": "Add {{name}}",
+    "editTitle": "Edit {{name}}",
+    "deleteTitle": "Delete {{name}}",
+    "okText": "Save",
+    "cancelText": "Cancel",
+    "deleteOkText": "Delete",
+    "deleteConfirm": "Are you sure you want to delete this {{name}}?"
+  }
+}

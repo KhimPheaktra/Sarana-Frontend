@@ -1,0 +1,67 @@
+{
+  "payment": {
+    "party": "ឈ្មោះអតិថិជន/អ្នកផ្គត់ផ្គង់",
+    "customerName": "អតិថិជន",
+    "supplierName": "អ្នកផ្គត់ផ្គង់",
+    "reference": "លេខយោង",
+    "engineer": "វិស្វករ",
+    "item": "ទំនិញ",
+    "qty": "បរិមាណ",
+    "unitPrice": "តម្លៃក្នុងមួយឯកតា",
+    "amount": "ចំនួនទឹកប្រាក់",
+    "totalAmount": "សរុបទឹកប្រាក់",
+    "discount": "បញ្ចុះតម្លៃ ($)",
+    "paymentType": "ប្រភេទការទូទាត់",
+    "date": "កាលបរិច្ឆេទ",
+    "status": "ស្ថានភាព",
+    "note": "កំណត់សម្គាល់",
+    "attachPayment": "ភ្ជាប់វិក្កយបត្រ",
+    "paymentDetail": "ព័ត៌មានការទូទាត់",
+    "dateRange": "ជួរកាលបរិច្ឆេទទូទាត់"
+  },
+  "placeholder": {
+    "partyName": "បញ្ចូលឈ្មោះ",
+    "reference": "លេខយោង",
+    "selectEngineer": "ជ្រើសរើសវិស្វករ",
+    "searchItem": "ស្វែងរកទំនិញ...",
+    "selectDate": "ជ្រើសរើសកាលបរិច្ឆេទ",
+    "note": "បញ្ចូលកំណត់សម្គាល់",
+    "selectStatus": "ជ្រើសរើសស្ថានភាព",
+    "selectPaymentType": "ជ្រើសរើសប្រភេទការទូទាត់"
+  },
+  "status": {
+    "pending": "កំពុងរង់ចាំ",
+    "completed": "បានបញ្ចប់",
+    "selectStatus": "ជ្រើសរើសស្ថានភាព"
+  },
+  "paymentType": {
+    "cash": "សាច់ប្រាក់",
+    "creditCard": "កាតឥណទាន",
+    "bakor": "បាគោ"
+  },
+  "validation": {
+    "customerRequired": "សូមបញ្ចូលអតិថិជន",
+    "required": "តម្រូវការ"
+  },
+  "button": {
+    "addItem": "បន្ថែមទំនិញ",
+    "clearFilter": "សម្អាតតម្រង"
+  },
+  "table": {
+    "id": "លេខសម្គាល់",
+    "customerSupplier": "អតិថិជន / អ្នកផ្គត់ផ្គង់",
+    "reference": "លេខយោង",
+    "item": "ទំនិញ",
+    "qty": "បរិមាណ",
+    "unitPrice": "តម្លៃក្នុងមួយឯកតា",
+    "total": "សរុប",
+    "date": "កាលបរិច្ឆេទ",
+    "payment": "ការទូទាត់",
+    "paymentDetail": "ព័ត៌មានការទូទាត់",
+    "status": "ស្ថានភាព",
+    "engineer": "វិស្វករ",
+    "note": "កំណត់សម្គាល់",
+    "actions": "សកម្មភាព",
+    "noData": "រកមិនឃើញការទូទាត់"
+  }
+}

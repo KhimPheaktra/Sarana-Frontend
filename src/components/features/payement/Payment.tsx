@@ -1,13 +1,13 @@
 import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
-import type { PaymentType } from "./payment.types";
-import PageHeader from "../../../shared/action-header/ActionHeader";
+import type { PaymentDetail, PaymentType } from "./payment.types";
+import ActionHeader from "../../../shared/action-header/ActionHeader";
 import { DollarOutlined } from "@ant-design/icons";
 import PaymentTable from "./PaymentTable";
 import PaymentForm from "./PaymentForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
-import { generatePaymentInvoice } from "./generatePaymentInvoice";
 import { useSales } from "../sales/SaleContext";
+import { useTranslation } from "react-i18next";
 
 
 export const paymentData: PaymentType[] = [
@@ -47,18 +47,42 @@ export const paymentData: PaymentType[] = [
     status: "Pending",
     key: "",
     customer_id: 0
-  }
+  },
+  {
+    payment_id: 3,
+    supplier_name: "Som",
+    payment_type: "Bakor",
+    reference_id: "P0002",
+    payments: [{
+      item_name: 'Item 1',
+      qty: 1,
+      unit_price: 120,
+      discount: 0,
+      amount: 120,
+    }],
+    total_amount: 120,
+    payment_date: "2026-02-02",
+    status: "Pending",
+    key: "",
+    customer_id: 0
+  },
 ]
+
 
 const Payment = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
-  const { invoices, setInvoices, payments, setPayments } = useSales();
-
+  const { payments, setPayments } = useSales();
+  const { t } = useTranslation();
   const titleMap = {
-    add: "Add Payment",
-    edit: "Edit Payment",
-    delete: "Delete Payment",
+    add: t("modal.addTitle", { name: t("title.payment") }),
+    edit: t("modal.editTitle", { name: t("title.payment") }),
+    delete: t("modal.deleteTitle", { name: t("title.payment") }),
+  };
+  const okTextMap = {
+    add: t("modal.okText"),
+    edit: t("modal.okText"),
+    delete: t("modal.deleteOkText"),
   };
 
   const openAdd = () => {
@@ -67,16 +91,20 @@ const Payment = () => {
 
     openModal("add", {
       titleMap,
+      okTextMap,
       content: <PaymentForm form={form} />,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       width: 800,
       onOk: async () => {
         const values = await form.validateFields();
 
+        const isCustomer = values.partyType === "customer";
         const newPayment: PaymentType = {
           key: `pay-${Date.now()}`,
           payment_id: payments.length + 1,
-          customer_id: values.customer_id ?? 0,
-          customer_name: values.customer_name,
+          customer_id: isCustomer ? values.customer_id ?? 0 : 0,
+          customer_name: isCustomer ? values.party_name : undefined,
+          supplier_name: !isCustomer ? values.party_name : undefined,
           payment_type: values.payment_type,
           reference_id: values.reference_id,
           payments: values.payments ?? [],
@@ -85,10 +113,10 @@ const Payment = () => {
           payment_date: values.payment_date?.format("YYYY-MM-DD") ?? "",
           status: values.status,
           note: values.note,
+
         };
 
         setPayments(prev => [...prev, newPayment]);
-        generatePaymentInvoice(newPayment, invoices, setInvoices);
         message.success("Payment added successfully");
         closeModal();
       },
@@ -96,14 +124,23 @@ const Payment = () => {
   };
 
   const openEdit = (payment: PaymentType) => {
+    const partyType: "customer" | "supplier" = payment.customer_name ? "customer" : "supplier";
+    const party_name: string =
+      payment.customer_name ?? payment.supplier_name ?? "";
+    partyType === "customer" ? payment.customer_name || "" : payment.supplier_name || "";
     form.setFieldsValue({
       ...payment,
+      partyType,
+      party_name,
       payment_date: payment.payment_date ? dayjs(payment.payment_date) : undefined,
     });
 
     openModal("edit", {
       titleMap,
+      okTextMap,
       content: <PaymentForm form={form} />,
+      width: 800,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       onOk: async () => {
         const values = await form.validateFields();
 
@@ -111,21 +148,24 @@ const Payment = () => {
           ...payment,
           ...values,
           payment_date: values.payment_date?.format("YYYY-MM-DD") ?? "",
+          customer_name: values.partyType === "customer" ? values.party_name : undefined,
+          supplier_name: values.partyType === "supplier" ? values.party_name : undefined,
         };
 
         setPayments(prev =>
           prev.map(p => p.key === payment.key ? updatedPayment : p)
         );
-        generatePaymentInvoice(updatedPayment, invoices, setInvoices);
+
         message.success("Payment updated successfully");
         closeModal();
       },
     });
   };
-
   const openDelete = (payment: PaymentType) => {
     openModal("delete", {
       titleMap,
+      okTextMap,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       content: <p>Are you sure you want to delete payment <b>{payment.payment_id}</b>?</p>,
       onOk: () => {
         setPayments(prev => prev.filter(p => p.key !== payment.key));
@@ -135,14 +175,36 @@ const Payment = () => {
     });
   };
 
+  const addPaymentDetail = (paymentId: number, detail: PaymentDetail) => {
+    setPayments((prev) =>
+      prev.map((p) => {
+        if (p.payment_id !== paymentId) return p;
+
+        const newPaidAmount = (p.paid_amount || 0) + detail.paid_amount;
+
+        let newStatus = "Unpaid";
+        if (newPaidAmount === 0) newStatus = "Unpaid";
+        else if (newPaidAmount < p.total_amount) newStatus = "Partial";
+        else newStatus = "Paid";
+
+        return {
+          ...p,
+          paid_amount: newPaidAmount,
+          status: newStatus,
+          details: [...(p.payment_details || []), detail],
+        };
+      })
+    );
+  };
+
   return (
     <div className="table-container">
-      <PageHeader
-        title="Payment Management"
+      <ActionHeader
+        title={t("title.payment")}
         count={payments.length}
-        countLabel="payments"
+        countLabel={t("title.payment", { ns: "common" })}
         onAdd={openAdd}
-        buttonText="Add Payment"
+        buttonText={t("button.add")}
         icon={<DollarOutlined />}
       />
       <Card>
@@ -150,6 +212,7 @@ const Payment = () => {
           data={payments}
           onEdit={openEdit}
           onDelete={openDelete}
+          onAddPaymentDetail={addPaymentDetail}
         />
       </Card>
     </div>

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Menu } from 'antd';
 import './sidebar.css';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { menuItems } from './MenuItem';
+import { useMenuItems } from "./MenuItem";
 import { CloseOutlined } from '@ant-design/icons';
 import Logo from './../../../assets/images/logo.png';
 interface SidebarProps {
@@ -15,7 +15,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
   const navigate = useNavigate();
   const location = useLocation();
   const [openKeys, setOpenKeys] = useState<string[]>([]);
-  
+  const menuItems = useMenuItems();
 
   const findeSelectKey = (items: any[]): string | undefined => {
     for (const item of items) {
@@ -26,7 +26,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
       }
     }
   };
-  
+
   const selectedKey = findeSelectKey(menuItems);
 
   const findRouteByKey = (items: any[], key: string): string | undefined => {
@@ -40,53 +40,56 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
   };
 
   const handleMenuClick = ({ key }: { key: string }) => {
-  const route = findRouteByKey(menuItems, key);
+    const route = findRouteByKey(menuItems, key);
 
     if (route && route !== location.pathname) {
       navigate(route);
       if (isMobile && onClose) onClose();
     }
   };
+  const filterMenuItems = (items: any[]): any[] =>
+    items
+      .filter(item => !item.hideInSidebar)
+      .map(item => ({
+        ...item,
+        children: item.children ? filterMenuItems(item.children) : undefined,
+      }));
 
-    const visibleMenuItems = menuItems.map(item => ({
-      ...item,
-      children: item.children?.filter(child => !child.hideInSidebar)
-    }));
-
-    const onOpenChange = (keys: string[]) => {
-      const latestOpenKey = keys.find(key=> !openKeys.includes(key));
-      if(!latestOpenKey) {
-        setOpenKeys([]);
-        return;
-      }
-      const parentKeys = findParentKey(menuItems,latestOpenKey);
-
-      const newKeys = [
-        ...parentKeys,
-        latestOpenKey
-      ];
-      setOpenKeys(newKeys);
+  const visibleMenuItems = filterMenuItems(menuItems);
+  const onOpenChange = (keys: string[]) => {
+    const latestOpenKey = keys.find(key => !openKeys.includes(key));
+    if (!latestOpenKey) {
+      setOpenKeys([]);
+      return;
     }
-    const findParentKey = (items: any[], targetKey?: string ,parents: string[] = []): string[] => {
-        for (const item of items){
-          if(item.key === targetKey) return parents;
-          if(item.children){
-            const result = findParentKey(
-              item.children,
-              targetKey,
-              [...parents, item.key]
-            );
-            if(result.length) return result;
-          }
-        }
-        return [];
-    };
-    React.useEffect(() => {
-      if (selectedKey) {
-        const parentKey = findParentKey(menuItems, selectedKey);
-        setOpenKeys(parentKey);
+    const parentKeys = findParentKey(menuItems, latestOpenKey);
+
+    const newKeys = [
+      ...parentKeys,
+      latestOpenKey
+    ];
+    setOpenKeys(newKeys);
+  }
+  const findParentKey = (items: any[], targetKey?: string, parents: string[] = []): string[] => {
+    for (const item of items) {
+      if (item.key === targetKey) return parents;
+      if (item.children) {
+        const result = findParentKey(
+          item.children,
+          targetKey,
+          [...parents, item.key]
+        );
+        if (result.length) return result;
       }
-    }, [selectedKey]);
+    }
+    return [];
+  };
+  React.useEffect(() => {
+    if (selectedKey) {
+      const parentKey = findParentKey(menuItems, selectedKey);
+      setOpenKeys(parentKey);
+    }
+  }, [selectedKey]);
 
 
 
@@ -102,8 +105,8 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
         {isMobile && (
           <>
             <div className="sidebar-logo"><img src={Logo} alt="LogoImage" /></div>
-            <CloseOutlined 
-              className="sidebar-close-icon" 
+            <CloseOutlined
+              className="sidebar-close-icon"
               onClick={onClose}
             />
           </>
@@ -115,7 +118,7 @@ export const Sidebar: React.FC<SidebarProps> = ({ collapsed, onClose, isMobile }
         items={visibleMenuItems}
         selectedKeys={selectedKey ? [selectedKey] : []}
         onOpenChange={onOpenChange}
-        openKeys={openKeys}   
+        openKeys={openKeys}
         onClick={handleMenuClick}
       />
     </>

@@ -1,38 +1,46 @@
 import { Card, Form, message } from "antd";
-import PageHeader from "../../../../shared/action-header/ActionHeader";
+import ActionHeader from "../../../../shared/action-header/ActionHeader";
 import { useAppModal } from "../../../../shared/modal/AppModalProvider";
 import type { CommissionType } from "../commission.types";
 import dayjs from "dayjs";
 import PersonalCommissionForm from "./PersonalCommissionForm";
-import CommissionTable from "./PersonalCommissionTable"; 
+import CommissionTable from "./PersonalCommissionTable";
 import { useSales } from "../../sales/SaleContext";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const PersonalCommission = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
   const { commissions, setCommissions } = useSales();
-
+  const { t } = useTranslation();
   const personalCommissions = React.useMemo(
     () => commissions.filter((item) => !item.project?.trim()),
     [commissions]
   );
 
   const titleMap = {
-    add: "Add Personal Commission",
-    edit: "Edit Personal Commission",
-    delete: "Delete Personal Commission",
+    add: t("modal.addTitle", { name: t("title.persionalCommission") }),
+    edit: t("modal.editTitle", { name: t("title.persionalCommission") }),
+    delete: t("modal.deleteTitle", { name: t("title.persionalCommission") }),
+  };
+  const okTextMap = {
+    add: t("modal.okText"),
+    edit: t("modal.okText"),
+    delete: t("modal.deleteOkText"),
   };
 
   const openAdd = () => {
     form.resetFields();
     form.setFieldsValue({
-      commission_date: dayjs(),       
+      commission_date: dayjs(),
       status: "Pending",
     });
 
     openModal("add", {
       titleMap,
+      okTextMap,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       content: <PersonalCommissionForm form={form} />,
       onOk: async () => {
         await form.validateFields();
@@ -70,6 +78,8 @@ const PersonalCommission = () => {
 
     openModal("edit", {
       titleMap,
+      okTextMap,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       content: <PersonalCommissionForm form={form} />,
       onOk: async () => {
         await form.validateFields();
@@ -79,12 +89,12 @@ const PersonalCommission = () => {
           prev.map((c) =>
             c.commission_id === commission.commission_id
               ? {
-                  ...c,
-                  ...values,
-                  commission_date: dayjs(values.commission_date).format("YYYY-MM-DD"),
-                  amount: Number(values.amount),
-                  commission_rate: Number(values.commission_rate),
-                }
+                ...c,
+                ...values,
+                commission_date: dayjs(values.commission_date).format("YYYY-MM-DD"),
+                amount: Number(values.amount),
+                commission_rate: Number(values.commission_rate),
+              }
               : c
           )
         );
@@ -98,6 +108,8 @@ const PersonalCommission = () => {
   const openDelete = (commission: CommissionType) => {
     openModal("delete", {
       titleMap,
+      okTextMap,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       content: (
         <p>
           Are you sure you want to delete personal commission <b>#{commission.commission_id}</b>?
@@ -113,10 +125,11 @@ const PersonalCommission = () => {
 
   return (
     <div className="table-container">
-      <PageHeader
-        title="Personal Commissions"
+      <ActionHeader
+        title={t("title.persionalCommission")}
+        countLabel={t("title.persionalCommission", { ns: "common" })}
         onAdd={openAdd}
-        buttonText="Add Commission"
+        buttonText={t("button.add")}
         count={personalCommissions.length}
         icon={undefined}
       />

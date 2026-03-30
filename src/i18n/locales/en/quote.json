@@ -1,0 +1,45 @@
+{
+  "quote": {
+    "id": "Id",
+    "quoteTo": "Quote To",
+    "quoteDate": "Quote Date",
+    "item": "Item",
+    "description": "Description",
+    "qty": "Qty",
+    "unit": "Unit",
+    "unitPrice": "Unit Price ($)",
+    "amount": "Amount ($)",
+    "totalAmount": "Total Amount",
+    "discount": "Discount ($)",
+    "engineer": "Engineer",
+    "status": "Status",
+    "notes": "Notes",
+    "date": "Date",
+    "dateRange": "Quote Date Range"
+  },
+  "placeholder": {
+    "customerName": "Customer name",
+    "searchItem": "Search item...",
+    "selectEngineer": "Select engineer",
+    "selectStatus": "Select quote status"
+  },
+  "status": {
+    "approved": "Approved",
+    "pending": "Pending",
+    "denied": "Denied",
+    "selectStatus": "Select quote status"
+  },
+  "validation": {
+    "required": "Required"
+  },
+  "button": {
+    "addItem": "Add Item",
+    "clearFilter": "Clear Filter",
+    "generateInvoice": "Generate Invoice",
+    "generating": "Generating...",
+    "generated": "Generated"
+  },
+  "table": {
+    "noData": "No quotes found"
+  }
+}

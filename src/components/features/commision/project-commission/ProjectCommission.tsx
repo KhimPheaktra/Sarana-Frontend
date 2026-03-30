@@ -1,5 +1,5 @@
 import { Card, Form, message } from "antd";
-import PageHeader from "../../../../shared/action-header/ActionHeader";
+import ActionHeader from "../../../../shared/action-header/ActionHeader";
 import { useAppModal } from "../../../../shared/modal/AppModalProvider";
 import type { CommissionType } from "../commission.types";
 import dayjs from "dayjs";
@@ -7,21 +7,27 @@ import { useSales } from "../../sales/SaleContext";
 import ProjectCommissionForm from "./ProjectCommissionForm";
 import ProjectCommissionTable from "./ProjectCommissionTable";
 import React from "react";
+import { useTranslation } from "react-i18next";
 
 const ProjectCommission = () => {
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
   const { commissions, setCommissions } = useSales();
-
+  const { t } = useTranslation();
   const projectCommissions = React.useMemo(
     () => commissions.filter((item) => item.project?.trim()),
     [commissions]
   );
 
   const titleMap = {
-    add: "Add Project Commission",
-    edit: "Edit Project Commission",
-    delete: "Delete Project Commission",
+    add: t("modal.addTitle", { name: t("title.projectCommission") }),
+    edit: t("modal.editTitle", { name: t("title.projectCommission") }),
+    delete: t("modal.deleteTitle", { name: t("title.projectCommission") }),
+  };
+  const okTextMap = {
+    add: t("modal.okText"),
+    edit: t("modal.okText"),
+    delete: t("modal.deleteOkText"),
   };
 
   const openAdd = () => {
@@ -33,6 +39,8 @@ const ProjectCommission = () => {
     });
     openModal("add", {
       titleMap,
+      okTextMap,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       content: <ProjectCommissionForm form={form} />,
       onOk: async () => {
         await form.validateFields();
@@ -65,6 +73,8 @@ const ProjectCommission = () => {
   const openEdit = (commission: CommissionType) => {
     openModal("edit", {
       titleMap,
+      okTextMap,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       content: <ProjectCommissionForm form={form} />,
       onOk: async () => {
         await form.validateFields();
@@ -108,6 +118,8 @@ const ProjectCommission = () => {
   const openDelete = (commission: CommissionType) => {
     openModal("delete", {
       titleMap,
+      okTextMap,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       content: (
         <p>
           Are you sure you want to delete project commission <b>#{commission.commission_id}</b>?
@@ -120,13 +132,14 @@ const ProjectCommission = () => {
       },
     });
   };
-
+   
   return (
     <div className="table-container">
-      <PageHeader
-        title="Project Commissions"
+      <ActionHeader
+        title={t("title.projectCommission")}
+        countLabel={t("title.projectCommission", { ns: "common" })}
         onAdd={openAdd}
-        buttonText="Add Commission"
+        buttonText={t("button.add")}
         count={projectCommissions.length}
         icon={undefined}
       />

@@ -1,14 +1,17 @@
 import { DeleteOutlined, PlusOutlined, UploadOutlined } from "@ant-design/icons";
 import { Button, Col, DatePicker, Form, Input, InputNumber, Row, Select, Upload } from "antd";
 import TextArea from "antd/es/input/TextArea";
-import {catalogItemsData } from "../catalogItem/CatalogItem";
+import { catalogItemsData } from "../catalogItem/CatalogItem";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   form: any;
 }
 
 const InvoiceForm: React.FC<Props> = ({ form }) => {
-const calcAmount = (name: number) => {
+  const { t } = useTranslation("invoice");
+
+  const calcAmount = (name: number) => {
     const qty = form.getFieldValue(["invoices", name, "qty"]) || 0;
     const price = form.getFieldValue(["invoices", name, "unit_price"]) || 0;
     form.setFieldValue(["invoices", name, "amount"], qty * price);
@@ -21,7 +24,6 @@ const calcAmount = (name: number) => {
     form.setFieldsValue({ total_amount: total });
   };
 
- 
   const handleItemSelect = (value: number, name: number) => {
     const selected = catalogItemsData.find((item) => item.item_id === value);
     if (!selected) return;
@@ -41,19 +43,24 @@ const calcAmount = (name: number) => {
     <Form form={form} layout="vertical" requiredMark={false}>
       <Row gutter={16}>
         <Col xs={24} sm={12}>
-          <Form.Item label="Customer Name" name="customer_name"
-            rules={[{ required: true, message: "Please input Customer" }]}>
-            <Input placeholder="Enter customer name" />
+          <Form.Item
+            label={t("invoice.customerName")}
+            name="customer_name"
+            rules={[{ required: true, message: t("placeholder.customer") }]}
+          >
+            <Input placeholder={t("placeholder.customer")} />
           </Form.Item>
         </Col>
-        <Col xs={24} sm={6}>
-          <Form.Item label="Reference" name="reference_id">
-            <Input placeholder="Reference" />
+
+        {/* <Col xs={24} sm={6}>
+          <Form.Item label={t("invoice.reference")} name="reference_id">
+            <Input placeholder={t("placeholder.reference")} />
           </Form.Item>
-        </Col>
+        </Col> */}
+
         <Col xs={24} sm={6}>
-          <Form.Item name="engineer" label="Engineer">
-            <Select allowClear placeholder="Select engineer">
+          <Form.Item name="engineer" label={t("invoice.engineer")}>
+            <Select allowClear placeholder={t("placeholder.selectEngineer")}>
               <Select.Option value="Tra">Tra</Select.Option>
               <Select.Option value="Long">Long</Select.Option>
               <Select.Option value="Som">Som</Select.Option>
@@ -61,29 +68,33 @@ const calcAmount = (name: number) => {
           </Form.Item>
         </Col>
       </Row>
+
       <div style={{ maxHeight: 260, overflowY: "auto", paddingRight: 4 }}>
-        <Form.List name="invoices" initialValue={[{ item_name: "", qty: 1, unit_price: 0, amount: 0 }]}>
+        <Form.List name="invoices" initialValue={[{ item_name: undefined, qty: 1, unit_price: 0, amount: 0 }]}>
           {(fields, { add, remove }) => (
             <>
               {fields.map(({ key, name, ...restField }) => (
-                <div key={key} style={{
-                  border: "1px dashed #d9d9d9",
-                  borderRadius: 8,
-                  padding: "8px 12px 0",
-                  marginBottom: 8,
-                  background: "#fafafa",
-                }}>
-                  <Row gutter={8} align="middle"> 
+                <div
+                  key={key}
+                  style={{
+                    border: "1px dashed #d9d9d9",
+                    borderRadius: 8,
+                    padding: "8px 12px 0",
+                    marginBottom: 8,
+                    background: "#fafafa",
+                  }}
+                >
+                  <Row gutter={8} align="middle">
                     <Col xs={24} sm={8}>
                       <Form.Item
                         {...restField}
                         name={[name, "item_name"]}
-                        label="Item"
-                        rules={[{ required: true, message: "Required" }]}
+                        label={t("invoice.item")}
+                        rules={[{ required: true, message: t("validation.required") || "Required" }]}
                       >
                         <Select
                           showSearch
-                          placeholder="Search item..."
+                          placeholder={t("placeholder.searchItem")}
                           optionFilterProp="label"
                           filterOption={(input, option) =>
                             (option?.label as string)?.toLowerCase().includes(input.toLowerCase())
@@ -109,97 +120,134 @@ const calcAmount = (name: number) => {
                     </Col>
 
                     <Col xs={8} sm={4}>
-                      <Form.Item {...restField} name={[name, "qty"]} label="Qty"
-                        rules={[{ required: true, message: "Required" }]}>
-                        <InputNumber min={1} style={{ width: "100%" }}
-                          onChange={() => calcAmount(name)} />
+                      <Form.Item
+                        {...restField}
+                        name={[name, "qty"]}
+                        label={t("invoice.qty")}
+                        rules={[{ required: true, message: t("validation.required") || "Required" }]}
+                      >
+                        <InputNumber min={1} style={{ width: "100%" }} onChange={() => calcAmount(name)} />
                       </Form.Item>
                     </Col>
+
                     <Col xs={8} sm={5}>
-                      <Form.Item {...restField} name={[name, "unit_price"]} label="Unit Price"
-                        rules={[{ required: true, message: "Required" }]}>
-                        <InputNumber min={0} style={{ width: "100%" }} prefix="$"
-                          onChange={() => calcAmount(name)} />
+                      <Form.Item
+                        {...restField}
+                        name={[name, "unit_price"]}
+                        label={t("invoice.unitPrice")}
+                        rules={[{ required: true, message: t("validation.required") || "Required" }]}
+                      >
+                        <InputNumber
+                          min={0}
+                          style={{ width: "100%" }}
+                          prefix="$"
+                          onChange={() => calcAmount(name)}
+                        />
                       </Form.Item>
                     </Col>
+
                     <Col xs={6} sm={5}>
-                      <Form.Item {...restField} name={[name, "amount"]} label="Amount">
-                        <InputNumber min={0} style={{ width: "100%" }} prefix="$"
-                          readOnly variant="filled" />
+                      <Form.Item {...restField} name={[name, "amount"]} label={t("invoice.amount")}>
+                        <InputNumber min={0} style={{ width: "100%" }} prefix="$" readOnly variant="filled" />
                       </Form.Item>
                     </Col>
+
                     <Col xs={2} sm={2} style={{ paddingTop: 4 }}>
-                      <Button danger type="text" icon={<DeleteOutlined />}
-                        onClick={() => { remove(name); setTimeout(recalcTotal, 0); }}
+                      <Button
+                        danger
+                        type="text"
+                        icon={<DeleteOutlined />}
+                        onClick={() => {
+                          remove(name);
+                          setTimeout(recalcTotal, 0);
+                        }}
                         disabled={fields.length === 1}
                       />
                     </Col>
                   </Row>
                 </div>
               ))}
-              <Button type="dashed" onClick={() =>
-                add({ item_name: undefined, qty: 1, unit_price: 0, amount: 0 })
-              } icon={<PlusOutlined />} style={{ width: "100%", marginBottom: 12 }}>
-                Add Item
+
+              <Button
+                type="dashed"
+                onClick={() => add({ item_name: undefined, qty: 1, unit_price: 0, amount: 0 })}
+                icon={<PlusOutlined />}
+                style={{ width: "100%", marginBottom: 12 }}
+              >
+                {t("invoice.addItem")}
               </Button>
             </>
           )}
         </Form.List>
       </div>
+
       <Row gutter={16}>
         <Col xs={24} sm={8}>
-          <Form.Item label="Total Amount" name="total_amount">
-            <InputNumber min={0} precision={2} prefix="$" style={{ width: "100%" }}
-              readOnly variant="filled" />
+          <Form.Item label={t("invoice.totalAmount")} name="total_amount">
+            <InputNumber min={0} precision={2} prefix="$" style={{ width: "100%" }} readOnly variant="filled" />
           </Form.Item>
         </Col>
+
         <Col xs={24} sm={8}>
-          <Form.Item name="discount" label="Discount ($)">
+          <Form.Item name="discount" label={t("invoice.discount")}>
             <InputNumber min={0} style={{ width: "100%" }} prefix="$" />
           </Form.Item>
         </Col>
-          <Col xs={24} sm={8}>
-          <Form.Item label="Date" name="invoice_date"
-            rules={[{ required: true, message: "Required" }]}>
-            <DatePicker placeholder="Select date" format="YYYY-MM-DD HH:mm:ss" disabled={true}
-              style={{ width: "100%" }} />
-          </Form.Item>
-        </Col>
-      </Row>
-      <Row gutter={16}>
+
         <Col xs={24} sm={8}>
-          <Form.Item label="Status" name="status"
-            rules={[{ required: true, message: "Required" }]} 
-            initialValue={"Pending"} >
-            <Select placeholder="Select status">
-              <Select.Option value="Completed">Completed</Select.Option>
-              <Select.Option value="Pending">Pending</Select.Option>
-            </Select>
-          </Form.Item>
-        </Col>
-        <Col xs={24} sm={8}>
-          <Form.Item label="Note" name="note">
-            <TextArea rows={1} placeholder="Enter note" />
-          </Form.Item>
-        </Col>
-        <Col xs={24} sm={8}>
-          <Form.Item label="Attach Payment" name="payment_detail"
-            valuePropName="fileList"
-            getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
+          <Form.Item
+            label={t("invoice.date")}
+            name="invoice_date"
+            rules={[{ required: true, message: t("validation.required") || "Required" }]}
           >
-            <Upload
-              accept="image/*"
-              listType="picture"
-              maxCount={1}
-              beforeUpload={() => false}
-            >
-              <Button icon={<UploadOutlined />}>Attach Payment</Button>
-            </Upload>
+            <DatePicker
+              placeholder={t("placeholder.selectDate")}
+              format="YYYY-MM-DD HH:mm:ss"
+              disabled
+              style={{ width: "100%" }}
+            />
           </Form.Item>
         </Col>
       </Row>
 
+      <Row gutter={16}>
+        <Col xs={24} sm={8}>
+          <Form.Item
+            label={t("invoice.status")}
+            name="status"
+            rules={[{ required: true, message: t("validation.required") || "Required" }]}
+            initialValue={"Pending"}
+          >
+            <Select placeholder={t("status.selectStatus")}>
+              <Select.Option value="Pending">{t("status.pending")}</Select.Option>
+              <Select.Option value="Completed">{t("status.completed")}</Select.Option>
+            </Select>
+          </Form.Item>
+        </Col>
+
+        <Col xs={24} sm={8}>
+          <Form.Item label={t("invoice.note")} name="note">
+            <TextArea rows={1} placeholder={t("placeholder.note")} />
+          </Form.Item>
+        </Col>
+
+        <Col xs={24} sm={8}>
+          <Form.Item
+            label={t("invoice.attachPayment")}
+            name="payment_detail"
+            valuePropName="fileList"
+            getValueFromEvent={(e) => (Array.isArray(e) ? e : e?.fileList)}
+          >
+            <Upload accept="image/*" listType="picture" maxCount={1} beforeUpload={() => false}>
+              <Button icon={<UploadOutlined />}>
+                {t("invoice.attachPayment")}
+              </Button>
+            </Upload>
+          </Form.Item>
+        </Col>
+      </Row>
     </Form>
   );
 };
+
 export default InvoiceForm;

@@ -1,5 +1,5 @@
 export interface QuoteItem {
-  item: string;
+  item_name: string;
   qty: number;
   unit: string;
   unit_price: number;
@@ -18,4 +18,5 @@ export interface QuoteType {
   status: string;
   notes?: string;
   engineer?: string;
+  created_by?: string;
 }

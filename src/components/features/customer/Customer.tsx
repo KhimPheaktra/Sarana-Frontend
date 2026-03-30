@@ -1,12 +1,14 @@
 import { Card, Form, message } from "antd";
 import type { CusType } from "./cus.types";
 import { UserOutlined } from "@ant-design/icons";
-import PageHeader from "../../../shared/action-header/ActionHeader";
+import ActionHeader from "../../../shared/action-header/ActionHeader";
 import CustomerTable from "./CustomerTable";
 import CustomerForm from "./CustomerForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
+import { useTranslation } from "react-i18next";
 
 const Customer = () => {
+  const { t } = useTranslation();
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
 
@@ -17,16 +19,23 @@ const Customer = () => {
   ];
 
   const titleMap = {
-    add: "Add Customer",
-    edit: "Edit Customer",
-    delete: "Delete Customer",
+    add: t("modal.addTitle", { name: t("title.customer") }),
+    edit: t("modal.editTitle", { name: t("title.customer") }),
+    delete: t("modal.deleteTitle", { name: t("title.customer") }),
+  };
+  const okTextMap = {
+    add: t("modal.okText"),
+    edit: t("modal.okText"),
+    delete: t("modal.deleteOkText"),
   };
 
   const openAdd = () => {
     form.resetFields();
     openModal("add", {
       titleMap,
+      okTextMap,
       content: <CustomerForm form={form} />,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       onOk: async () => {
         await form.validateFields();
         message.success("Customer added successfully");
@@ -39,7 +48,9 @@ const Customer = () => {
     form.setFieldsValue(customer);
     openModal("edit", {
       titleMap,
+      okTextMap,
       content: <CustomerForm form={form} />,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       onOk: async () => {
         await form.validateFields();
         message.success("Customer updated successfully");
@@ -51,6 +62,8 @@ const Customer = () => {
   const openDelete = (customer: CusType) => {
     openModal("delete", {
       titleMap,
+      okTextMap,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       content: (
         <p>
           Are you sure you want to delete <b>{customer.name}</b>?
@@ -65,13 +78,13 @@ const Customer = () => {
 
   return (
     <div className="table-container">
-      <PageHeader
-        title="Customer Management"
+      <ActionHeader
+        title={t("title.customer")}
         count={customers.length}
-        countLabel="customers"
+        countLabel={t("title.customer", { ns: "common" })}
         icon={<UserOutlined />}
         onAdd={openAdd}
-        buttonText="Add Customer"
+        buttonText={t("button.add")}
       />
 
       <Card>

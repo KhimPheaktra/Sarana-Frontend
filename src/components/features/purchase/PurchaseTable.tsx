@@ -2,10 +2,15 @@ import type { ColumnsType } from "antd/es/table";
 import type { PurchaseType } from "./purchase.types";
 import { Space, Table, Form, Row, Col, DatePicker, Button, Grid } from "antd";
 import { EyeOutlined, EditOutlined, DeleteOutlined, ClearOutlined } from "@ant-design/icons";
-import type { Key } from "react";
-
+import { useCallback, useEffect, useState, type Key } from "react";
+import { useTranslation } from "react-i18next";
 const { useBreakpoint } = Grid;
+import dayjs, { Dayjs } from "dayjs";
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 interface Props {
     data: PurchaseType[];
     onView: (purchase: PurchaseType) => void;
@@ -17,6 +22,8 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
     const [form] = Form.useForm();
     const screens = useBreakpoint();
     const isMobile = !screens.md;
+    const { t } = useTranslation(["purchase", "common"]);
+    const [filteredPurchases, setFilteredPurchases] = useState<PurchaseType[]>(data);
     const renderItems = (record: PurchaseType, render: (item: any) => React.ReactNode) => (
         <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
             {record.items?.map((item: any, index: Key | null | undefined) => (
@@ -25,120 +32,157 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
                 </div>
             ))}
         </div>
-    )
+    );
+
+    useEffect(() => {
+        setFilteredPurchases(data);
+    }, [data])
+
+    const handleDateChange = useCallback(() => {
+        const values = form.getFieldsValue();
+        let fromDate: Dayjs | null = null;
+        let toDate: Dayjs | null = null;
+
+        if (isMobile) {
+            fromDate = values.purchase_date_from ?? null;
+            toDate = values.purchase_date_to ?? null;
+        } else {
+            if (values.purchase_date_range) {
+                [fromDate, toDate] = values.purchase_date_range;
+            }
+        }
+
+        if (fromDate && toDate) {
+            const filtered = data.filter((purchase) => {
+                const purchaseDate = dayjs(purchase.purchase_date);
+                return (
+                    purchaseDate.isSameOrAfter(fromDate, "day") &&
+                    purchaseDate.isSameOrBefore(toDate, "day")
+                );
+            });
+            setFilteredPurchases(filtered);
+        } else {
+            setFilteredPurchases(data);
+        }
+    }, [form, isMobile, data]);
+
+    const handleClear = useCallback(() => {
+        form.resetFields();
+        setFilteredPurchases(data);
+    }, [form, data]);
+
     const columns: ColumnsType<PurchaseType> = [
         {
-            title: "ID",
+            title: t("table.id", { ns: "purchase" }),
             dataIndex: "purchase_id",
             key: "purchase_id",
             align: "center",
             sorter: (a, b) => a.purchase_id - b.purchase_id,
-            defaultSortOrder: 'ascend',
+            defaultSortOrder: "ascend",
         },
         {
-            title: "Supplier",
+            title: t("table.supplier", { ns: "purchase" }),
             dataIndex: "supplier_name",
             key: "suppsupplier_namelier",
             align: "center",
         },
         {
-            title: "Purchase Date",
+            title: t("table.purchaseDate", { ns: "purchase" }),
             dataIndex: "purchase_date",
             key: "purchase_date",
             align: "center",
         },
         {
-            title: "Item Name",
+            title: t("table.itemName", { ns: "purchase" }),
             dataIndex: "item_name",
             key: "item_name",
             align: "center",
             render: (_, record) => renderItems(record, (item) => item.item_name),
         },
         {
-            title: "Qty",
+            title: t("table.qty", { ns: "purchase" }),
             dataIndex: "qty",
             key: "qty",
             align: "center",
             render: (_, record) => renderItems(record, (item) => item.qty),
         },
         {
-            title: "Unit Price",
+            title: t("table.unitPrice", { ns: "purchase" }),
             dataIndex: "unit_price",
             key: "unit_price",
             align: "center",
-            render: (_, record) => renderItems(record, (item) =>
-                new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.unit_price)
-            ),
+            render: (_, record) =>
+                renderItems(record, (item) =>
+                    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(item.unit_price)
+                ),
         },
         {
-            title: "Subtotal",
+            title: t("table.subtotal", { ns: "purchase" }),
             dataIndex: "subtotal",
             key: "subtotal",
             align: "center",
-            render: (_, record) => renderItems(record, (item) =>
-                new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(item.subtotal ?? 0)
-            ),
+            render: (_, record) =>
+                renderItems(record, (item) =>
+                    new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(item.subtotal ?? 0)
+                ),
         },
         {
-            title: "Total Amount",
+            title: t("table.totalAmount", { ns: "purchase" }),
             dataIndex: "total_amount",
             key: "total_amount",
             align: "center",
-            render: (value: number) => {
-                return new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                }).format(value);
-            },
+            render: (value: number) =>
+                new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value),
         },
         {
-            title: "Actions",
+            title: t("table.actions", { ns: "purchase" }),
             key: "actions",
             align: "center",
             render: (_, record) => (
                 <Space>
                     <Button type="primary" onClick={() => onView(record)}>
-                        <EyeOutlined /> View
+                        <EyeOutlined /> {t("button.view", { ns: "common" })}
                     </Button>
                     <Button type="primary" onClick={() => onEdit(record)}>
-                        <EditOutlined /> Edit
+                        <EditOutlined /> {t("button.edit", { ns: "common" })}
                     </Button>
                     <Button danger onClick={() => onDelete(record)}>
-                        <DeleteOutlined /> Delete
+                        <DeleteOutlined /> {t("button.delete", { ns: "common" })}
                     </Button>
                 </Space>
-            )
-        }
+            ),
+        },
     ];
 
     return (
-        <div style={{ overflow: 'visible', minHeight: '600px' }}>
+        <div style={{ overflow: "visible", minHeight: "600px" }}>
             <Form form={form} layout="vertical" requiredMark={false}>
                 <Row gutter={16} align="bottom">
                     {isMobile ? (
                         <>
                             <Col xs={24} sm={12}>
                                 <Form.Item
-                                    label="From Date"
-                                    name="purchase_date_from"
+                                    label={t("filterDate.from_date", { ns: "common" })}
+                                    name="purchase_date_from"  
                                 >
                                     <DatePicker
-                                        placeholder="From date"
-                                        format="YYYY-MMMM-DD"
-                                        style={{ width: '100%' }}
+                                        placeholder={t("filterDate.from_date", { ns: "common" })}
+                                        format="YYYY-MM-DD"
+                                        style={{ width: "100%" }}
+                                        onChange={handleDateChange}
                                     />
                                 </Form.Item>
                             </Col>
-
                             <Col xs={24} sm={12}>
                                 <Form.Item
-                                    label="To Date"
+                                    label={t("filterDate.to_date", { ns: "common" })}
                                     name="purchase_date_to"
                                 >
                                     <DatePicker
-                                        placeholder="To date"
-                                        format="YYYY-MMMM-DD"
-                                        style={{ width: '100%' }}
+                                        placeholder={t("filterDate.to_date", { ns: "common" })}
+                                        format="YYYY-MM-DD"
+                                        style={{ width: "100%" }}
+                                        onChange={handleDateChange}
                                     />
                                 </Form.Item>
                             </Col>
@@ -146,26 +190,29 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
                     ) : (
                         <Col xs={24} sm={24} md={8}>
                             <Form.Item
-                                label="Purchase Date Range"
+                                label={t("purchase.dateRange", { ns: "purchase" })}
                                 name="purchase_date_range"
                             >
                                 <DatePicker.RangePicker
-                                    placeholder={["From date", "To date"]}
-                                    format="YYYY-MMMM-DD"
-                                    style={{ width: '100%' }}
+                                    placeholder={[
+                                        t("filterDate.from_date", { ns: "common" }),
+                                        t("filterDate.to_date", { ns: "common" }),
+                                    ]}
+                                    format="YYYY-MM-DD"
+                                    style={{ width: "100%" }}
+                                    onChange={handleDateChange}
                                 />
                             </Form.Item>
                         </Col>
                     )}
-
-                    <Col xs={24} sm={12} md={5}>
+                    <Col xs={24} sm={12} md={3}>
                         <Form.Item>
                             <Button
-                                onClick={() => form.resetFields()}
+                                onClick={handleClear}
                                 icon={<ClearOutlined />}
                                 block={isMobile}
                             >
-                                Clear Filter
+
                             </Button>
                         </Form.Item>
                     </Col>
@@ -174,11 +221,11 @@ const PurchaseTable: React.FC<Props> = ({ data, onView, onEdit, onDelete }) => {
 
             <Table
                 columns={columns}
-                dataSource={data}
+                dataSource={filteredPurchases}
                 pagination={{ pageSize: 10, simple: true }}
-                scroll={{ x: 'max-content' }}
+                scroll={{ x: "max-content" }}
                 rowKey="purchase_id"
-                locale={{ emptyText: "No Purchases Found" }}
+                locale={{ emptyText: t("table.noData", { ns: "purchase" }) }}
                 size="small"
             />
         </div>

@@ -1,0 +1,41 @@
+{
+  "invoice": {
+    "customerName": "Customer Name",
+    "reference": "Reference",
+    "engineer": "Engineer",
+    "item": "Item",
+    "qty": "Qty",
+    "unitPrice": "Unit Price",
+    "amount": "Amount",
+    "totalAmount": "Total Amount",
+    "discount": "Discount ($)",
+    "date": "Date",
+    "status": "Status",
+    "note": "Note",
+    "attachPayment": "Attach Payment",
+    "addItem": "Add Item"
+  },
+  "placeholder": {
+    "customer": "Enter customer name",
+    "reference": "Reference",
+    "selectEngineer": "Select engineer",
+    "searchItem": "Search item...",
+    "selectDate": "Select date",
+    "note": "Enter note"
+  },
+  "status": {
+    "pending": "Pending",
+    "completed": "Completed",
+    "selectStatus": "Select status"
+  },
+  "table": {
+    "id": "ID",
+    "customer": "Customer",
+    "engineer": "Engineer",
+    "quote": "Quote",
+    "date": "Date",
+    "total": "Total",
+    "actions": "Actions",
+    "noData": "No Invoice Found"
+  }
+}

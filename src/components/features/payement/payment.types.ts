@@ -5,7 +5,15 @@ export interface PaymentItem {
     discount: number;
     amount: number;
 }
-
+export interface PaymentDetail {
+  id: number;
+  ref_id: number;       
+  ref_type: "payment"| "purchase" | "commission";
+  paid_amount: number;
+  payment_date: string;
+  image?: string;
+  note?: string;
+}
 export interface PaymentType {
     key: string;
     payment_id: number;
@@ -19,8 +27,9 @@ export interface PaymentType {
     payments: PaymentItem[];
     total_amount: number;
     payment_date: string;
-    payment_detail?: string;
     status: string;
     partial_percentage?: number;
     note?: string;
+    payment_details?: PaymentDetail[];
+    paid_amount?: number; 
 }

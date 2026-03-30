@@ -2,6 +2,7 @@ import React from "react";
 import { Button, Col, DatePicker, Form, InputNumber, Row, Select, Upload } from "antd";
 import TextArea from "antd/es/input/TextArea";
 import { UploadOutlined } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   form: any;
@@ -9,7 +10,9 @@ interface Props {
 }
 
 const ProjectCommissionForm: React.FC<Props> = ({ form, lockedFields = [] }) => {
+  const { t } = useTranslation("commission");
   const isLocked = (field: string) => lockedFields.includes(field as any);
+
   const handleRateOrTotalChange = () => {
     const rate: number = form.getFieldValue("commission_rate") ?? 0;
     const total: number = form.getFieldValue("invoice_total") ?? 0;
@@ -25,11 +28,11 @@ const ProjectCommissionForm: React.FC<Props> = ({ form, lockedFields = [] }) => 
       <Row gutter={16}>
         <Col xs={24} sm={12}>
           <Form.Item
-            label="Engineer"
+            label={t("commission.engineer")}
             name="engineer"
-            rules={[{ required: true, message: "Please select engineer" }]}
+            rules={[{ required: true, message: t("validation.engineerRequired") }]}
           >
-            <Select placeholder="Select engineer" disabled={isLocked("engineer")}>
+            <Select placeholder={t("placeholder.selectEngineer")} disabled={isLocked("engineer")}>
               <Select.Option value="Tra">Tra</Select.Option>
               <Select.Option value="Long">Long</Select.Option>
             </Select>
@@ -37,12 +40,12 @@ const ProjectCommissionForm: React.FC<Props> = ({ form, lockedFields = [] }) => 
         </Col>
         <Col xs={24} sm={12}>
           <Form.Item
-            label="Date"
+            label={t("commission.date")}
             name="commission_date"
-            rules={[{ required: true, message: "Please enter commission date" }]}
+            rules={[{ required: true, message: t("validation.dateRequired") }]}
           >
             <DatePicker
-              placeholder="Enter commission date"
+              placeholder={t("placeholder.commissionDate")}
               format="YYYY-MM-DD"
               style={{ width: "100%" }}
             />
@@ -50,12 +53,12 @@ const ProjectCommissionForm: React.FC<Props> = ({ form, lockedFields = [] }) => 
         </Col>
         <Col xs={24} sm={12}>
           <Form.Item
-            label="Invoice Total ($)"
+            label={t("commission.invoiceTotal")}
             name="invoice_total"
-            rules={[{ required: true, message: "Invoice total is required" }]}
+            rules={[{ required: true, message: t("validation.invoiceTotalRequired") }]}
           >
             <InputNumber
-              placeholder="0.00"
+              placeholder={t("placeholder.invoiceTotal")}
               precision={2}
               style={{ width: "100%" }}
               disabled={isLocked("invoice_total")}
@@ -65,15 +68,15 @@ const ProjectCommissionForm: React.FC<Props> = ({ form, lockedFields = [] }) => 
         </Col>
         <Col xs={24} sm={12}>
           <Form.Item
-            label="Commission Rate (%)"
+            label={t("commission.commissionRate")}
             name="commission_rate"
             rules={[
-              { required: true, message: "Please enter commission rate" },
-              { type: "number", min: 0, max: 100, message: "Must be between 0–100" },
+              { required: true, message: t("validation.commissionRateRequired") },
+              { type: "number", min: 0, max: 100, message: t("validation.commissionRateRange") },
             ]}
           >
             <InputNumber
-              placeholder="30"
+              placeholder={t("placeholder.commissionRate")}
               min={0}
               max={100}
               precision={1}
@@ -84,60 +87,54 @@ const ProjectCommissionForm: React.FC<Props> = ({ form, lockedFields = [] }) => 
         </Col>
         <Col xs={24} sm={12}>
           <Form.Item
-            label="Amount"
+            label={t("commission.amount")}
             name="amount"
-            rules={[{ required: true, message: "Please enter amount" }]}
-            tooltip="Auto-calculated from Invoice Total × Rate. You can override manually."
+            rules={[{ required: true, message: t("validation.amountRequired") }]}
+            tooltip={t("tooltip.amountAutoCalc")}
           >
             <InputNumber
-              placeholder="Enter amount"
+              placeholder={t("placeholder.amount")}
               precision={2}
               style={{ width: "100%" }}
             />
           </Form.Item>
         </Col>
-
         <Col xs={24} sm={12}>
           <Form.Item
-            label="Status"
+            label={t("commission.status")}
             name="status"
-            rules={[{ required: true, message: "Please select status" }]}
+            rules={[{ required: true, message: t("validation.statusRequired") }]}
           >
-            <Select placeholder="Select status">
-              <Select.Option value="Pending">Pending</Select.Option>
-              <Select.Option value="Paid">Paid</Select.Option>
-              <Select.Option value="Cancelled">Cancelled</Select.Option>
+            <Select placeholder={t("placeholder.selectStatus")}>
+              <Select.Option value="Pending">{t("status.pending")}</Select.Option>
+              <Select.Option value="Paid">{t("status.paid")}</Select.Option>
+              <Select.Option value="Cancelled">{t("status.cancelled")}</Select.Option>
             </Select>
           </Form.Item>
         </Col>
-
         <Col xs={24} sm={12}>
-          <Form.Item label="Project" name="project">
+          <Form.Item label={t("commission.project")} name="project">
             <TextArea
-              placeholder="Enter project"
+              placeholder={t("placeholder.project")}
               disabled={isLocked("project")}
               autoSize={{ minRows: 2 }}
             />
           </Form.Item>
         </Col>
-
         <Col xs={24} sm={12}>
-          <Form.Item label="Description" name="description">
-            <TextArea placeholder="Enter description" autoSize={{ minRows: 2 }} />
+          <Form.Item label={t("commission.description")} name="description">
+            <TextArea placeholder={t("placeholder.description")} autoSize={{ minRows: 2 }} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={12}>
-          <Form.Item label="Attach Payment" name="payment_detail"
+          <Form.Item
+            label={t("commission.attachPayment")}
+            name="payment_detail"
             valuePropName="fileList"
             getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
           >
-            <Upload
-              accept="image/*"
-              listType="picture"
-              maxCount={1}
-              beforeUpload={() => false}
-            >
-              <Button icon={<UploadOutlined />}>Attach Payment</Button>
+            <Upload accept="image/*" listType="picture" maxCount={1} beforeUpload={() => false}>
+              <Button icon={<UploadOutlined />}>{t("button.attachPayment")}</Button>
             </Upload>
           </Form.Item>
         </Col>

@@ -1,0 +1,19 @@
+{
+  "title": "ចំណាយ និងការទិញ",
+  "dateRange": "ចន្លោះកាលបរិច្ឆេទ",
+  "totalExpenses": "ចំណាយសរុប",
+  "totalPurchases": "ការទិញសរុប",
+  "totalSpend": "ការចំណាយសរុប",
+  "table": {
+    "type": "ប្រភេទ",
+    "description": "ការពិពណ៌នា",
+    "categorySupplier": "ប្រភេទ/អ្នកផ្គត់ផ្គង់",
+    "date": "កាលបរិច្ឆេទ",
+    "qty": "បរិមាណ",
+    "unitPrice": "តម្លៃក្នុងមួយឯកតា",
+    "amount": "ចំនួនទឹកប្រាក់",
+    "expense": "ចំណាយ",
+    "purchase": "ការទិញ",
+    "supplier": "អ្នកផ្គត់ផ្គង់"
+  }
+}

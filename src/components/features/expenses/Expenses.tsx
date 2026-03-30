@@ -1,12 +1,13 @@
 import dayjs from "dayjs";
 import { Card, Form, message } from "antd";
 import type { ExpensesType } from "./expenses.types";
-import PageHeader from "../../../shared/action-header/ActionHeader";
+import ActionHeader from "../../../shared/action-header/ActionHeader";
 import { BookOutlined } from "@ant-design/icons";
 import ExpensesTable from "./ExpensesTable";
 import ExpensesForm from "./ExpensesForm";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
 import { useSales } from "../sales/SaleContext";
+import { useTranslation } from "react-i18next";
 
 export const expensesData: ExpensesType[] = [
   {
@@ -20,6 +21,7 @@ export const expensesData: ExpensesType[] = [
 ]
 
 const Expenses = () => {
+  const {t} = useTranslation();
   const [form] = Form.useForm();
   const { openModal, closeModal } = useAppModal();
   const { expenses, setExpenses } = useSales();
@@ -120,12 +122,12 @@ const Expenses = () => {
 
   return (
     <div className="table-container">
-      <PageHeader
-        title="Expenses"
+      <ActionHeader
+        title={t("title.expenses")}
         count={expenses.length}
-        countLabel="expenses"
+        countLabel={t("title.expenses", { ns: "common" })}
         onAdd={openAdd}
-        buttonText="Add Expense"
+        buttonText={t("button.add")}
         icon={<BookOutlined />}
       />
 

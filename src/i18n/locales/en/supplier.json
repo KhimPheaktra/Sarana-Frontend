@@ -1,0 +1,29 @@
+{
+  "supplier": {
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address"
+  },
+  "placeholder": {
+    "name": "Enter name",
+    "phone": "Enter phone number",
+    "email": "Enter email",
+    "address": "Enter address"
+  },
+  "validation": {
+    "nameRequired": "Please enter name",
+    "phoneRequired": "Please enter phone number",
+    "emailRequired": "Please enter email",
+    "addressRequired": "Please enter address"
+  },
+  "table": {
+    "id": "ID",
+    "name": "Name",
+    "phone": "Phone",
+    "email": "Email",
+    "address": "Address",
+    "actions": "Actions",
+    "noData": "No Supplier Found"
+  }
+}
