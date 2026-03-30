@@ -21,6 +21,7 @@ import { exportProfit } from './ProfitExport';
 import { useProfitDateFilter } from './ProfitFilterDate';
 import { ProfitChart } from './ProfitChart';
 import { ProfitStatCards } from './ProfitStatCard';
+import { useTranslation } from 'react-i18next';
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -53,6 +54,7 @@ function ProfitReportTable({
         isMobile,
     } = useProfitDateFilter(invoices, expenses, purchases, commissions, form);
 
+    const { t } = useTranslation(["common","profitReport"]);
     //  Calculations
     const totalRevenue     = filteredInvoices.reduce((s, i) => s + (i.total_amount || 0), 0);
     const totalExpenses    = filteredExpenses.reduce((s, e) => s + (e.amount || 0), 0);
@@ -84,14 +86,14 @@ function ProfitReportTable({
         <div style={{ overflow: 'visible', minHeight: '600px' }}>
 
             {/* ── Date Filter ── */}
-            <Form form={form} layout="vertical" requiredMark={false}>
+          <Form form={form} layout="vertical" requiredMark={false}>
                 <Row gutter={6} align="bottom">
                     {isMobile ? (
                         <>
                             <Col xs={24} sm={12}>
-                                <Form.Item label="From Date" name="report_date_from">
+                                <Form.Item label={t('filterDate.from_date', { ns: 'common' })} name="report_date_from">
                                     <DatePicker
-                                        placeholder="From date"
+                                        placeholder={t('filterDate.from_date', { ns: 'common' })}
                                         format="YYYY-MMMM-DD"
                                         style={{ width: '100%' }}
                                         onChange={handleFilter}
@@ -99,9 +101,9 @@ function ProfitReportTable({
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12}>
-                                <Form.Item label="To Date" name="report_date_to">
+                                <Form.Item label={t('filterDate.to_date', { ns: 'common' })} name="report_date_to">
                                     <DatePicker
-                                        placeholder="To Date"
+                                        placeholder={t('filterDate.to_date', { ns: 'common' })}
                                         format="YYYY-MMMM-DD"
                                         style={{ width: '100%' }}
                                         onChange={handleFilter}
@@ -111,9 +113,12 @@ function ProfitReportTable({
                         </>
                     ) : (
                         <Col xs={24} sm={24} md={8}>
-                            <Form.Item label="Report Date Range" name="report_date_range">
+                            <Form.Item label={t('dateRange', { ns: 'profitReport' })} name="report_date_range">
                                 <DatePicker.RangePicker
-                                    placeholder={['From Date', 'To Date']}
+                                    placeholder={[
+                                        t('filterDate.from_date', { ns: 'common' }),
+                                        t('filterDate.to_date', { ns: 'common' }),
+                                    ]}
                                     format="YYYY-MMMM-DD"
                                     style={{ width: '100%' }}
                                     onChange={handleFilter}
@@ -124,12 +129,12 @@ function ProfitReportTable({
                     <Col xs={24} sm={24} md={10}>
                         <Form.Item>
                             <Space size="small" wrap>
-                                <Button onClick={handleShowAll}>All</Button>
+                                <Button onClick={handleShowAll}>{t('button.all', { ns: 'common' })}</Button>
                                 <Button icon={<DownloadOutlined />} onClick={handleExport}>
                                     Export
                                 </Button>
                                 <Button onClick={handleClearFilter} icon={<ClearOutlined />}>
-                                    Clear Filter
+                                  
                                 </Button>
                             </Space>
                         </Form.Item>

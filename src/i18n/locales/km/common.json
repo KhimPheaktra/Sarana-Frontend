@@ -1,0 +1,75 @@
+{
+  "menu": {
+    "dashboard": "ផ្ទាំងគ្រប់គ្រង",
+    "items": "បញ្ជីទំនិញ",
+    "purchases": "ការទិញ",
+    "salesRevenue": "ការលក់និងចំណូល",
+    "quotes": "សម្រង់តម្លៃ",
+    "invoices": "វិក្កយបត្រ",
+    "payments": "ការទូទាត់",
+    "people": "មនុស្ស",
+    "users": "អ្នកប្រើប្រាស់",
+    "customers": "អតិថិជន",
+    "suppliers": "អ្នកផ្គត់ផ្គង់",
+    "financial": "ហិរញ្ញវត្ថុ",
+    "expenses": "ការចំណាយ",
+    "commissions": "កម្រៃជើងសារ",
+    "personalCommissions": "កម្រៃជើងសារផ្ទាល់ខ្លួន",
+    "projectCommissions": "កម្រៃជើងសារគម្រោង",
+    "reports": "របាយការណ៍",
+    "salesReports": "របាយការណ៍លក់",
+    "expenseReports": "របាយការណ៍ចំណាយ",
+    "profitLoss": "ចំណេញនិងខាត"
+  },
+  "title": {
+    "dashboard": "ផ្ទាំងគ្រប់គ្រង",
+    "invoice": "វិក្កយបត្រ",
+    "item": "ទំនិញ និង សេវាកម្ម",
+    "purchase": "ការទិញ",
+    "quotation": "សម្រង់តម្លៃ",
+    "inovice": "វិក្កយបត្រ",
+    "payment": "ការទូទាត់",
+    "user": "អ្នកប្រើប្រាស់",
+    "customer": "អតិថិជន",
+    "supplier": "អ្នកផ្គត់ផ្គង់",
+    "expenses": "ចំណាយ",
+    "persionalCommission": "កម្រៃបុគ្គល",
+    "projectCommission": "កម្រៃគម្រោង",
+    "saleReport": "របាយការណ៍លក់",
+    "expenseReport": "របាយការណ៍ចំណាយ",
+    "profitLostReport": "របាយការណ៍ចំណេញ និង ខាត"
+  },
+  "navbar": {
+    "search": "ស្វែងរក..."
+  },
+  "button": {
+    "add": "បន្ថែម",
+    "save": "រក្សាទុក",
+    "edit": "កែសម្រួល",
+    "delete": "លុប",
+    "view": "មើល",
+    "all": "ទាំងអស់"
+  },
+  "filterDate": {
+    "from_date": "ពីថ្ងៃទី ខែ​ ឆ្នាំ",
+    "to_date": "ដល់ថ្ងៃទី ខែ ​ឆ្នាំ"
+  },
+  "dateRange": {
+    "selectDateRange": "កាលបរិច្ឆេទ"
+  },
+  "options": {
+    "selectOptions": "ជម្រើស"
+  },
+  "status": {
+    "selectStatus": "ស្ថានភាព"
+  },
+  "modal": {
+    "addTitle": "បន្ថែម{{name}}",
+    "editTitle": "កែប្រែ{{name}}",
+    "deleteTitle": "លុប{{name}}",
+    "okText": "រក្សាទុក",
+    "cancelText": "បោះបង់",
+    "deleteOkText": "លុប",
+    "deleteConfirm": "តើអ្នកពិតជាចង់លុប{{name}}នេះមែនទេ?"
+  }
+}

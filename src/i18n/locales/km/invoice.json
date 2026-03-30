@@ -1,0 +1,42 @@
+{
+  "invoice": {
+    "customerName": "ឈ្មោះអតិថិជន",
+    "reference": "លេខយោង",
+    "engineer": "វិស្វករ",
+    "item": "ទំនិញ",
+    "qty": "ចំនួន",
+    "unitPrice": "តម្លៃឯកតា",
+    "amount": "ចំនួនសរុប",
+    "totalAmount": "ចំនួនសរុបទាំងអស់",
+    "discount": "បញ្ចុះតម្លៃ ($)",
+    "date": "កាលបរិច្ឆេទ",
+    "status": "ស្ថានភាព",
+    "note": "ចំណាំ",
+    "attachPayment": "ភ្ជាប់ការទូទាត់",
+    "addItem": "បន្ថែមទំនិញ"
+  },
+  "placeholder": {
+    "customer": "បញ្ចូលឈ្មោះអតិថិជន",
+    "reference": "លេខយោង",
+    "selectEngineer": "ជ្រើសរើសវិស្វករ",
+    "searchItem": "ស្វែងរកទំនិញ...",
+    "selectDate": "ជ្រើសរើសកាលបរិច្ឆេទ",
+    "note": "បញ្ចូលចំណាំ"
+  },
+  "status": {
+    "pending": "កំពុងរង់ចាំ",
+    "completed": "បានបញ្ចប់",
+    "selectStatus": "ជ្រើសរើសស្ថានភាព"
+  },
+  "table": {
+    "id": "លេខសម្គាល់",
+    "customer": "អតិថិជន",
+    "engineer": "វិស្វករ",
+    "quote": "សម្រង់តម្លៃ",
+    "date": "កាលបរិច្ឆេទ",
+    "total": "សរុប",
+    "actions": "សកម្មភាព",
+    "status": "ស្ថានភាព",
+    "noData": "មិនមានវិក្កយបត្រ"
+  }
+}

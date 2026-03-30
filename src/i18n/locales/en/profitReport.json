@@ -1,0 +1,12 @@
+{
+  "dateRange": "Report Date Range",
+  "totalRevenue": "Total Revenue",
+  "totalExpenses": "Total Expenses",
+  "totalPurchases": "Total Purchases",
+  "personalCommissions": "Personal Commissions",
+  "projectCommissions": "Project Commissions",
+  "totalCommissions": "Total Commissions",
+  "totalSpend": "Total Spend",
+  "netProfit": "Net Profit",
+  "netLoss": "Net Loss"
+}

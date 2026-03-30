@@ -42,10 +42,10 @@ export function paymentFromInvoice(
 
 //   Creates a PaymentType entry from a newly added Purchase.
 //   Reference ID format to: P0001, P0002, ...
- 
-export function paymentFromPurchase(
+ export function paymentFromPurchase(
   purchase: PurchaseType,
-  existingPayments: PaymentType[]
+  existingPayments: PaymentType[],
+  paymentDetailImage?: string 
 ): PaymentType {
   const newId =
     existingPayments.length > 0
@@ -54,7 +54,7 @@ export function paymentFromPurchase(
 
   const padded = String(purchase.purchase_id).padStart(4, "0");
 
-  return {
+  const payment: PaymentType = {
     key: `pay-pur-${purchase.purchase_id}`,
     payment_id: newId,
     customer_id: 0,
@@ -74,5 +74,25 @@ export function paymentFromPurchase(
     payment_date: purchase.purchase_date,
     status: "Pending",
     note: purchase.note ?? "",
+    payment_details: [], 
+    paid_amount: 0,
   };
+
+  // ✅ attach image if it exists
+  if (paymentDetailImage) {
+    payment.payment_details = [
+      {
+        id: Date.now(),
+        ref_id: payment.payment_id,
+        ref_type: "purchase",
+        paid_amount: purchase.total_amount,
+        payment_date: purchase.purchase_date,
+        image: paymentDetailImage,
+      },
+    ];
+    payment.paid_amount = purchase.total_amount;
+    payment.status = "Paid";
+  }
+
+  return payment;
 }

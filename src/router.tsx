@@ -18,21 +18,18 @@ import ExpenseReportContext from './components/features/reports/expenseReport/Ex
 import UserProfile from './components/features/user-profile/UserProfile';
 import PersonalCommision from './components/features/commision/personal-commission/PersonalCommision';
 import ProjectCommission from './components/features/commision/project-commission/ProjectCommission';
-
-
-
-
+import UserSettings from './components/features/user-setting/UserSetting';
 
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, authReady } = useAuth();
-  
+
   if (!authReady) {
     return (
-      <div style={{ 
-        height: '100vh', 
-        display: 'flex', 
-        justifyContent: 'center', 
+      <div style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
         alignItems: 'center',
         background: '#f0f2f5'
       }}>
@@ -40,19 +37,19 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
       </div>
     );
   }
-  
+
   return isAuthenticated ? <>{children}</> : <Navigate to="/login" replace />;
 };
 
 const PublicRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, authReady } = useAuth();
-  
+
   if (!authReady) {
     return (
-      <div style={{ 
-        height: '100vh', 
-        display: 'flex', 
-        justifyContent: 'center', 
+      <div style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
         alignItems: 'center',
         background: '#f0f2f5'
       }}>
@@ -60,19 +57,19 @@ const PublicRoute = ({ children }: { children: React.ReactNode }) => {
       </div>
     );
   }
-  
+
   return isAuthenticated ? <Navigate to="/dashboard" replace /> : <>{children}</>;
 };
 
 const RootRedirect = () => {
   const { isAuthenticated, authReady } = useAuth();
-  
+
   if (!authReady) {
     return (
-      <div style={{ 
-        height: '100vh', 
-        display: 'flex', 
-        justifyContent: 'center', 
+      <div style={{
+        height: '100vh',
+        display: 'flex',
+        justifyContent: 'center',
         alignItems: 'center',
         background: '#f0f2f5'
       }}>
@@ -80,7 +77,7 @@ const RootRedirect = () => {
       </div>
     );
   }
-  
+
   return <Navigate to={isAuthenticated ? "/dashboard" : "/login"} replace />;
 };
 
@@ -98,6 +95,14 @@ export const routes = [
     element: (
       <ProtectedRoute>
         <UserProfile />
+      </ProtectedRoute>
+    ),
+  },
+  {
+    path: '/user-setting',
+    element: (
+      <ProtectedRoute>
+        <UserSettings />
       </ProtectedRoute>
     ),
   },
@@ -165,7 +170,7 @@ export const routes = [
       </ProtectedRoute>
     ),
   },
-   {
+  {
     path: '/quotes',
     element: (
       <ProtectedRoute>
@@ -182,7 +187,7 @@ export const routes = [
     ),
   },
   {
-    path: '/persional-commissions',
+    path: '/personal-commissions',
     element: (
       <ProtectedRoute>
         <PersonalCommision />
@@ -205,7 +210,7 @@ export const routes = [
       </ProtectedRoute>
     ),
   },
-   {
+  {
     path: '/reports/expenses',
     element: (
       <ProtectedRoute>
@@ -221,6 +226,7 @@ export const routes = [
       </ProtectedRoute>
     ),
   },
+
   {
     path: '*',
     element: <RootRedirect />,

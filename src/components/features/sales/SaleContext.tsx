@@ -11,6 +11,7 @@ import type { ExpensesType } from "../expenses/expenses.types";
 import type { PurchaseType } from "../purchase/purchase.types";
 import { expensesData } from "../expenses/Expenses";
 import { commissionsData } from "../commision/commissionDataTest";
+import { purchasesData } from "../purchase/Purchase";
 
 interface SalesContextType {
   quotes: QuoteType[];
@@ -42,7 +43,7 @@ export const SalesProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   const [payments, setPayments] = useState<PaymentType[]>(paymentData);
   const [commissions, setCommissions] = useState<CommissionType[]>(commissionsData);
   const [expenses, setExpenses] = useState<ExpensesType[]>(expensesData);
-  const [purchases, setPurchase] = useState<PurchaseType[]>([]);
+  const [purchases, setPurchase] = useState<PurchaseType[]>(purchasesData);
   const addExpense = (expense: ExpensesType) => setExpenses(prev => [...prev, expense]);
   const addQuote = (quote: QuoteType) => setQuotes(prev => [...prev, quote]);
   const addInvoice = (invoice: InvoiceType) => setInvoices(prev => [...prev, invoice]);

@@ -1,0 +1,52 @@
+{
+  "purchase": {
+    "supplier": "អ្នកផ្គត់ផ្គង់",
+    "purchaseDate": "កាលបរិច្ឆេទទិញ",
+    "item": "ទំនិញ",
+    "qty": "បរិមាណ",
+    "unitPrice": "តម្លៃក្នុងមួយឯកតា",
+    "subtotal": "សរុបរង",
+    "totalAmount": "សរុបទឹកប្រាក់",
+    "note": "កំណត់សម្គាល់",
+    "status": "ស្ថានភាព",
+    "attachPayment": "ភ្ជាប់វិក្កយបត្រ",
+    "dateRange": "ជួរកាលបរិច្ឆេទទិញ"
+  },
+  "placeholder": {
+    "selectSupplier": "ជ្រើសរើសអ្នកផ្គត់ផ្គង់",
+    "searchItem": "ស្វែងរកទំនិញ...",
+    "note": "កំណត់សម្គាល់ / មតិយោបល់",
+    "selectStatus": "ជ្រើសរើសស្ថានភាព"
+  },
+  "status": {
+    "pending": "កំពុងរង់ចាំ",
+    "completed": "បានបញ្ចប់",
+    "cancelled": "បានបោះបង់"
+  },
+  "validation": {
+    "supplierRequired": "សូមជ្រើសរើសអ្នកផ្គត់ផ្គង់",
+    "required": "តម្រូវការ"
+  },
+  "button": {
+    "addItem": "បន្ថែមទំនិញ",
+    "addNewItem": "បន្ថែមទំនិញថ្មី",
+    "clearFilter": "សម្អាតតម្រង",
+    "attachPayment": "ភ្ជាប់វិក្កយបត្រ"
+  },
+  "modal": {
+    "quickAddTitle": "បន្ថែមទំនិញក្នុងបញ្ជីរហ័ស",
+    "okText": "បន្ថែម & ជ្រើសរើស"
+  },
+  "table": {
+    "id": "លេខសម្គាល់",
+    "supplier": "អ្នកផ្គត់ផ្គង់",
+    "purchaseDate": "កាលបរិច្ឆេទទិញ",
+    "itemName": "ឈ្មោះទំនិញ",
+    "qty": "បរិមាណ",
+    "unitPrice": "តម្លៃក្នុងមួយឯកតា",
+    "subtotal": "សរុបរង",
+    "totalAmount": "សរុបទឹកប្រាក់",
+    "actions": "សកម្មភាព",
+    "noData": "រកមិនឃើញការទិញ"
+  }
+}

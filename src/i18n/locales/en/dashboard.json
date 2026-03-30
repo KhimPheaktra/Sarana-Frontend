@@ -1,0 +1,32 @@
+{
+  "overview": "Overview",
+  "stats": {
+    "totalUsers": "Total Users",
+    "revenue": "Revenue",
+    "totalCustomers": "Total Customers",
+    "totalItems": "Total Items"
+  },
+  "mostSoldItems": {
+    "title": "Most Sold Items",
+    "itemName": "Item Name",
+    "category": "Category",
+    "unitsSold": "Units Sold",
+    "revenue": "Revenue"
+  },
+  "quickActions": {
+    "title": "Quick Actions",
+    "user": "User",
+    "payment": "Payment",
+    "customer": "Customer",
+    "report": "Report"
+  },
+  "recentTransactions": {
+    "title": "Recent Transactions",
+    "id": "ID",
+    "customer": "Customer",
+    "item": "Item",
+    "amount": "Amount",
+    "status": "Status",
+    "completed": "Completed"
+  }
+}

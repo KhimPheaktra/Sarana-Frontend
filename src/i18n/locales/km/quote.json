@@ -1,0 +1,45 @@
+{
+  "quote": {
+    "id": "លេខសម្គាល់",
+    "quoteTo": "ផ្ញើទៅ",
+    "quoteDate": "កាលបរិច្ឆេទ",
+    "item": "ទំនិញ",
+    "description": "ការពិពណ៌នា",
+    "qty": "បរិមាណ",
+    "unit": "ឯកតា",
+    "unitPrice": "តម្លៃក្នុងមួយឯកតា ($)",
+    "amount": "ចំនួនទឹកប្រាក់ ($)",
+    "totalAmount": "សរុបទឹកប្រាក់",
+    "discount": "បញ្ចុះតម្លៃ ($)",
+    "engineer": "វិស្វករ",
+    "status": "ស្ថានភាព",
+    "notes": "កំណត់សម្គាល់",
+    "date": "កាលបរិច្ឆេទ",
+    "dateRange": "ជួរកាលបរិច្ឆេទសម្រង់"
+  },
+  "placeholder": {
+    "customerName": "ឈ្មោះអតិថិជន",
+    "searchItem": "ស្វែងរកទំនិញ...",
+    "selectEngineer": "ជ្រើសរើសវិស្វករ",
+    "selectStatus": "ជ្រើសរើសស្ថានភាពសម្រង់"
+  },
+  "status": {
+    "approved": "បានអនុម័ត",
+    "pending": "កំពុងរង់ចាំ",
+    "denied": "បានបដិសេធ",
+    "selectStatus": "ជ្រើសរើសស្ថានភាពសម្រង់"
+  },
+  "validation": {
+    "required": "តម្រូវការ"
+  },
+  "button": {
+    "addItem": "បន្ថែមទំនិញ",
+    "clearFilter": "សម្អាតតម្រង",
+    "generateInvoice": "បង្កើតវិក្កយបត្រ",
+    "generating": "កំពុងបង្កើត...",
+    "generated": "បានបង្កើត"
+  },
+  "table": {
+    "noData": "រកមិនឃើញសម្រង់តម្លៃ"
+  }
+}

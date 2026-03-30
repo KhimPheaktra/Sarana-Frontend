@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Typography, Layout, Input, Badge, Avatar, Dropdown, Button, Space, type MenuProps, Card, Popover } from 'antd';
+import { Typography, Layout, Input, Badge, Avatar, Dropdown, Button, Space, type MenuProps, Card, Popover, Select } from 'antd';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -19,6 +19,9 @@ import { LoadingOverlay } from '../../common/LoadingOverlay';
 
 const { Header } = Layout;
 const { Text } = Typography;
+import { useTranslation } from 'react-i18next';
+import Cambodia from "../../../assets/images/cambodia-flag-icon-64.png";
+import English from "../../../assets/images/united-kingdom-flag-icon-64.png";
 
 interface NavbarProps {
   collapsed: boolean;
@@ -32,6 +35,7 @@ interface NotificationItem {
 }
 
 const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
+  const { t, i18n } = useTranslation();
   const navigate = useNavigate();
   const { setIsAuthenticated, username, setUsername } = useAuth();
   const [loading, setLoading] = React.useState(false);
@@ -91,7 +95,7 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
         maxHeight: '320px',
       }}
     >
-     <Space orientation="vertical" style={{ width: "100%" }}>
+      <Space orientation="vertical" style={{ width: "100%" }}>
         {notifications.map((item, index) => (
           <div
             key={index}
@@ -139,7 +143,7 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
     },
     {
       key: '2',
-      label: 'Settings',
+      label: <Link to="/user-setting">Setting</Link>,
       icon: <SettingOutlined />
     },
     {
@@ -156,7 +160,7 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
   return (
     <>
       {loading && <LoadingOverlay show={true} />}
-    
+
       <Header className="custom-navbar">
         <div className="navbar-left">
           <Button
@@ -166,13 +170,41 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
             className="toggle-btn"
           />
           <Input
-            placeholder="Search..."
+            placeholder={t("navbar.search")}
             prefix={<SearchOutlined />}
             className="search-input"
           />
         </div>
 
         <div className="navbar-right">
+          <Select
+            value={i18n.language}
+            onChange={(lang) => i18n.changeLanguage(lang)}
+            style={{ width:65, backgroundColor: 'transparent', border: 'none', boxShadow: 'none' }}
+            variant="borderless"
+            labelRender={({ value }) => (
+              <img
+                src={value === 'km' ? Cambodia : English}
+                alt={value as string}
+                style={{ width: 24, height: 16, objectFit: 'cover', borderRadius: 2, display: 'block', marginTop: 4 }}
+              />
+            )}
+            optionRender={(option) => (
+              <Space size={8} align="center">
+                <img
+                  src={option.value === 'km' ? Cambodia : English}
+                  alt={option.value as string}
+                  style={{ width: 22, height: 15, objectFit: 'cover', borderRadius: 2, display: 'block' }}
+                />
+                <span>{option.label}</span>
+              </Space>
+            )}
+            options={[
+              { value: 'en', label: 'English' },
+              { value: 'km', label: 'ភាសាខ្មែរ' },
+            ]}
+            popupMatchSelectWidth={false}
+          />
           <Space size={20}>
             <Popover
               content={notificationContent}
@@ -200,7 +232,7 @@ const Navbar: React.FC<NavbarProps> = ({ collapsed, onToggle }) => {
         </div>
       </Header>
 
-    
+
     </>
   );
 };

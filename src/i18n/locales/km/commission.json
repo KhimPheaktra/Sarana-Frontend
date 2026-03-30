@@ -1,0 +1,68 @@
+{
+  "commission": {
+    "engineer": "វិស្វករ",
+    "amount": "ចំនួនទឹកប្រាក់",
+    "date": "កាលបរិច្ឆេទ",
+    "description": "ការពិពណ៌នា",
+    "project": "គម្រោង",
+    "invoiceTotal": "សរុបវិក្កយបត្រ ($)",
+    "commissionRate": "អត្រាកម្រៃជើងសារ (%)",
+    "commissionAmount": "កម្រៃជើងសារ ($)",
+    "status": "ស្ថានភាព",
+    "attachPayment": "ភ្ជាប់វិក្កយបត្រ",
+    "payment": "ការទូទាត់",
+    "rate": "អត្រា",
+    "dateRange": "ជួរកាលបរិច្ឆេទការទូទាត់"
+  },
+  "placeholder": {
+    "selectEngineer": "ជ្រើសរើសវិស្វករ",
+    "filterEngineer": "ច្រោះតាមវិស្វករ",
+    "filterStatus": "ច្រោះតាមស្ថានភាព",
+    "amount": "បញ្ចូលចំនួនទឹកប្រាក់",
+    "commissionDate": "បញ្ចូលកាលបរិច្ឆេទកម្រៃ",
+    "description": "បញ្ចូលការពិពណ៌នា",
+    "project": "បញ្ចូលគម្រោង",
+    "invoiceTotal": "0.00",
+    "commissionRate": "30",
+    "selectStatus": "ជ្រើសរើសស្ថានភាព"
+  },
+  "status": {
+    "pending": "កំពុងរង់ចាំ",
+    "paid": "បានបង់",
+    "cancelled": "បានបោះបង់"
+  },
+  "validation": {
+    "engineerRequired": "សូមជ្រើសរើសវិស្វករ",
+    "amountRequired": "សូមបញ្ចូលចំនួនទឹកប្រាក់",
+    "dateRequired": "សូមបញ្ចូលកាលបរិច្ឆេទកម្រៃ",
+    "invoiceTotalRequired": "សរុបវិក្កយបត្រត្រូវការ",
+    "commissionRateRequired": "សូមបញ្ចូលអត្រាកម្រៃជើងសារ",
+    "commissionRateRange": "ត្រូវតែរវាង 0–100",
+    "statusRequired": "សូមជ្រើសរើសស្ថានភាព"
+  },
+  "button": {
+    "clearFilter": "សម្អាតតម្រង",
+    "attachPayment": "ភ្ជាប់វិក្កយបត្រ",
+    "clear": "សម្អាត"
+  },
+  "table": {
+    "id": "លេខសម្គាល់",
+    "amount": "ចំនួនទឹកប្រាក់",
+    "date": "កាលបរិច្ឆេទ",
+    "description": "ការពិពណ៌នា",
+    "engineer": "វិស្វករ",
+    "project": "គម្រោង",
+    "invoiceTotal": "សរុបវិក្កយបត្រ ($)",
+    "rate": "អត្រា",
+    "commissionAmount": "កម្រៃជើងសារ ($)",
+    "payment": "ការទូទាត់",
+    "status": "ស្ថានភាព",
+    "actions": "សកម្មភាព",
+    "commission": "កម្រៃជើងសារ",
+    "noDataPersonal": "រកមិនឃើញកម្រៃជើងសារផ្ទាល់ខ្លួន",
+    "noDataProject": "រកមិនឃើញកម្រៃជើងសារគម្រោង"
+  },
+  "tooltip": {
+    "amountAutoCalc": "គណនាដោយស្វ័យប្រវត្តិពីសរុបវិក្កយបត្រ × អត្រា។ អ្នកអាចកែប្រែដោយដៃ។"
+  }
+}

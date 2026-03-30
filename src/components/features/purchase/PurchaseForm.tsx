@@ -6,6 +6,7 @@ import TextArea from "antd/es/input/TextArea";
 import { useState } from "react";
 import { catalogItemsData } from "../catalogItem/CatalogItem";
 import CatalogItemForm from "../catalogItem/CatalogItemForm";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   form: FormInstance<any>;
@@ -18,6 +19,7 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
   const [quickModalOpen, setQuickModalOpen] = useState(false);
   const [activeRowName, setActiveRowName] = useState<number | null>(null);
   const [localCatalog, setLocalCatalog] = useState([...catalogItemsData]);
+  const { t } = useTranslation(["purchase", "common"]);
 
   const calcSubtotal = (name: number) => {
     const qty   = form.getFieldValue(["items", name, "qty"])        || 0;
@@ -32,16 +34,14 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
     form.setFieldsValue({ total_amount: total });
   };
 
-
   const handleItemSelect = (value: number, name: number) => {
     const selected = localCatalog.find((item) => item.item_id === value);
     if (!selected) return;
-
     const unitPrice = selected.purchase_price ?? selected.price;
     const rows = form.getFieldValue("items") ?? [];
     rows[name] = {
       ...rows[name],
-      item_name:  selected.item_id,       
+      item_name:  selected.item_id,
       unit_price: unitPrice,
       subtotal:   (rows[name]?.qty || 1) * unitPrice,
     };
@@ -52,7 +52,6 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
   const handleQuickAdd = async () => {
     try {
       const v = await quickForm.validateFields();
-
       const newItem = {
         key:            String(localCatalog.length + 1),
         item_id:        localCatalog.length + 1,
@@ -82,7 +81,7 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
       setQuickModalOpen(false);
       quickForm.resetFields();
     } catch {
-      message.error("Failed to add new item")
+      message.error("Failed to add new item");
     }
   };
 
@@ -91,11 +90,11 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
       <Row gutter={16}>
         <Col xs={24} sm={12}>
           <Form.Item
-            label="Supplier"
+            label={t("purchase.supplier", { ns: "purchase" })}
             name="supplier_id"
-            rules={[{ required: true, message: "Please select supplier" }]}
+            rules={[{ required: true, message: t("validation.supplierRequired", { ns: "purchase" }) }]}
           >
-            <Select placeholder="Select supplier" disabled={isView}>
+            <Select placeholder={t("placeholder.selectSupplier", { ns: "purchase" })} disabled={isView}>
               <Select.Option value={1}>Supplier 1</Select.Option>
               <Select.Option value={2}>Supplier 2</Select.Option>
               <Select.Option value={3}>Supplier 3</Select.Option>
@@ -103,7 +102,7 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
           </Form.Item>
         </Col>
         <Col xs={24} sm={12}>
-          <Form.Item label="Purchase Date" name="purchase_date">
+          <Form.Item label={t("purchase.purchaseDate", { ns: "purchase" })} name="purchase_date">
             <DatePicker style={{ width: "100%" }} format="YYYY-MM-DD HH:mm:ss" disabled />
           </Form.Item>
         </Col>
@@ -129,18 +128,16 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
                   }}
                 >
                   <Row gutter={8} align="middle">
-
-                    {/* Item selector with + New Item footer */}
                     <Col xs={24} sm={8}>
                       <Form.Item
                         {...restField}
                         name={[name, "item_name"]}
-                        label="Item"
-                        rules={[{ required: true, message: "Required" }]}
+                        label={t("purchase.item", { ns: "purchase" })}
+                        rules={[{ required: true, message: t("validation.required", { ns: "purchase" }) }]}
                       >
                         <Select
                           showSearch
-                          placeholder="Search item..."
+                          placeholder={t("placeholder.searchItem", { ns: "purchase" })}
                           optionFilterProp="label"
                           disabled={isView}
                           filterOption={(input, option) =>
@@ -157,9 +154,7 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
                           optionRender={(option) => (
                             <div style={{ display: "flex", justifyContent: "space-between" }}>
                               <span>{option.label}</span>
-                              <span style={{ color: "#aaa", fontSize: 12 }}>
-                                ${option.data.price}
-                              </span>
+                              <span style={{ color: "#aaa", fontSize: 12 }}>${option.data.price}</span>
                             </div>
                           )}
                           popupRender={(menu) => (
@@ -170,14 +165,14 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
                                 type="link"
                                 icon={<PlusOutlined />}
                                 style={{ width: "100%", textAlign: "left", padding: "4px 12px" }}
-                                onMouseDown={(e) => e.preventDefault()} 
+                                onMouseDown={(e) => e.preventDefault()}
                                 onClick={() => {
                                   setActiveRowName(name);
                                   quickForm.resetFields();
                                   setQuickModalOpen(true);
                                 }}
                               >
-                                Add New Item
+                                {t("button.addNewItem", { ns: "purchase" })}
                               </Button>
                             </>
                           )}
@@ -189,8 +184,8 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
                       <Form.Item
                         {...restField}
                         name={[name, "qty"]}
-                        label="Quantity"
-                        rules={[{ required: true, message: "Required" }]}
+                        label={t("purchase.qty", { ns: "purchase" })}
+                        rules={[{ required: true, message: t("validation.required", { ns: "purchase" }) }]}
                       >
                         <InputNumber
                           min={1}
@@ -205,8 +200,8 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
                       <Form.Item
                         {...restField}
                         name={[name, "unit_price"]}
-                        label="Unit Price"
-                        rules={[{ required: true, message: "Required" }]}
+                        label={t("purchase.unitPrice", { ns: "purchase" })}
+                        rules={[{ required: true, message: t("validation.required", { ns: "purchase" }) }]}
                       >
                         <InputNumber
                           min={0}
@@ -220,14 +215,8 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
                     </Col>
 
                     <Col xs={6} sm={3}>
-                      <Form.Item {...restField} name={[name, "subtotal"]} label="Subtotal">
-                        <InputNumber
-                          precision={2}
-                          prefix="$"
-                          style={{ width: "100%" }}
-                          readOnly
-                          variant="filled"
-                        />
+                      <Form.Item {...restField} name={[name, "subtotal"]} label={t("purchase.subtotal", { ns: "purchase" })}>
+                        <InputNumber precision={2} prefix="$" style={{ width: "100%" }} readOnly variant="filled" />
                       </Form.Item>
                     </Col>
 
@@ -254,7 +243,7 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
                   icon={<PlusOutlined />}
                   style={{ marginBottom: 16 }}
                 >
-                  Add Item
+                  {t("button.addItem", { ns: "purchase" })}
                 </Button>
               )}
             </>
@@ -264,51 +253,50 @@ const PurchaseForm: React.FC<Props> = ({ form, mode = "add" }) => {
 
       <Row gutter={16}>
         <Col xs={24} sm={6}>
-          <Form.Item label="Total Amount" name="total_amount">
+          <Form.Item label={t("purchase.totalAmount", { ns: "purchase" })} name="total_amount">
             <InputNumber precision={2} prefix="$" style={{ width: "100%" }} readOnly variant="filled" />
           </Form.Item>
         </Col>
         <Col xs={24} sm={6}>
-          <Form.Item label="Note" name="note">
-            <TextArea rows={2} placeholder="Optional note / remarks" disabled={isView} />
+          <Form.Item label={t("purchase.note", { ns: "purchase" })} name="note">
+            <TextArea rows={2} placeholder={t("placeholder.note", { ns: "purchase" })} disabled={isView} />
           </Form.Item>
         </Col>
         <Col xs={24} sm={6}>
-          <Form.Item label="Status" name="status" initialValue="Pending">
+          <Form.Item label={t("purchase.status", { ns: "purchase" })} name="status" initialValue="Pending">
             <Select disabled={isView}>
-              <Select.Option value="Pending">Pending</Select.Option>
-              <Select.Option value="Completed">Completed</Select.Option>
-              <Select.Option value="Cancelled">Cancelled</Select.Option>
+              <Select.Option value="Pending">{t("status.pending", { ns: "purchase" })}</Select.Option>
+              <Select.Option value="Completed">{t("status.completed", { ns: "purchase" })}</Select.Option>
+              <Select.Option value="Cancelled">{t("status.cancelled", { ns: "purchase" })}</Select.Option>
             </Select>
           </Form.Item>
         </Col>
         <Col xs={24} sm={6}>
           <Form.Item
-            label="Attach Payment"
+            label={t("purchase.attachPayment", { ns: "purchase" })}
             name="payment_detail"
             valuePropName="fileList"
             getValueFromEvent={(e) => Array.isArray(e) ? e : e?.fileList}
           >
             <Upload accept="image/*" listType="picture" maxCount={1} beforeUpload={() => false}>
-              <Button icon={<UploadOutlined />}>Attach Payment</Button>
+              <Button icon={<UploadOutlined />}>{t("button.attachPayment", { ns: "purchase" })}</Button>
             </Upload>
           </Form.Item>
         </Col>
       </Row>
 
-      {/* Add Catalog Item Modal */}
+      {/* Quick Add Catalog Item Modal */}
       <Modal
-        title="Quick Add Catalog Item"
+        title={t("modal.quickAddTitle", { ns: "purchase" })}
         open={quickModalOpen}
         onCancel={() => { setQuickModalOpen(false); quickForm.resetFields(); }}
         onOk={handleQuickAdd}
-        okText="Add & Select"
+        okText={t("modal.okText", { ns: "purchase" })}
         width={600}
         destroyOnHidden
       >
         <CatalogItemForm form={quickForm} />
       </Modal>
-
     </Form>
   );
 };

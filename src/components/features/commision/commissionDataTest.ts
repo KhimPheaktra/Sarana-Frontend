@@ -17,7 +17,7 @@ export const commissionsData: CommissionType[] = [
             commission_date: "2026-02-01",
             invoice_total: 250,     
             commission_rate: 18,
-            status: "Paid", 
+            status: "Pending", 
             description: "Fire Service",
             engineer: "Tra",
             project: "Fire Service",

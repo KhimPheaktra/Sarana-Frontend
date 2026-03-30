@@ -1,6 +1,7 @@
 import { Card } from "antd";
 import { useSales } from "../../sales/SaleContext";
 import ProfitReportTable from "./ProfitReportTable";
+import { useTranslation } from "react-i18next";
 
 const ProfitReport = () => {
   const { 
@@ -9,10 +10,11 @@ const ProfitReport = () => {
     expenses,      
     purchases,
   } = useSales();
+  const {t} = useTranslation(); //default from common 
 
   return (
     <Card>
-      <h1 className="mb-4 text-2xl font-bold">Profit & Loss Statement</h1>
+      <h1 className="mb-4 text-2xl font-bold">{t("title.profitLostReport")}</h1>
 
       <ProfitReportTable
         invoices={invoices}

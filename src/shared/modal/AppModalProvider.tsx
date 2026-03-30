@@ -5,6 +5,7 @@ export interface ModalConfig<T extends ModalMode = ModalMode> {
   titleMap: Partial<Record<T, string>>; 
   okTextMap?: Partial<Record<T, string>>;
   content: React.ReactNode;
+  cancelText?: string; 
   onOk: () => void;
   width?: number; 
 }
@@ -44,6 +45,7 @@ export const AppModalProvider: React.FC<{ children: React.ReactNode }> = ({ chil
           titleMap={config.titleMap}
           okTextMap={config.okTextMap}
           onCancel={closeModal}
+          cancelText={config.cancelText}
           onOk={config.onOk}
           width={config.width} 
         >

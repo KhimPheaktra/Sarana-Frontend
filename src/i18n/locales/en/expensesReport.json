@@ -1,0 +1,19 @@
+{
+  "title": "Expenses & Purchases",
+  "dateRange": "Report Date Range",
+  "totalExpenses": "Total Expenses",
+  "totalPurchases": "Total Purchases",
+  "totalSpend": "Total Spend",
+  "table": {
+    "type": "Type",
+    "description": "Description",
+    "categorySupplier": "Category/Supplier",
+    "date": "Date",
+    "qty": "Qty",
+    "unitPrice": "Unit Price",
+    "amount": "Amount",
+    "expense": "Expense",
+    "purchase": "Purchase",
+    "supplier": "Supplier"
+  }
+}

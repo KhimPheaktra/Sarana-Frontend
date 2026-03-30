@@ -1,0 +1,32 @@
+{
+  "overview": "ទិដ្ឋភាពទូទៅ",
+  "stats": {
+    "totalUsers": "អ្នកប្រើប្រាស់សរុប",
+    "revenue": "ចំណូល",
+    "totalCustomers": "អតិថិជនសរុប",
+    "totalItems": "ទំនិញសរុប"
+  },
+  "mostSoldItems": {
+    "title": "ទំនិញលក់ច្រើនបំផុត",
+    "itemName": "ឈ្មោះទំនិញ",
+    "category": "ប្រភេទ",
+    "unitsSold": "ចំនួនលក់",
+    "revenue": "ចំណូល"
+  },
+  "quickActions": {
+    "title": "សកម្មភាពរហ័ស",
+    "user": "អ្នកប្រើប្រាស់",
+    "payment": "ការទូទាត់",
+    "customer": "អតិថិជន",
+    "report": "របាយការណ៍"
+  },
+  "recentTransactions": {
+    "title": "ប្រតិបត្តិការថ្មីៗ",
+    "id": "លេខសម្គាល់",
+    "customer": "អតិថិជន",
+    "item": "ទំនិញ",
+    "amount": "ចំនួនទឹកប្រាក់",
+    "status": "ស្ថានភាព",
+    "completed": "បានបញ្ចប់"
+  }
+}

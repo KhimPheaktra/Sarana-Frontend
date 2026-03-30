@@ -1,0 +1,44 @@
+{
+    "catalogItem": {
+        "itemType": "ប្រភេទទំនិញ",
+        "name": "ឈ្មោះ",
+        "price": "តម្លៃ",
+        "purchasePrice": "តម្លៃទិញ",
+        "stockQuantity": "បរិមាណស្តុក",
+        "description": "ការពិពណ៌នា"
+    },
+    "placeholder": {
+        "itemType": "បញ្ចូលប្រភេទទំនិញ",
+        "name": "បញ្ចូលឈ្មោះ",
+        "price": "បញ្ចូលតម្លៃ",
+        "purchasePrice": "បញ្ចូលតម្លៃទិញ",
+        "stockQuantity": "0",
+        "description": "បញ្ចូលការពិពណ៌នា",
+        "selectStatus": "ជ្រើសរើសស្ថានភាព"
+    },
+    "status": {
+        "active": "សកម្ម",
+        "inactive": "អសកម្ម",
+        "selectStatus": "ជ្រើសរើសស្ថានភាព"
+    },
+    "validation": {
+        "itemTypeRequired": "សូមបញ្ចូលប្រភេទទំនិញ",
+        "nameRequired": "សូមបញ្ចូលឈ្មោះ",
+        "priceRequired": "សូមបញ្ចូលតម្លៃ",
+        "purchasePriceRequired": "សូមបញ្ចូលតម្លៃទិញ",
+        "stockQuantityRequired": "សូមបញ្ចូលបរិមាណស្តុក",
+        "statusRequired": "សូមជ្រើសរើសស្ថានភាព"
+    },
+    "table": {
+        "id": "លេខសម្គាល់",
+        "itemType": "ប្រភេទទំនិញ",
+        "name": "ឈ្មោះ",
+        "description": "ការពិពណ៌នា",
+        "price": "តម្លៃ",
+        "purchasePrice": "តម្លៃទិញ",
+        "stockQuantity": "បរិមាណស្តុក",
+        "status": "ស្ថានភាព",
+        "actions": "សកម្មភាព",
+        "noData": "រកមិនឃើញទំនិញ"
+    }
+}

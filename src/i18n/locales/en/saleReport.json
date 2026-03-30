@@ -1,0 +1,18 @@
+{
+  "title": "Sales",
+  "dateRange": "Date Range",
+  "totalInvoices": "Total Invoices",
+  "totalQuoteApprove": "Total Quote Approve",
+  "totalItemSold": "Total Item Sold",
+  "totalRevenue": "Total Revenue",
+  "table": {
+    "customer": "Customer",
+    "item": "Item",
+    "quoteTo": "Quote To",
+    "instantSale": "Instant Sale",
+    "date": "Date",
+    "qty": "Qty",
+    "unitPrice": "Unit Price",
+    "total": "Total"
+  }
+}

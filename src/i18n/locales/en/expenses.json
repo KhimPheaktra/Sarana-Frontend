@@ -1,0 +1,26 @@
+{
+  "expenses": {
+    "expenseId": "Expense ID",
+    "description": "Description",
+    "amount": "Amount",
+    "date": "Date",
+    "category": "Category",
+    "expensesDate": "Expenses Date",
+    "dateRange": "Expenses Date Range"
+  },
+  "placeholder": {
+    "description": "Enter description",
+    "amount": "Enter amount",
+    "expensesDate": "Enter purchase date",
+    "category": "Enter category"
+  },
+  "validation": {
+    "descriptionRequired": "Please enter description",
+    "amountRequired": "Please enter amount",
+    "expensesDateRequired": "Please enter purchase date",
+    "categoryRequired": "Please enter category"
+  },
+  "table": {
+    "noData": "No Expense Found"
+  }
+}

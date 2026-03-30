@@ -2,13 +2,14 @@ import dayjs from "dayjs";
 import { useState } from "react";
 import { Card, Form, Grid, Modal, message } from "antd";
 import type { QuoteType } from "./quote.types";
-import PageHeader from "../../../shared/action-header/ActionHeader";
+import ActionHeader from "../../../shared/action-header/ActionHeader";
 import { FileTextOutlined } from "@ant-design/icons";
 import QuoteTable from "./QuoteTable";
 import QuoteForm from "./QuoteForm";
 import QuotePrintView from "./QuotePrintView";
 import { useAppModal } from "../../../shared/modal/AppModalProvider";
 import { useSales } from "../sales/SaleContext";
+import { useTranslation } from "react-i18next";
 
 const { useBreakpoint } = Grid;
 
@@ -19,8 +20,8 @@ export const quotesData: QuoteType[] = [
     quote_to: "Baktrang",
     quote_date: "2026-02-02",
     items: [
-      { item: "Machine Maintenance", qty: 1, unit: "SET", unit_price: 100, amount: 100 },
-      { item: "Service Engine", qty: 1, unit: "SET", unit_price: 120, amount: 120 },
+      { item_name: "Machine Maintenance", qty: 1, unit: "SET", unit_price: 100, amount: 100 },
+      { item_name: "Service Engine", qty: 1, unit: "SET", unit_price: 120, amount: 120 },
     ],
     discount: 0,
     total_amount: 220,
@@ -33,7 +34,7 @@ export const quotesData: QuoteType[] = [
     quote_id: 2,
     quote_to: "PP",
     quote_date: "2026-02-03",
-    items: [{ item: "Engine Service", qty: 1, unit: "PCs", unit_price: 120, amount: 120 }],
+    items: [{ item_name: "Engine Service", qty: 1, unit: "PCs", unit_price: 120, amount: 120 }],
     discount: 0,
     total_amount: 120,
     status: "Approved",
@@ -43,7 +44,7 @@ export const quotesData: QuoteType[] = [
     quote_id: 3,
     quote_to: "PP",
     quote_date: "2026-02-12",
-    items: [{ item: "Engine Service", qty: 1, unit: "PCs", unit_price: 120, amount: 120 }],
+    items: [{ item_name: "Engine Service", qty: 1, unit: "PCs", unit_price: 120, amount: 120 }],
     discount: 0,
     total_amount: 120,
     status: "Pending",
@@ -53,7 +54,7 @@ export const quotesData: QuoteType[] = [
     quote_id: 4,
     quote_to: "Koh Kong",
     quote_date: "2026-02-03",
-    items: [{ item: "Electric Maintenance", qty: 1, unit: "PCs", unit_price: 200, amount: 200 }],
+    items: [{ item_name: "Electric Maintenance", qty: 1, unit: "PCs", unit_price: 200, amount: 200 }],
     discount: 0,
     total_amount: 200,
     status: "Denied",
@@ -65,10 +66,10 @@ const Quote = () => {
   const { openModal, closeModal } = useAppModal();
   const { quotes, setQuotes } = useSales();
   const screens = useBreakpoint();
-
+  const { t } = useTranslation();
   const [selectedQuote, setSelectedQuote] = useState<QuoteType | null>(null);
   const [isPrintModalVisible, setIsPrintModalVisible] = useState(false);
-
+  const username = sessionStorage.getItem('username') || 'User';
   const handleView = (quote: QuoteType) => {
     setSelectedQuote(quote);
     setIsPrintModalVisible(true);
@@ -100,10 +101,16 @@ const Quote = () => {
     total_amount: computeTotal(values),
   });
 
+
   const titleMap = {
-    add: "Add Quote",
-    edit: "Edit Quote",
-    delete: "Delete Quote",
+    add: t("modal.addTitle", { name: t("title.quotation") }),
+    edit: t("modal.editTitle", { name: t("title.quotation") }),
+    delete: t("modal.deleteTitle", { name: t("title.quotation") }),
+  };
+  const okTextMap = {
+    add: t("modal.okText"),
+    edit: t("modal.okText"),
+    delete: t("modal.deleteOkText"),
   };
 
   const openAdd = () => {
@@ -111,13 +118,16 @@ const Quote = () => {
     form.setFieldsValue({ quote_date: dayjs() });
     openModal("add", {
       titleMap,
+      okTextMap,
       content: <QuoteForm form={form} />,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       onOk: async () => {
         await form.validateFields();
         const newQuote: QuoteType = {
           key: `${quotes.length + 1}`,
           quote_id: quotes.length + 1,
           ...sanitizeValues(form.getFieldsValue()),
+           created_by: username,
         };
         setQuotes(prev => [...prev, newQuote]);
         message.success("Quote added successfully");
@@ -133,7 +143,9 @@ const Quote = () => {
     });
     openModal("edit", {
       titleMap,
+      okTextMap,
       content: <QuoteForm form={form} />,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       onOk: async () => {
         await form.validateFields();
         const updated = sanitizeValues(form.getFieldsValue());
@@ -153,6 +165,8 @@ const Quote = () => {
   const openDelete = (quote: QuoteType) => {
     openModal("delete", {
       titleMap,
+      okTextMap,
+      cancelText: t("modal.cancelText", { ns: "common" }),
       content: (
         <p>
           Are you sure you want to delete quote <b>#{quote.quote_id}</b>?
@@ -168,15 +182,14 @@ const Quote = () => {
 
   return (
     <div className="table-container">
-      <PageHeader
-        title="Quotations"
+      <ActionHeader
+        title={t("title.quotation")}
         count={quotes.length}
-        countLabel="quotes"
+        countLabel={t("title.quotation", { ns: "common" })}
         onAdd={openAdd}
-        buttonText="Add Quote"
+        buttonText={t("button.add")}
         icon={<FileTextOutlined />}
       />
-
       <Card>
         <QuoteTable
           data={quotes}

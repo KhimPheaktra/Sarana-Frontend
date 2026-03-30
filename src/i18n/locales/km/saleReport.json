@@ -1,0 +1,18 @@
+{
+  "title": "ការលក់",
+  "dateRange": "ចន្លោះកាលបរិច្ឆេទ",
+  "totalInvoices": "វិក្កយបត្រសរុប",
+  "totalQuoteApprove": "សម្រង់អនុម័តសរុប",
+  "totalItemSold": "ទំនិញលក់សរុប",
+  "totalRevenue": "ចំណូលសរុប",
+  "table": {
+    "customer": "អតិថិជន",
+    "item": "ទំនិញ",
+    "quoteTo": "សម្រង់ទៅ",
+    "instantSale": "លក់ភ្លាមៗ",
+    "date": "កាលបរិច្ឆេទ",
+    "qty": "បរិមាណ",
+    "unitPrice": "តម្លៃក្នុងមួយឯកតា",
+    "total": "សរុប"
+  }
+}

@@ -7,6 +7,7 @@ import {
   EditOutlined,
   FileTextOutlined,
 } from "@ant-design/icons";
+import { useTranslation } from "react-i18next";
 
 const { Text, Title } = Typography;
 
@@ -31,6 +32,8 @@ const getCategoryColor = (category: string): string => {
 };
 
 const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense, onEdit, onDelete }) => {
+  const { t } = useTranslation(["expenses", "common"]);
+
   return (
     <Card
       hoverable
@@ -54,7 +57,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense, onEdit, onDelete }) 
       >
         <div>
           <Text type="secondary" style={{ fontSize: 12 }}>
-            Expense ID
+            {t("expenses.expenseId", { ns: "expenses" })}
           </Text>
           <Title level={4} style={{ margin: "4px 0" }}>
             {expense.expenses_id}
@@ -83,7 +86,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense, onEdit, onDelete }) 
           />
           <div style={{ flex: 1 }}>
             <Text type="secondary" style={{ fontSize: 12 }}>
-              Description
+              {t("expenses.description", { ns: "expenses" })}
             </Text>
             <div>
               <Text strong>{expense.description}</Text>
@@ -97,7 +100,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense, onEdit, onDelete }) 
           />
           <div style={{ flex: 1 }}>
             <Text type="secondary" style={{ fontSize: 12 }}>
-              Date
+              {t("expenses.date", { ns: "expenses" })}
             </Text>
             <div>
               <Text>{expense.expenses_date}</Text>
@@ -111,7 +114,7 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense, onEdit, onDelete }) 
           />
           <div style={{ flex: 1 }}>
             <Text type="secondary" style={{ fontSize: 12 }}>
-              Amount
+              {t("expenses.amount", { ns: "expenses" })}
             </Text>
             <div>
               <Text strong style={{ fontSize: 16, color: "#faad14" }}>
@@ -130,10 +133,10 @@ const ExpenseCard: React.FC<ExpenseCardProps> = ({ expense, onEdit, onDelete }) 
       {/* Actions */}
       <Space style={{ width: "100%", justifyContent: "flex-end" }}>
         <Button type="primary" icon={<EditOutlined />} onClick={() => onEdit(expense)}>
-          Edit
+          {t("button.edit", { ns: "common" })}
         </Button>
         <Button danger icon={<DeleteOutlined />} onClick={() => onDelete(expense)}>
-          Delete
+          {t("button.delete", { ns: "common" })}
         </Button>
       </Space>
     </Card>

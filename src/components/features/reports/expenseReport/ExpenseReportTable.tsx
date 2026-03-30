@@ -10,6 +10,7 @@ import type { ColumnsType } from "antd/es/table";
 import type { ExpensesType } from "../../expenses/expenses.types";
 import type { PurchaseType } from "../../purchase/purchase.types";
 import { ExpenseStatCards } from "./ExpenseStatCard";
+import { useTranslation } from "react-i18next";
 
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isSameOrBefore);
@@ -35,7 +36,7 @@ interface CombinedExpenseType {
 
 export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseReportTableProps) {
     const [form] = Form.useForm();
-
+    const {t} = useTranslation(["common","expenseReport"])
     const {
         filteredExpenses,
         filteredPurchases,
@@ -76,9 +77,9 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
             })),
     ].sort((a, b) => dayjs(b.date).valueOf() - dayjs(a.date).valueOf()); 
 
-    const combinedColumns: ColumnsType<CombinedExpenseType> = [
+  const combinedColumns: ColumnsType<CombinedExpenseType> = [
         {
-            title: "Type",
+            title: t('table.type', { ns: 'expenseReport' }),
             dataIndex: "type",
             key: "type",
             render: (type: string) => (
@@ -89,62 +90,50 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                     backgroundColor: type === 'Expense' ? '#fff1f0' : '#fffbe6',
                     color: type === 'Expense' ? '#ff4d4f' : '#faad14',
                 }}>
-                    {type}
+                    {type === 'Expense' ? t('table.expense', { ns: 'expenseReport' }) : t('table.purchase', { ns: 'expenseReport' })}
                 </span>
             ),
         },
         {
-            title: "Description",
+            title: t('table.description', { ns: 'expenseReport' }),
             dataIndex: "description",
             key: "description"
         },
         {
-            title: "Category/Supplier",
+            title: t('table.categorySupplier', { ns: 'expenseReport' }),
             key: "category_supplier",
             render: (_, record) => {
-                if (record.type === 'Expense') {
-                    return record.category || '-';
-                } else {
-                    return `Supplier: ${record.supplier_id}`;
-                }
+                if (record.type === 'Expense') return record.category || '-';
+                return `${t('table.supplier', { ns: 'expenseReport' })}: ${record.supplier_id}`;
             },
         },
         {
-            title: "Date",
+            title: t('table.date', { ns: 'expenseReport' }),
             dataIndex: "date",
             key: "date",
             render: (date: string) => dayjs(date).format('DD-MMM-YYYY'),
         },
         {
-            title: "Qty",
+            title: t('table.qty', { ns: 'expenseReport' }),
             key: "qty",
-            render: (_, record) => {
-                return record.type === 'Purchase' ? record.qty : '-';
-            },
+            render: (_, record) => record.type === 'Purchase' ? record.qty : '-',
         },
         {
-            title: "Unit Price",
+            title: t('table.unitPrice', { ns: 'expenseReport' }),
             key: "unit_price",
             render: (_, record) => {
                 if (record.type === 'Purchase' && record.unit_price) {
-                    return new Intl.NumberFormat('en-US', {
-                        style: 'currency',
-                        currency: 'USD',
-                    }).format(record.unit_price);
+                    return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(record.unit_price);
                 }
                 return '-';
             },
         },
         {
-            title: "Amount",
+            title: t('table.amount', { ns: 'expenseReport' }),
             dataIndex: "amount",
             key: "amount",
-            render: (value: number) => {
-                return new Intl.NumberFormat('en-US', {
-                    style: 'currency',
-                    currency: 'USD',
-                }).format(value);
-            },
+            render: (value: number) =>
+                new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(value),
         },
     ];
 
@@ -155,9 +144,9 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                     {isMobile ? (
                         <>
                             <Col xs={24} sm={12}>
-                                <Form.Item label="From Date" name="report_date_from">
+                                <Form.Item label={t('filterDate.from_date', { ns: 'common' })} name="report_date_from">
                                     <DatePicker
-                                        placeholder="From date"
+                                        placeholder={t('filterDate.from_date', { ns: 'common' })}
                                         format="YYYY-MMMM-DD"
                                         style={{ width: '100%' }}
                                         onChange={handleFilter}
@@ -165,9 +154,9 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                                 </Form.Item>
                             </Col>
                             <Col xs={24} sm={12}>
-                                <Form.Item label="To Date" name="report_date_to">
+                                <Form.Item label={t('filterDate.to_date', { ns: 'common' })} name="report_date_to">
                                     <DatePicker
-                                        placeholder="To Date"
+                                        placeholder={t('filterDate.to_date', { ns: 'common' })}
                                         format="YYYY-MMMM-DD"
                                         style={{ width: '100%' }}
                                         onChange={handleFilter}
@@ -177,9 +166,12 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                         </>
                     ) : (
                         <Col xs={24} sm={24} md={8}>
-                            <Form.Item label="Report Date Range" name="report_date_range">
+                            <Form.Item label={t('dateRange', { ns: 'expenseReport' })} name="report_date_range">
                                 <DatePicker.RangePicker
-                                    placeholder={["From Date", "To Date"]}
+                                    placeholder={[
+                                        t('filterDate.from_date', { ns: 'common' }),
+                                        t('filterDate.to_date', { ns: 'common' }),
+                                    ]}
                                     format="YYYY-MMMM-DD"
                                     style={{ width: '100%' }}
                                     onChange={handleFilter}
@@ -190,25 +182,23 @@ export function ExpenseReportTable({ expenses = [], purchases = [] }: ExpenseRep
                     <Col xs={24} sm={24} md={10}>
                         <Form.Item>
                             <Space size="small" wrap>
-                                <Button onClick={handleShowAll}>All</Button>
-                                <Button icon={<DownloadOutlined  />} onClick={handleExport}>
-                                    Export
-                                </Button>
-                                <Button onClick={handleClearFilter} icon={<ClearOutlined />}>
-                                    Clear Filter
-                                </Button>
+                                <Button onClick={handleShowAll}>{t('button.all', { ns: 'common' })}</Button>
+                                <Button icon={<DownloadOutlined />} onClick={handleExport}>Export</Button>
+                                <Button onClick={handleClearFilter} icon={<ClearOutlined />}></Button>
                             </Space>
                         </Form.Item>
                     </Col>
                 </Row>
             </Form>
-            <ExpenseStatCards 
+
+            <ExpenseStatCards
                 total_expenses={total_expenses}
                 total_purchases={total_purchases}
                 total_spend={total_spend}
-                />
+            />
+
             <div>
-                <h3 style={{ marginBottom: '16px' }}>Expenses & Purchases</h3>
+                <h3 style={{ marginBottom: '16px' }}>{t('title', { ns: 'expenseReport' })}</h3>
                 <Table
                     columns={combinedColumns}
                     dataSource={combinedTableData}

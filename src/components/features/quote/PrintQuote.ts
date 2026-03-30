@@ -348,7 +348,7 @@ export const PrintQuote = (quote: QuoteType) => {
           ${quote.items.map((row, i) => `
             <tr>
               <td class="text-center">${i + 1}</td>
-              <td>${row.item}</td>
+              <td>${row.item_name}</td>
               <td class="text-center">${row.qty}</td>
               <td class="text-center">${row.unit}</td>
               <td class="text-right">$ ${formatCurrency(row.unit_price)}</td>

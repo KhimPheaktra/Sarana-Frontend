@@ -10,6 +10,7 @@ export interface InvoiceType {
   key: string;
   invoice_id: number;
   quote_id?: number;
+  type: "invoice" | "quote";
   quote_to?: string;
   payment_id: number;
   reference_id?: string;

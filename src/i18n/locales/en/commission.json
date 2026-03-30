@@ -1,0 +1,68 @@
+{
+    "commission": {
+        "engineer": "Engineer",
+        "amount": "Amount",
+        "date": "Date",
+        "description": "Description",
+        "project": "Project",
+        "invoiceTotal": "Invoice Total ($)",
+        "commissionRate": "Commission Rate (%)",
+        "commissionAmount": "Commission ($)",
+        "status": "Status",
+        "attachPayment": "Attach Payment",
+        "payment": "Payment",
+        "rate": "Rate",
+        "dateRange": "Payment Date Range"
+    },
+    "placeholder": {
+        "selectEngineer": "Select engineer",
+        "filterEngineer": "Filter by Engineer",
+        "filterStatus": "Filter by Status",
+        "amount": "Enter amount",
+        "commissionDate": "Enter commission date",
+        "description": "Enter description",
+        "project": "Enter project",
+        "invoiceTotal": "0.00",
+        "commissionRate": "30",
+        "selectStatus": "Select status"
+    },
+    "status": {
+        "pending": "Pending",
+        "paid": "Paid",
+        "cancelled": "Cancelled"
+    },
+    "validation": {
+        "engineerRequired": "Please select engineer",
+        "amountRequired": "Please enter amount",
+        "dateRequired": "Please enter commission date",
+        "invoiceTotalRequired": "Invoice total is required",
+        "commissionRateRequired": "Please enter commission rate",
+        "commissionRateRange": "Must be between 0–100",
+        "statusRequired": "Please select status"
+    },
+    "button": {
+        "clearFilter": "Clear Filter",
+        "attachPayment": "Attach Payment",
+        "clear": "Clear"
+    },
+    "table": {
+        "id": "ID",
+        "amount": "Amount",
+        "date": "Date",
+        "description": "Description",
+        "engineer": "Engineer",
+        "project": "Project",
+        "invoiceTotal": "Invoice Total ($)",
+        "rate": "Rate",
+        "commissionAmount": "Commission ($)",
+        "payment": "Payment",
+        "status": "Status",
+        "actions": "Actions",
+        "commission": "Commission",
+        "noDataPersonal": "No Personal Commissions Found",
+        "noDataProject": "No Project Commissions Found"
+    },
+    "tooltip": {
+        "amountAutoCalc": "Auto-calculated from Invoice Total × Rate. You can override manually."
+    }
+}
