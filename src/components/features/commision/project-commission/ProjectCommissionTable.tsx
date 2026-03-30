@@ -177,8 +177,8 @@ const ProjectCommissionTable: React.FC<Props> = ({ data, onEdit, onDelete }) => 
       current: [{ image: null, paid_amount: 0, type: "image" }] as AttachEntry[],
     };
 
-    openModal("view", {
-      titleMap: { view: "Attach Payment" },
+    openModal("add", {
+      titleMap: { add: "Attach Payment" },
       content: (
         <AttachPaymentForm
           entriesRef={entriesRef}
